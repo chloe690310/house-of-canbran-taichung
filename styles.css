@@ -196,6 +196,18 @@ input {
   text-shadow: 0 16px 40px rgba(75, 101, 95, 0.08);
 }
 
+.hero-title-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
+
 .hero-subtitle {
   margin: 10px 0 0;
   color: rgba(49, 88, 79, 0.72);
