@@ -314,14 +314,18 @@ input {
   background: var(--line);
 }
 
-.hero-photo {
+.hero-media {
   position: absolute;
   inset: 0;
   z-index: 0;
+  display: block;
+}
+
+.hero-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center right;
+  object-fit: contain;
+  object-position: 72% center;
 }
 
 .home-intro {
@@ -1394,7 +1398,7 @@ input {
   }
 
   .hero-photo {
-    object-position: 70% center;
+    object-position: center center;
   }
 
   .home-intro-grid {
@@ -1473,7 +1477,7 @@ input {
 
   .hero {
     display: block;
-    height: clamp(286px, 46svh, 370px);
+    height: clamp(286px, 89vw, 360px);
     min-height: 0;
     margin-bottom: 0;
     padding: 0;
@@ -1553,13 +1557,10 @@ input {
   }
 
   .hero-photo {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
     width: 100%;
     height: 100%;
     border-radius: 0;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center center;
     box-shadow: none;
     filter: saturate(1.04) contrast(1.03) brightness(1.02);
@@ -1728,7 +1729,7 @@ input {
   }
 
   .hero {
-    height: clamp(262px, 44svh, 330px);
+    height: clamp(278px, 89vw, 330px);
     padding-inline: 0;
   }
 

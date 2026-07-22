@@ -138,7 +138,11 @@ window.addEventListener("hashchange", () => {
   showPage(getPageFromLocation(), { scrollToTop: true });
 });
 
-showPage(getPageFromLocation());
+showPage(getPageFromLocation(), { scrollToTop: true });
+
+window.addEventListener("load", () => {
+  showPage(getPageFromLocation(), { scrollToTop: true });
+});
 
 const advisorState = {
   scalp: "normal",
