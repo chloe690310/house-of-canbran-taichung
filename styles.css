@@ -140,7 +140,7 @@ input {
 
 .hero {
   position: relative;
-  min-height: clamp(500px, 62svh, 720px);
+  min-height: clamp(620px, 46vw, 700px);
   overflow: hidden;
   display: flex;
   align-items: flex-end;
@@ -324,8 +324,8 @@ input {
 .hero-photo {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: 72% center;
+  object-fit: cover;
+  object-position: 72% 43%;
 }
 
 .home-intro {
