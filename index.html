@@ -176,6 +176,7 @@
                 <button type="button" class="choice" data-value="tool">整髮工具</button>
                 <button type="button" class="choice" data-value="curlStyling">捲髮造型品</button>
                 <button type="button" class="choice" data-value="styling">整髮造型品</button>
+                <button type="button" class="choice" data-value="holdStyling">定型產品</button>
                 <button type="button" class="choice" data-value="menStyling">男士造型品</button>
                 <button type="button" class="choice" data-value="scalpCare">頭皮保養</button>
               </div>
@@ -191,7 +192,7 @@
                 <button type="button" class="choice" data-value="dandruff">有頭皮屑困擾</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment tool curlStyling styling menStyling">
+            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment tool curlStyling styling holdStyling menStyling">
               <p class="question-label">髮質比較接近哪一種？</p>
               <div class="choice-row" data-question="hair">
                 <button type="button" class="choice is-active" data-value="normal">一般中等</button>
@@ -200,7 +201,7 @@
                 <button type="button" class="choice" data-value="frizzy">自然捲</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment curlStyling styling">
+            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment">
               <p class="question-label">染燙漂狀態</p>
               <div class="choice-row" data-question="chemical">
                 <button type="button" class="choice is-active" data-value="none">沒有染燙</button>
@@ -211,7 +212,7 @@
                 <button type="button" class="choice" data-value="tone">想維持補色</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment curlStyling styling">
+            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment">
               <p class="question-label">髮況</p>
               <div class="choice-row" data-question="damage">
                 <button type="button" class="choice is-active" data-value="healthy">健康髮</button>
@@ -221,7 +222,7 @@
                 <button type="button" class="choice" data-value="split">髮尾分岔斷裂</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment curlStyling styling scalpCare">
+            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment scalpCare">
               <p class="question-label">最想改善</p>
               <div class="choice-row" data-question="goal">
                 <button type="button" class="choice is-active" data-value="repair">受損修護</button>
@@ -252,7 +253,51 @@
                 <button type="button" class="choice" data-value="natural">自然好整理</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="leaveIn tool curlStyling styling treatment">
+            <div class="question-group advisor-branch" data-show-for="curlStyling">
+              <p class="question-label">想呈現的捲髮效果</p>
+              <div class="choice-row" data-question="styleEffect">
+                <button type="button" class="choice is-active" data-value="naturalCurl">自然捲度</button>
+                <button type="button" class="choice" data-value="elasticCurl">彈力捲度</button>
+                <button type="button" class="choice" data-value="looseCurl">鬆柔空氣感</button>
+                <button type="button" class="choice" data-value="curlHold">捲度持久</button>
+                <button type="button" class="choice" data-value="volumeCurl">蓬鬆線條</button>
+                <button type="button" class="choice" data-value="frizzControl">修飾毛躁</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="styling">
+              <p class="question-label">想塑造的造型效果</p>
+              <div class="choice-row" data-question="styleEffect">
+                <button type="button" class="choice is-active" data-value="natural">自然好整理</button>
+                <button type="button" class="choice" data-value="smoothLine">柔順線條</button>
+                <button type="button" class="choice" data-value="volume">蓬鬆量感</button>
+                <button type="button" class="choice" data-value="shine">亮澤光感</button>
+                <button type="button" class="choice" data-value="matteTexture">霧面質感</button>
+                <button type="button" class="choice" data-value="clean">乾淨俐落</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="holdStyling">
+              <p class="question-label">想要的定型效果</p>
+              <div class="choice-row" data-question="styleEffect">
+                <button type="button" class="choice is-active" data-value="strongHold">固定力強</button>
+                <button type="button" class="choice" data-value="softHold">自然定型</button>
+                <button type="button" class="choice" data-value="antiHumidity">抗潮持久</button>
+                <button type="button" class="choice" data-value="rootHold">髮根支撐</button>
+                <button type="button" class="choice" data-value="curlHold">捲度維持</button>
+                <button type="button" class="choice" data-value="shineHold">光澤定型</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="tool">
+              <p class="question-label">想用工具解決什麼？</p>
+              <div class="choice-row" data-question="toolPurpose">
+                <button type="button" class="choice is-active" data-value="detangle">梳順打結</button>
+                <button type="button" class="choice" data-value="blowdry">吹整造型</button>
+                <button type="button" class="choice" data-value="rootVolume">蓬鬆髮根</button>
+                <button type="button" class="choice" data-value="curlFinish">整理捲度</button>
+                <button type="button" class="choice" data-value="scalpMassage">頭皮按摩</button>
+                <button type="button" class="choice" data-value="daily">日常萬用</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="leaveIn treatment">
               <p class="question-label">日常造型習慣</p>
               <div class="choice-row" data-question="routine">
                 <button type="button" class="choice is-active" data-value="simple">日常簡單</button>
@@ -262,7 +307,7 @@
                 <button type="button" class="choice" data-value="care">願意完整護理</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment tool curlStyling styling scalpCare">
+            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment scalpCare">
               <p class="question-label">希望保養方式</p>
               <div class="choice-row" data-question="preference">
                 <button type="button" class="choice is-active" data-value="quick">越簡單越好</button>
