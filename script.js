@@ -155,43 +155,61 @@ const advisorState = {
   preference: "quick",
 };
 
+const productCatalog = Array.isArray(window.CANBRAN_PRODUCTS)
+  ? window.CANBRAN_PRODUCTS.filter((product) => product.status === "上架")
+  : [];
+
+const priorityScore = {
+  高: 7,
+  中: 4,
+  低: 1,
+};
+
 const recommendations = {
   sensitive: {
+    intent: "sensitive",
     title: "頭皮舒緩觀察 + 輕量髮尾修護",
     copy: "你的回答偏向頭皮需要溫和照護。建議先以頭皮舒適為優先，避免過度清潔或太刺激的清涼感，髮尾乾燥再另外補充少量修護。",
     products: ["主方向：溫和清潔、降低頭皮負擔", "搭配建議：髮尾可少量使用超柔細順髮凝露或 ICS 修護油", "提醒：若有持續紅癢、刺痛或明顯脫屑，建議先詢問專業人員"],
   },
   dandruff: {
+    intent: "dandruff",
     title: "頭皮屑狀況確認 + 清潔方式調整",
     copy: "你的回答提到頭皮屑困擾。頭皮屑可能和乾燥、出油悶熱、清潔殘留或頭皮敏感有關，建議先確認出現時機與頭皮感受，再選擇清潔強度。",
     products: ["主方向：先分辨乾燥型或出油悶熱型頭皮屑", "搭配建議：護髮產品避開頭皮，只放髮中至髮尾", "提醒：若有紅腫、刺痛、結痂或大量脫屑，請先透過 LINE 讓專人協助確認"],
   },
   scalpCare: {
+    intent: "scalpCare",
     title: "清爽頭皮 + 輕盈髮尾護理",
     copy: "你的回答偏向頭皮出油、悶熱或殘留感。建議先把頭皮清潔做好，護髮則集中在髮中至髮尾，避免讓髮根更容易扁塌。",
     products: ["主推薦：茶樹洗髮精或 IAU 茄紅素洗護組", "搭配建議：髮尾乾燥時少量使用超柔細順髮凝露", "使用順序：頭皮清潔 -> 髮尾輕量護理 -> 吹乾髮根"],
   },
   colorCare: {
+    intent: "colorCare",
     title: "染後護色 + 修護補水",
     copy: "你的回答偏向染後或補色需求。建議以護色清潔搭配髮尾修護，降低褪色感，同時補足染後容易出現的乾燥與光澤不足。",
     products: ["主推薦：EDOL 煥然補色洗髮精，依髮色選粉紅、銀色或紫色系", "搭配建議：米胚芽修護霜加強染後乾燥髮尾", "注意事項：水溫不要過高，減少高溫吹整與日曬造成的褪色"],
   },
   repair: {
+    intent: "repair",
     title: "修護柔順型洗護建議",
     copy: "你的回答偏向乾燥、染燙後或髮尾粗糙。建議先建立基礎修護，再用免沖洗護理加強髮中至髮尾，讓髮絲比較好梳理、有光澤。",
     products: ["主推薦：米胚芽修護霜", "搭配建議：ICS 修護油加強髮尾光澤與柔順", "使用順序：洗髮 -> 修護霜停留沖淨 -> 吹乾前後少量護理髮尾"],
   },
   smooth: {
+    intent: "smooth",
     title: "柔順抗毛躁 + 髮尾滑順整理",
     copy: "你的回答偏向毛躁、打結或自然捲整理需求。建議把保濕修護放在髮中至髮尾，吹整前後搭配柔順型產品，降低蓬亂與摩擦感。",
     products: ["主推薦：超柔細順髮凝露", "搭配建議：米胚芽修護霜作為洗後修護基底", "使用順序：護髮後吹至半乾 -> 少量凝露整理髮尾與毛躁處"],
   },
   volume: {
+    intent: "volume",
     title: "蓬鬆清爽 + 輕量保養",
     copy: "你的回答偏向細軟、扁塌或容易出油。建議洗髮以頭皮清爽為主，護髮和免沖洗產品都少量放在髮尾，保留髮根的空氣感。",
     products: ["主推薦：茶樹洗髮精", "搭配建議：超柔細順髮凝露只用少量在髮尾", "使用重點：吹乾時先吹髮根，避免厚重護理品靠近頭皮"],
   },
   shine: {
+    intent: "shine",
     title: "亮澤保濕 + 日常光感維持",
     copy: "你的回答偏向想提升柔順與光澤。建議選擇保濕修護搭配少量光澤型免沖洗產品，讓髮絲看起來更乾淨、有質感。",
     products: ["主推薦：米胚芽修護霜", "搭配建議：ICS 修護油少量加在髮尾提升光澤", "使用重點：少量多次，避免一次用太多造成厚重感"],
@@ -200,6 +218,7 @@ const recommendations = {
 
 const titleEl = document.querySelector("#recommend-title");
 const copyEl = document.querySelector("#recommend-copy");
+const featuredProductGrid = document.querySelector("#featured-product-grid");
 
 document.querySelectorAll(".choice-row").forEach((row) => {
   row.addEventListener("click", (event) => {
@@ -216,12 +235,13 @@ document.querySelectorAll(".choice-row").forEach((row) => {
 function updateRecommendation() {
   const base = getBaseRecommendation();
   const modifiers = getRecommendationModifiers().slice(0, 5);
+  const selectedProducts = getProductRecommendations(base);
   const resultCopy = [base.copy, ...modifiers].join(" ");
 
   if (titleEl) titleEl.textContent = base.title;
   if (copyEl) copyEl.textContent = resultCopy;
-  renderProducts(base.products);
-  updateAdvisorLineLink(base, modifiers);
+  renderProducts(selectedProducts, base.products);
+  updateAdvisorLineLink(base, modifiers, selectedProducts);
 }
 
 function getBaseRecommendation() {
@@ -261,12 +281,12 @@ function getBaseRecommendation() {
   if (advisorState.damage === "medium") scores.repair += 2;
   if (advisorState.damage === "healthy") scores.shine += 2;
 
-  if (advisorState.goal === "scalpCare") scores.scalpCare += 6;
-  if (advisorState.goal === "colorCare") scores.colorCare += 6;
-  if (advisorState.goal === "repair") scores.repair += 6;
-  if (advisorState.goal === "smooth") scores.smooth += 6;
-  if (advisorState.goal === "volume") scores.volume += 6;
-  if (advisorState.goal === "shine") scores.shine += 6;
+  if (advisorState.goal === "scalpCare") scores.scalpCare += 10;
+  if (advisorState.goal === "colorCare") scores.colorCare += 10;
+  if (advisorState.goal === "repair") scores.repair += 10;
+  if (advisorState.goal === "smooth") scores.smooth += 10;
+  if (advisorState.goal === "volume") scores.volume += 10;
+  if (advisorState.goal === "shine") scores.shine += 10;
 
   if (advisorState.wash === "sweat") scores.scalpCare += 2;
   if (advisorState.wash === "dryLess") scores.sensitive += 2;
@@ -310,24 +330,299 @@ function getRecommendationModifiers() {
   return modifiers;
 }
 
-function renderProducts(products) {
+function getProductRecommendations(base) {
+  if (!productCatalog.length) return [];
+
+  const scoredProducts = productCatalog
+    .map((product, catalogIndex) => {
+      const score = scoreProduct(product, base);
+      return {
+        ...product,
+        catalogIndex,
+        score,
+        reason: buildProductReason(product, base),
+      };
+    })
+    .filter((product) => product.score > 0)
+    .sort((a, b) => b.score - a.score || a.catalogIndex - b.catalogIndex);
+
+  return diversifyProducts(scoredProducts, base.intent).slice(0, 3);
+}
+
+function scoreProduct(product, base) {
+  const text = getProductSearchText(product);
+  let score = priorityScore[product.priority] || 0;
+
+  score += scoreIntent(product, text, base.intent);
+  score += scoreAdvisorState(product, text);
+
+  if (hasCategory(product, ["造型工具"]) && !["smooth", "volume"].includes(base.intent)) score -= 6;
+  if (hasCategory(product, ["男士造型"]) && advisorState.routine !== "styling") score -= 2;
+
+  return score;
+}
+
+function scoreIntent(product, text, intent) {
+  const categoryScore = {
+    sensitive: [["洗髮精", "頭皮護理", "頭皮保養"], 4],
+    dandruff: [["洗髮精", "頭皮護理", "頭皮保養"], 5],
+    scalpCare: [["洗髮精", "頭皮護理", "頭皮保養"], 5],
+    colorCare: [["補色", "洗髮精", "護髮膜", "潤絲"], 4],
+    repair: [["護髮膜", "潤絲", "免沖洗"], 5],
+    smooth: [["免沖洗", "潤絲", "護髮膜"], 5],
+    volume: [["洗髮精", "頭皮護理", "造型", "定型"], 4],
+    shine: [["免沖洗", "潤絲", "護髮膜"], 4],
+  };
+  const keywords = {
+    sensitive: ["敏感", "乾癢", "舒緩", "溫和", "保濕", "頭皮"],
+    dandruff: ["頭皮屑", "乾燥", "舒緩", "頭皮", "清潔"],
+    scalpCare: ["油性", "出油", "清爽", "淨化", "頭皮", "蓬鬆", "控油", "冰涼", "茶樹"],
+    colorCare: ["染後", "護色", "補色", "漂髮後", "褪色", "髮色", "紫色", "粉紅", "銀色", "EDOL"],
+    repair: ["受損", "修護", "護髮", "乾燥", "毛躁", "燙後", "染後", "漂髮後", "保濕", "柔順"],
+    smooth: ["柔順", "滑順", "毛躁", "打結", "自然捲", "粗硬", "糾結", "順髮"],
+    volume: ["細軟", "蓬鬆", "豐盈", "輕盈", "髮根", "清爽", "造型"],
+    shine: ["光澤", "亮澤", "柔順", "保濕", "精華油", "亮麗", "光感"],
+  };
+  const [categories, points] = categoryScore[intent] || [[], 0];
+  let score = hasCategory(product, categories) ? points : 0;
+  score += countKeywordHits(text, keywords[intent] || []) * 2;
+  return score;
+}
+
+function scoreAdvisorState(product, text) {
+  let score = 0;
+  const scalpKeywords = {
+    oily: ["油性", "出油", "清爽", "淨化", "控油", "悶熱", "茶樹"],
+    dry: ["乾性", "乾燥", "保濕", "舒緩"],
+    sensitive: ["敏感", "乾癢", "舒緩", "溫和"],
+    buildup: ["淨化", "清潔", "殘留", "頭皮護理", "頭皮保養"],
+    dandruff: ["頭皮屑", "乾燥", "舒緩", "頭皮"],
+  };
+  const hairKeywords = {
+    dry: ["乾燥", "毛躁", "受損", "保濕", "修護"],
+    fine: ["細軟", "蓬鬆", "輕盈", "髮根"],
+    coarse: ["粗硬", "柔順", "保濕", "毛躁"],
+    frizzy: ["自然捲", "毛躁", "柔順", "滑順"],
+    tangle: ["打結", "糾結", "柔順", "滑順", "順髮"],
+    normal: ["都適用", "一般", "中性"],
+  };
+  const chemicalKeywords = {
+    colored: ["染後", "護色", "髮色", "褪色"],
+    bleached: ["漂髮後", "受損", "補色", "修護"],
+    permed: ["燙後", "受損", "修護", "彈性"],
+    straightened: ["離子燙", "直順", "柔順", "光澤"],
+    tone: ["補色", "紫色", "粉紅", "銀色", "護色"],
+  };
+
+  score += countKeywordHits(text, scalpKeywords[advisorState.scalp] || []) * 2;
+  score += countKeywordHits(text, hairKeywords[advisorState.hair] || []) * 2;
+  score += countKeywordHits(text, chemicalKeywords[advisorState.chemical] || []) * 2;
+
+  if (advisorState.scalp === "oily") {
+    if (hasProductTag(product.scalp, ["油性"])) score += 10;
+    if (hasProductTag(product.scalp, ["乾性", "敏感"])) score -= 8;
+    if (hasCategory(product, ["頭皮護理", "頭皮保養"]) && countKeywordHits(text, ["保濕修護霜", "乾燥", "受損"])) score -= 5;
+    if (countKeywordHits(text, ["茶樹", "冷橘", "茄紅素", "淨化", "去脂"])) score += 4;
+  }
+
+  if (advisorState.scalp === "dry") {
+    if (hasProductTag(product.scalp, ["乾性"])) score += 8;
+    if (hasProductTag(product.scalp, ["油性"])) score -= 4;
+  }
+
+  if (advisorState.scalp === "sensitive") {
+    if (hasProductTag(product.scalp, ["敏感"])) score += 8;
+    if (hasProductTag(product.scalp, ["油性"])) score -= 3;
+  }
+
+  if (advisorState.damage === "high" || advisorState.damage === "split") score += countKeywordHits(text, ["受損", "修護", "護髮膜", "重度受損"]) * 2;
+  if (advisorState.goal === "scalpCare") score += hasCategory(product, ["洗髮精", "頭皮護理", "頭皮保養"]) ? 4 : 0;
+  if (advisorState.goal === "colorCare") score += countKeywordHits(text, ["補色", "染後", "護色", "漂髮後"]) * 3;
+  if (advisorState.goal === "repair") score += hasCategory(product, ["護髮膜", "潤絲", "免沖洗"]) ? 4 : 0;
+  if (advisorState.goal === "smooth") score += countKeywordHits(text, ["柔順", "毛躁", "滑順", "順髮"]) * 3;
+  if (advisorState.goal === "volume") score += countKeywordHits(text, ["蓬鬆", "細軟", "髮根", "輕盈"]) * 3;
+  if (advisorState.goal === "shine") score += countKeywordHits(text, ["光澤", "亮澤", "精華油", "光感"]) * 3;
+  if (advisorState.routine === "styling") score += hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"]) ? 5 : 0;
+  if (advisorState.routine === "heat") score += countKeywordHits(text, ["修護", "免沖洗", "精華油", "熱", "吹整"]) * 2;
+  if (advisorState.preference === "lightweight") score += countKeywordHits(text, ["輕盈", "蓬鬆", "清爽", "不厚重"]) * 2;
+  if (advisorState.preference === "intensive") score += hasCategory(product, ["護髮膜", "潤絲", "免沖洗"]) ? 3 : 0;
+
+  return score;
+}
+
+function diversifyProducts(products, intent) {
+  const orderByIntent = {
+    sensitive: ["cleanser", "scalp", "treatment", "leaveIn"],
+    dandruff: ["cleanser", "scalp", "treatment", "leaveIn"],
+    scalpCare: ["cleanser", "scalp", "treatment", "leaveIn"],
+    colorCare: ["color", "treatment", "leaveIn", "cleanser"],
+    repair: ["treatment", "leaveIn", "cleanser", "color"],
+    smooth: ["leaveIn", "treatment", "cleanser", "tool"],
+    volume: ["cleanser", "styling", "scalp", "leaveIn"],
+    shine: ["leaveIn", "treatment", "cleanser", "color"],
+  };
+  const selected = [];
+  const groups = orderByIntent[intent] || ["cleanser", "treatment", "leaveIn"];
+
+  groups.forEach((group) => {
+    const nextProduct = products.find((product) => !selected.includes(product) && getProductGroup(product) === group);
+    if (nextProduct) selected.push(nextProduct);
+  });
+
+  products.forEach((product) => {
+    if (selected.length >= 3) return;
+    if (!selected.includes(product)) selected.push(product);
+  });
+
+  return selected;
+}
+
+function getProductGroup(product) {
+  if (hasCategory(product, ["補色"])) return "color";
+  if (hasCategory(product, ["洗髮精"])) return "cleanser";
+  if (hasCategory(product, ["頭皮護理", "頭皮保養"])) return "scalp";
+  if (hasCategory(product, ["護髮膜", "潤絲"])) return "treatment";
+  if (hasCategory(product, ["免沖洗", "免沖洗補水"])) return "leaveIn";
+  if (hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型"])) return "styling";
+  if (hasCategory(product, ["造型工具"])) return "tool";
+  return "other";
+}
+
+function getProductSearchText(product) {
+  return [
+    product.name,
+    product.brand,
+    product.category,
+    ...(product.categories || []),
+    ...(product.scalp || []),
+    ...(product.hair || []),
+    ...(product.needs || []),
+    product.effect,
+    product.usage,
+    product.pitch,
+    product.caution,
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+function hasCategory(product, categories) {
+  return categories.some((category) => (product.categories || []).some((item) => item.includes(category)));
+}
+
+function hasProductTag(tags = [], values = []) {
+  return values.some((value) => tags.some((tag) => tag.includes(value)));
+}
+
+function countKeywordHits(text, keywords) {
+  return keywords.reduce((total, keyword) => (text.includes(keyword) ? total + 1 : total), 0);
+}
+
+function buildProductReason(product, base) {
+  const reasons = [];
+  const text = getProductSearchText(product);
+
+  if (advisorState.scalp === "oily" && countKeywordHits(text, ["油性", "出油", "清爽", "淨化"])) reasons.push("符合頭皮清爽需求");
+  if (advisorState.scalp === "sensitive" && countKeywordHits(text, ["敏感", "乾癢", "舒緩", "溫和"])) reasons.push("適合先降低頭皮負擔");
+  if (advisorState.hair === "fine" && countKeywordHits(text, ["細軟", "蓬鬆", "輕盈"])) reasons.push("保留細軟髮的輕盈感");
+  if (advisorState.hair === "dry" && countKeywordHits(text, ["乾燥", "毛躁", "保濕", "修護"])) reasons.push("加強乾燥毛躁處的修護");
+  if (advisorState.chemical === "colored" && countKeywordHits(text, ["染後", "護色", "髮色"])) reasons.push("協助染後髮色與質感維持");
+  if (advisorState.chemical === "bleached" && countKeywordHits(text, ["漂髮後", "受損", "補色", "修護"])) reasons.push("適合漂後髮的修護或色調維持");
+  if (advisorState.goal === "smooth" && countKeywordHits(text, ["柔順", "滑順", "毛躁", "順髮"])) reasons.push("提升髮尾柔順與好整理度");
+  if (advisorState.goal === "shine" && countKeywordHits(text, ["光澤", "亮澤", "精華油"])) reasons.push("補足髮絲光澤與質感");
+  if (advisorState.routine === "styling" && hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"])) reasons.push("適合日常造型需求");
+
+  if (!reasons.length && product.pitch) reasons.push(summarizeText(product.pitch, 42));
+  if (!reasons.length && product.effect) reasons.push(summarizeText(product.effect, 42));
+  if (!reasons.length) reasons.push(base.title);
+
+  return reasons.slice(0, 2).join("，");
+}
+
+function formatProductVariants(product) {
+  if (!product.variants?.length) return "";
+  return product.variants
+    .slice(0, 2)
+    .map((variant) => `${variant.spec} / $${variant.price}`)
+    .join("、");
+}
+
+function summarizeText(text, maxLength = 54) {
+  const value = String(text || "").replace(/\s+/g, " ").trim();
+  if (value.length <= maxLength) return value;
+  return `${value.slice(0, maxLength)}...`;
+}
+
+function renderProducts(products, fallbackProducts = []) {
   const productList = document.querySelector("#recommend-products");
   if (!productList) return;
   productList.innerHTML = "";
+
+  if (!products.length) {
+    fallbackProducts.forEach((product) => {
+      const item = document.createElement("li");
+      item.textContent = product;
+      productList.appendChild(item);
+    });
+    return;
+  }
+
   products.forEach((product) => {
     const item = document.createElement("li");
-    item.textContent = product;
+    item.className = "recommend-product-card";
+    item.innerHTML = `
+      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" />
+      <span>
+        <em>${escapeHtml([product.brand, product.category].filter(Boolean).join(" / "))}</em>
+        <strong>${escapeHtml(product.name)}</strong>
+        <p>${escapeHtml(product.reason)}</p>
+        <small>${escapeHtml(formatProductVariants(product))}</small>
+      </span>
+    `;
     productList.appendChild(item);
   });
 }
 
-function updateAdvisorLineLink(base, modifiers) {
+function renderFeaturedProducts() {
+  if (!featuredProductGrid || !productCatalog.length) return;
+
+  const featuredNames = ["茶樹洗髮精", "米胚芽護髮霜", "順髮凝露"];
+  const featuredProducts = featuredNames
+    .map((name) => productCatalog.find((product) => product.name === name))
+    .filter(Boolean);
+
+  if (!featuredProducts.length) return;
+
+  featuredProductGrid.innerHTML = "";
+  featuredProducts.forEach((product) => {
+    const card = document.createElement("article");
+    card.className = "product-card";
+    card.innerHTML = `
+      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" />
+      <div>
+        <p class="product-kicker">${escapeHtml([product.brand, product.category].filter(Boolean).join(" / "))}</p>
+        <h3>${escapeHtml(product.name)}</h3>
+        <p>${escapeHtml(summarizeText(product.effect, 72))}</p>
+        <p class="product-spec">${escapeHtml(formatProductVariants(product))}</p>
+      </div>
+    `;
+    featuredProductGrid.appendChild(card);
+  });
+}
+
+function updateAdvisorLineLink(base, modifiers, selectedProducts = []) {
   if (!advisorLineLink || !base) return;
 
   const selectedAnswers = getAdvisorAnswerSummary();
   const selectedLines = selectedAnswers.map(({ label, value }) => `${label}：${value}`);
   const analysisLines = [base.copy, ...modifiers.slice(0, 2)].filter(Boolean);
-  const productLines = base.products.map((product) => `・${product}`);
+  const productLines = selectedProducts.length
+    ? selectedProducts.map((product) => {
+        const variant = formatProductVariants(product);
+        const reason = product.reason || summarizeText(product.effect, 36);
+        return `・${product.name}${variant ? `（${variant}）` : ""}：${reason}`;
+      })
+    : base.products.map((product) => `・${product}`);
   const message = [
     "您好，我已完成肯邦屋 AI 髮品診斷，想請專人協助確認。",
     "",
@@ -367,6 +662,7 @@ if (advisorLineLink) {
 }
 
 updateRecommendation();
+renderFeaturedProducts();
 
 const advisorPresets = {
   dry: {
