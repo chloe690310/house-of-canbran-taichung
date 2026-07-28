@@ -643,6 +643,10 @@ input {
   margin-top: 24px;
 }
 
+.question-group[hidden] {
+  display: none;
+}
+
 .question-label,
 .result-label,
 .product-kicker,
@@ -688,6 +692,12 @@ input {
   border-color: var(--line);
   background: var(--line);
   box-shadow: 0 10px 24px rgba(18, 168, 117, 0.18);
+}
+
+.intent-choice-row .choice {
+  min-height: 46px;
+  padding-inline: 18px;
+  font-weight: 800;
 }
 
 .recommendation {
