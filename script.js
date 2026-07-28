@@ -151,6 +151,7 @@ const advisorState = {
   damage: "healthy",
   goal: "scalpCare",
   hair: "normal",
+  styleEffect: "clean",
   wash: "daily",
   routine: "simple",
   preference: "quick",
@@ -173,6 +174,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "healthy",
     goal: "scalpCare",
+    styleEffect: "clean",
     wash: "daily",
     routine: "simple",
     preference: "quick",
@@ -183,6 +185,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "low",
     goal: "smooth",
+    styleEffect: "clean",
     wash: "twoDays",
     routine: "simple",
     preference: "balanced",
@@ -193,6 +196,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "low",
     goal: "smooth",
+    styleEffect: "clean",
     wash: "twoDays",
     routine: "heat",
     preference: "quick",
@@ -203,6 +207,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "medium",
     goal: "repair",
+    styleEffect: "clean",
     wash: "twoDays",
     routine: "care",
     preference: "intensive",
@@ -213,6 +218,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "healthy",
     goal: "smooth",
+    styleEffect: "clean",
     wash: "twoDays",
     routine: "styling",
     preference: "quick",
@@ -223,6 +229,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "low",
     goal: "smooth",
+    styleEffect: "natural",
     wash: "twoDays",
     routine: "styling",
     preference: "quick",
@@ -233,6 +240,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "healthy",
     goal: "smooth",
+    styleEffect: "clean",
     wash: "twoDays",
     routine: "styling",
     preference: "quick",
@@ -243,6 +251,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "healthy",
     goal: "volume",
+    styleEffect: "clean",
     wash: "twoDays",
     routine: "styling",
     preference: "quick",
@@ -253,6 +262,7 @@ const advisorIntentDefaults = {
     chemical: "none",
     damage: "healthy",
     goal: "scalpCare",
+    styleEffect: "clean",
     wash: "daily",
     routine: "simple",
     preference: "lightweight",
@@ -304,6 +314,39 @@ const productTypeConfigs = {
     label: "頭皮保養",
     recommendation: "scalpCare",
     categories: ["頭皮保養", "頭皮護理"],
+  },
+};
+
+const menStyleEffectConfigs = {
+  clean: {
+    label: "乾淨俐落",
+    keywords: ["乾淨", "俐落", "專業", "紮實", "清爽", "容易沖洗", "水溶性"],
+    reason: "適合乾淨俐落的日常造型",
+  },
+  slick: {
+    label: "油頭光澤",
+    keywords: ["油頭", "光澤", "削光", "妝感", "完整的妝感", "油分"],
+    reason: "適合油頭或帶光澤的俐落造型",
+  },
+  strongHold: {
+    label: "固定力強",
+    keywords: ["強膠", "支撐", "固定", "定型", "持續", "強烈", "控制", "塑型力"],
+    reason: "加強固定力與長時間支撐",
+  },
+  matteTexture: {
+    label: "霧面線條",
+    keywords: ["霧面", "低光", "線條", "質地", "粗糙", "黏土", "髮蠟"],
+    reason: "適合霧面線條與自然束感",
+  },
+  volume: {
+    label: "蓬鬆量感",
+    keywords: ["量感", "豐厚", "髮量", "蓬鬆", "3D", "立體", "纖維"],
+    reason: "協助增加蓬鬆量感與立體輪廓",
+  },
+  natural: {
+    label: "自然好整理",
+    keywords: ["自然", "無重力", "彈性", "重覆塑型", "輕鬆", "不扁塌"],
+    reason: "適合自然好整理、可重複塑型的髮感",
   },
 };
 
@@ -471,21 +514,25 @@ function getBaseRecommendation() {
   if (advisorState.damage === "medium") scores.repair += 2;
   if (advisorState.damage === "healthy") scores.shine += 2;
 
-  if (advisorState.goal === "scalpCare") scores.scalpCare += 10;
-  if (advisorState.goal === "colorCare") scores.colorCare += 10;
-  if (advisorState.goal === "repair") scores.repair += 10;
-  if (advisorState.goal === "smooth") scores.smooth += 10;
-  if (advisorState.goal === "volume") scores.volume += 10;
-  if (advisorState.goal === "shine") scores.shine += 10;
+  if (advisorState.intent !== "menStyling") {
+    if (advisorState.goal === "scalpCare") scores.scalpCare += 10;
+    if (advisorState.goal === "colorCare") scores.colorCare += 10;
+    if (advisorState.goal === "repair") scores.repair += 10;
+    if (advisorState.goal === "smooth") scores.smooth += 10;
+    if (advisorState.goal === "volume") scores.volume += 10;
+    if (advisorState.goal === "shine") scores.shine += 10;
+  }
 
   if (advisorState.wash === "sweat") scores.scalpCare += 2;
   if (advisorState.wash === "dryLess") scores.sensitive += 2;
-  if (advisorState.routine === "heat") scores.repair += 2;
-  if (advisorState.routine === "styling") scores.styling += 5;
-  if (advisorState.routine === "outdoor") scores.colorCare += 1;
-  if (advisorState.preference === "lightweight") scores.volume += 2;
-  if (advisorState.preference === "intensive") scores.repair += 2;
-  if (advisorState.preference === "quick" && advisorState.intent === "leaveIn") scores.leaveIn += 3;
+  if (advisorState.intent !== "menStyling") {
+    if (advisorState.routine === "heat") scores.repair += 2;
+    if (advisorState.routine === "styling") scores.styling += 5;
+    if (advisorState.routine === "outdoor") scores.colorCare += 1;
+    if (advisorState.preference === "lightweight") scores.volume += 2;
+    if (advisorState.preference === "intensive") scores.repair += 2;
+    if (advisorState.preference === "quick" && advisorState.intent === "leaveIn") scores.leaveIn += 3;
+  }
 
   let bestKey = productType.recommendation;
   Object.entries(scores).forEach(([key, score]) => {
@@ -496,6 +543,10 @@ function getBaseRecommendation() {
   return {
     ...base,
     title: `${productType.label}｜${base.title}`,
+    copy:
+      advisorState.intent === "menStyling"
+        ? "你的回答偏向男士造型品。建議先以髮質和想塑造的效果挑選，確認需要的是乾淨俐落、油頭光澤、固定力強、霧面線條或蓬鬆量感，再選對應質地。"
+        : base.copy,
     productType: advisorState.intent,
     productTypeLabel: productType.label,
     recommendationIntent: bestKey,
@@ -506,7 +557,11 @@ function getRecommendationModifiers() {
   const modifiers = [];
 
   const productType = getProductTypeConfig();
-  modifiers.push(`這次會先鎖定「${productType.label}」類商品，再依你的頭皮、髮質與髮況排序推薦。`);
+  if (advisorState.intent === "menStyling") {
+    modifiers.push(`這次會先鎖定「${productType.label}」類商品，再依你的髮質與想塑造的效果排序推薦。`);
+  } else {
+    modifiers.push(`這次會先鎖定「${productType.label}」類商品，再依你的頭皮、髮質與髮況排序推薦。`);
+  }
   if (advisorState.intent === "shampoo") modifiers.push("洗髮精會優先看頭皮狀態，再搭配髮質與染燙需求調整清潔力。");
   if (advisorState.intent === "conditioner") modifiers.push("潤髮乳建議以髮中至髮尾為主，依髮質選擇輕盈或滋潤感。");
   if (advisorState.intent === "leaveIn") modifiers.push("免沖洗保養適合洗後吹整前後或日常整理髮尾時使用，請避開頭皮。");
@@ -515,6 +570,10 @@ function getRecommendationModifiers() {
   if (advisorState.intent === "curlStyling") modifiers.push("捲髮造型品會優先看捲度、毛躁與定型需求，讓線條自然不僵硬。");
   if (advisorState.intent === "styling") modifiers.push("整髮造型品會依蓬鬆、線條、光澤或定型需求挑選質地。");
   if (advisorState.intent === "menStyling") modifiers.push("男士造型品會優先看髮量、支撐度與清爽感，避免厚重塌黏。");
+  if (advisorState.intent === "menStyling") {
+    const styleEffect = getMenStyleEffectConfig();
+    modifiers.push(`想塑造「${styleEffect.label}」時，會優先挑選質地、固定力與光澤感更接近的男士造型品。`);
+  }
   if (advisorState.intent === "scalpCare") modifiers.push("頭皮保養會優先看出油、乾燥、敏感或殘留感，再選擇對應調理品。");
   if (advisorState.scalp === "dry") modifiers.push("頭皮偏乾時，洗髮水溫不要太高，清潔力也不宜過強。");
   if (advisorState.scalp === "sensitive") modifiers.push("敏感頭皮建議先降低產品更換頻率，避免同時嘗試太多新產品。");
@@ -530,18 +589,18 @@ function getRecommendationModifiers() {
   if (advisorState.damage === "high" || advisorState.damage === "split") modifiers.push("明顯受損或分岔時，建議每週加入一次加強護理，日常也要減少熱工具傷害。");
   if (advisorState.wash === "daily") modifiers.push("每天洗髮時，護髮產品更要避開頭皮，避免累積厚重感。");
   if (advisorState.wash === "sweat") modifiers.push("常流汗或悶熱時，頭皮清潔與確實吹乾髮根會比厚重護理更重要。");
-  if (advisorState.routine === "styling") modifiers.push("常用造型品時，建議定期確認清潔是否足夠，避免殘留影響蓬鬆。");
-  if (advisorState.routine === "heat") modifiers.push("常吹整或使用電棒時，吹整前後的髮尾防護會是保養重點。");
-  if (advisorState.routine === "outdoor") modifiers.push("常日曬或戶外活動時，染後髮更要留意護色與乾燥問題。");
-  if (advisorState.preference === "quick" && ["tool", "curlStyling", "styling", "menStyling"].includes(advisorState.intent)) {
+  if (advisorState.intent !== "menStyling" && advisorState.routine === "styling") modifiers.push("常用造型品時，建議定期確認清潔是否足夠，避免殘留影響蓬鬆。");
+  if (advisorState.intent !== "menStyling" && advisorState.routine === "heat") modifiers.push("常吹整或使用電棒時，吹整前後的髮尾防護會是保養重點。");
+  if (advisorState.intent !== "menStyling" && advisorState.routine === "outdoor") modifiers.push("常日曬或戶外活動時，染後髮更要留意護色與乾燥問題。");
+  if (advisorState.intent !== "menStyling" && advisorState.preference === "quick" && ["tool", "curlStyling", "styling"].includes(advisorState.intent)) {
     modifiers.push("若想簡單整理，建議先選一款主要造型品，少量堆疊會比一次用太多更自然。");
-  } else if (advisorState.preference === "quick" && advisorState.intent === "shampoo") {
+  } else if (advisorState.intent !== "menStyling" && advisorState.preference === "quick" && advisorState.intent === "shampoo") {
     modifiers.push("若想簡單保養，可先固定一款適合頭皮與髮質的洗髮精，再觀察清爽度與髮尾乾燥感。");
-  } else if (advisorState.preference === "quick") {
+  } else if (advisorState.intent !== "menStyling" && advisorState.preference === "quick") {
     modifiers.push("若想簡單保養，可先固定一款主力產品，再依髮尾乾燥或造型需求少量搭配。");
   }
-  if (advisorState.preference === "intensive") modifiers.push("若願意完整護理，可以用洗髮、沖洗式護理、免沖洗修護三步驟建立穩定髮況。");
-  if (advisorState.preference === "lightweight") modifiers.push("喜歡輕盈感時，所有護理產品都建議少量多次，先從髮尾開始。");
+  if (advisorState.intent !== "menStyling" && advisorState.preference === "intensive") modifiers.push("若願意完整護理，可以用洗髮、沖洗式護理、免沖洗修護三步驟建立穩定髮況。");
+  if (advisorState.intent !== "menStyling" && advisorState.preference === "lightweight") modifiers.push("喜歡輕盈感時，所有護理產品都建議少量多次，先從髮尾開始。");
 
   return modifiers;
 }
@@ -583,6 +642,10 @@ function scoreProduct(product, base) {
 
 function getProductTypeConfig(intent = advisorState.intent) {
   return productTypeConfigs[intent] || productTypeConfigs.shampoo;
+}
+
+function getMenStyleEffectConfig(value = advisorState.styleEffect) {
+  return menStyleEffectConfigs[value] || menStyleEffectConfigs.clean;
 }
 
 function productMatchesType(product, intent = advisorState.intent) {
@@ -696,8 +759,10 @@ function scoreAdvisorState(product, text) {
   }
 
   if (advisorState.intent === "menStyling") {
+    const styleEffect = getMenStyleEffectConfig();
     if (hasCategory(product, ["男士造型"])) score += 18;
     if (countKeywordHits(text, ["男士", "支撐", "霧面", "髮蠟", "定型", "清爽"])) score += 5;
+    score += countKeywordHits(text, styleEffect.keywords) * 4;
     if (hasCategory(product, ["洗髮精", "潤絲", "護髮膜", "頭皮護理"])) score -= 8;
   }
 
@@ -725,16 +790,18 @@ function scoreAdvisorState(product, text) {
   }
 
   if (advisorState.damage === "high" || advisorState.damage === "split") score += countKeywordHits(text, ["受損", "修護", "護髮膜", "重度受損"]) * 2;
-  if (advisorState.goal === "scalpCare") score += hasCategory(product, ["洗髮精", "頭皮護理", "頭皮保養"]) ? 4 : 0;
-  if (advisorState.goal === "colorCare") score += countKeywordHits(text, ["補色", "染後", "護色", "漂髮後"]) * 3;
-  if (advisorState.goal === "repair") score += hasCategory(product, ["護髮膜", "潤絲", "免沖洗"]) ? 4 : 0;
-  if (advisorState.goal === "smooth") score += countKeywordHits(text, ["柔順", "毛躁", "滑順", "順髮"]) * 3;
-  if (advisorState.goal === "volume") score += countKeywordHits(text, ["蓬鬆", "細軟", "髮根", "輕盈"]) * 3;
-  if (advisorState.goal === "shine") score += countKeywordHits(text, ["光澤", "亮澤", "精華油", "光感"]) * 3;
-  if (advisorState.routine === "styling") score += hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"]) ? 5 : 0;
-  if (advisorState.routine === "heat") score += countKeywordHits(text, ["修護", "免沖洗", "精華油", "熱", "吹整"]) * 2;
-  if (advisorState.preference === "lightweight") score += countKeywordHits(text, ["輕盈", "蓬鬆", "清爽", "不厚重"]) * 2;
-  if (advisorState.preference === "intensive") score += hasCategory(product, ["護髮膜", "潤絲", "免沖洗"]) ? 3 : 0;
+  if (advisorState.intent !== "menStyling") {
+    if (advisorState.goal === "scalpCare") score += hasCategory(product, ["洗髮精", "頭皮護理", "頭皮保養"]) ? 4 : 0;
+    if (advisorState.goal === "colorCare") score += countKeywordHits(text, ["補色", "染後", "護色", "漂髮後"]) * 3;
+    if (advisorState.goal === "repair") score += hasCategory(product, ["護髮膜", "潤絲", "免沖洗"]) ? 4 : 0;
+    if (advisorState.goal === "smooth") score += countKeywordHits(text, ["柔順", "毛躁", "滑順", "順髮"]) * 3;
+    if (advisorState.goal === "volume") score += countKeywordHits(text, ["蓬鬆", "細軟", "髮根", "輕盈"]) * 3;
+    if (advisorState.goal === "shine") score += countKeywordHits(text, ["光澤", "亮澤", "精華油", "光感"]) * 3;
+    if (advisorState.routine === "styling") score += hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"]) ? 5 : 0;
+    if (advisorState.routine === "heat") score += countKeywordHits(text, ["修護", "免沖洗", "精華油", "熱", "吹整"]) * 2;
+    if (advisorState.preference === "lightweight") score += countKeywordHits(text, ["輕盈", "蓬鬆", "清爽", "不厚重"]) * 2;
+    if (advisorState.preference === "intensive") score += hasCategory(product, ["護髮膜", "潤絲", "免沖洗"]) ? 3 : 0;
+  }
 
   return score;
 }
@@ -857,10 +924,14 @@ function buildProductReason(product, base) {
   if (advisorState.damage === "high" || advisorState.damage === "split") {
     if (countKeywordHits(text, ["受損", "修護", "護髮", "保濕"])) reasons.push("對應高受損髮況的修護需求");
   }
-  if (advisorState.goal === "smooth" && countKeywordHits(text, ["柔順", "滑順", "毛躁", "順髮"])) reasons.push("提升髮尾柔順與好整理度");
-  if (advisorState.goal === "shine" && countKeywordHits(text, ["光澤", "亮澤", "精華油"])) reasons.push("補足髮絲光澤與質感");
-  if (advisorState.goal === "volume" && countKeywordHits(text, ["蓬鬆", "髮根", "輕盈", "支撐"])) reasons.push("協助維持蓬鬆與支撐度");
-  if (advisorState.routine === "styling" && hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"])) reasons.push("適合日常造型需求");
+  if (advisorState.intent !== "menStyling" && advisorState.goal === "smooth" && countKeywordHits(text, ["柔順", "滑順", "毛躁", "順髮"])) reasons.push("提升髮尾柔順與好整理度");
+  if (advisorState.intent !== "menStyling" && advisorState.goal === "shine" && countKeywordHits(text, ["光澤", "亮澤", "精華油"])) reasons.push("補足髮絲光澤與質感");
+  if (advisorState.intent !== "menStyling" && advisorState.goal === "volume" && countKeywordHits(text, ["蓬鬆", "髮根", "輕盈", "支撐"])) reasons.push("協助維持蓬鬆與支撐度");
+  if (advisorState.intent === "menStyling") {
+    const styleEffect = getMenStyleEffectConfig();
+    if (countKeywordHits(text, styleEffect.keywords)) reasons.push(styleEffect.reason);
+  }
+  if (advisorState.intent !== "menStyling" && advisorState.routine === "styling" && hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"])) reasons.push("適合日常造型需求");
 
   if (!reasons.length && product.pitch) reasons.push(summarizeText(product.pitch, 42));
   if (!reasons.length && product.effect) reasons.push(summarizeText(product.effect, 42));
@@ -956,7 +1027,7 @@ function updateAdvisorLineLink(base, modifiers, selectedProducts = []) {
   const message = [
     "您好，我已完成肯邦屋 AI 髮品診斷，想請專人協助確認。",
     "",
-    "我的髮況：",
+    "我的選擇：",
     ...selectedLines.map((line) => `・${line}`),
     "",
     `推薦方向：${base.title}`,
