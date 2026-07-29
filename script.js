@@ -1117,6 +1117,10 @@ function summarizeText(text, maxLength = 54) {
   return `${value.slice(0, maxLength)}...`;
 }
 
+function getProductCardDescription(product) {
+  return summarizeText(product.effect || product.reason || product.pitch, 72);
+}
+
 function renderProducts(products, fallbackProducts = []) {
   const productList = document.querySelector("#recommend-products");
   if (!productList) return;
@@ -1139,7 +1143,7 @@ function renderProducts(products, fallbackProducts = []) {
       <span>
         <em>${escapeHtml([product.brand, product.category].filter(Boolean).join(" / "))}</em>
         <strong>${escapeHtml(product.name)}</strong>
-        <p>${escapeHtml(product.reason)}</p>
+        <p>${escapeHtml(getProductCardDescription(product))}</p>
         <small>${escapeHtml(formatProductVariants(product))}</small>
       </span>
     `;
