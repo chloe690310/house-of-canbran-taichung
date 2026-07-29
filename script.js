@@ -818,8 +818,9 @@ function getProductRecommendations(base) {
   const hairCompatibleProducts = candidateProducts.filter((product) => isProductHairCompatible(product));
   const filteredProducts =
     advisorState.hair !== "normal" && hairCompatibleProducts.length ? hairCompatibleProducts : candidateProducts;
+  const purposeMatchedProducts = filterProductsByToolPurpose(filteredProducts, base);
 
-  return diversifyProducts(filteredProducts, base).slice(0, 3);
+  return diversifyProducts(purposeMatchedProducts, base).slice(0, 3);
 }
 
 function scoreProduct(product, base) {
@@ -855,6 +856,20 @@ function isStylingConsultIntent(intent = advisorState.intent) {
 
 function productMatchesType(product, intent = advisorState.intent) {
   return getProductTypeConfig(intent).categories.some((category) => (product.categories || []).includes(category));
+}
+
+function filterProductsByToolPurpose(products, base) {
+  if (base.productType !== "tool") return products;
+
+  const matchedProducts = products.filter((product) => productMatchesToolPurpose(product));
+  return matchedProducts.length ? matchedProducts : products;
+}
+
+function productMatchesToolPurpose(product, purposeValue = advisorState.toolPurpose) {
+  const purpose = getToolPurposeConfig(purposeValue);
+  const needs = product.needs || [];
+
+  return needs.some((need) => need === purpose.label || purpose.keywords.some((keyword) => need.includes(keyword)));
 }
 
 function scoreProductType(product, intent = advisorState.intent) {
