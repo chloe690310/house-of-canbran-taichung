@@ -310,7 +310,7 @@ const productTypeConfigs = {
   treatment: {
     label: "護髮產品",
     recommendation: "repair",
-    categories: ["護髮膜", "潤絲"],
+    categories: ["護髮膜"],
   },
   tool: {
     label: "整髮工具",
@@ -961,7 +961,7 @@ function scoreAdvisorState(product, text) {
 
   if (advisorState.intent === "treatment") {
     if (hasCategory(product, ["護髮膜"])) score += 18;
-    if (hasCategory(product, ["潤絲"]) && countKeywordHits(text, ["護髮", "修護", "受損", "滋養", "保濕"])) score += 8;
+    if (hasCategory(product, ["潤絲"])) score -= 12;
     if (hasCategory(product, ["洗髮精", "頭皮護理", "頭皮保養", "造型", "定型", "造型工具"])) score -= 8;
   }
 
