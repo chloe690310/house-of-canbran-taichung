@@ -222,7 +222,7 @@
                 <button type="button" class="choice" data-value="split">髮尾分岔斷裂</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment scalpCare">
+            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment">
               <p class="question-label">最想改善</p>
               <div class="choice-row" data-question="goal">
                 <button type="button" class="choice is-active" data-value="repair">受損修護</button>
@@ -233,13 +233,41 @@
                 <button type="button" class="choice" data-value="colorCare">髮色維持</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo scalpCare">
+            <div class="question-group advisor-branch" data-show-for="scalpCare">
+              <p class="question-label">頭皮最想改善</p>
+              <div class="choice-row" data-question="goal">
+                <button type="button" class="choice" data-value="scalpCare">出油悶熱</button>
+                <button type="button" class="choice" data-value="sensitive">敏感乾癢</button>
+                <button type="button" class="choice" data-value="dandruff">頭皮屑</button>
+                <button type="button" class="choice" data-value="buildup">清潔殘留</button>
+                <button type="button" class="choice" data-value="volume">髮根扁塌</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="shampoo">
               <p class="question-label">洗髮頻率</p>
               <div class="choice-row" data-question="wash">
                 <button type="button" class="choice is-active" data-value="daily">每天洗</button>
                 <button type="button" class="choice" data-value="twoDays">兩天一次</button>
                 <button type="button" class="choice" data-value="sweat">常流汗悶熱</button>
                 <button type="button" class="choice" data-value="dryLess">頭皮乾不常洗</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="scalpCare">
+              <p class="question-label">日常頭皮情境</p>
+              <div class="choice-row" data-question="wash">
+                <button type="button" class="choice" data-value="daily">每天洗仍出油</button>
+                <button type="button" class="choice" data-value="sweat">流汗悶熱</button>
+                <button type="button" class="choice" data-value="dryLess">乾燥緊繃</button>
+                <button type="button" class="choice" data-value="twoDays">偶爾保養</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="scalpCare">
+              <p class="question-label">平常頭皮負擔</p>
+              <div class="choice-row" data-question="routine">
+                <button type="button" class="choice" data-value="simple">日常維持</button>
+                <button type="button" class="choice" data-value="styling">常用造型品</button>
+                <button type="button" class="choice" data-value="outdoor">常戴帽戶外</button>
+                <button type="button" class="choice" data-value="care">想加強調理</button>
               </div>
             </div>
             <div class="question-group advisor-branch" data-show-for="menStyling">
@@ -307,13 +335,22 @@
                 <button type="button" class="choice" data-value="care">願意完整護理</button>
               </div>
             </div>
-            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment scalpCare">
+            <div class="question-group advisor-branch" data-show-for="shampoo conditioner leaveIn treatment">
               <p class="question-label">希望保養方式</p>
               <div class="choice-row" data-question="preference">
                 <button type="button" class="choice is-active" data-value="quick">越簡單越好</button>
                 <button type="button" class="choice" data-value="balanced">日常兩步驟</button>
                 <button type="button" class="choice" data-value="intensive">願意加強護理</button>
                 <button type="button" class="choice" data-value="lightweight">喜歡輕盈不厚重</button>
+              </div>
+            </div>
+            <div class="question-group advisor-branch" data-show-for="scalpCare">
+              <p class="question-label">希望頭皮保養方式</p>
+              <div class="choice-row" data-question="preference">
+                <button type="button" class="choice" data-value="quick">一瓶簡單維持</button>
+                <button type="button" class="choice" data-value="lightweight">清爽不黏膩</button>
+                <button type="button" class="choice" data-value="balanced">清潔加調理</button>
+                <button type="button" class="choice" data-value="intensive">願意加強護理</button>
               </div>
             </div>
             <div class="recommendation" aria-live="polite">

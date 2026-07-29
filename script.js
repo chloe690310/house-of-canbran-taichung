@@ -655,6 +655,9 @@ function getBaseRecommendation() {
 
   if (!isStylingConsultIntent()) {
     if (advisorState.goal === "scalpCare") scores.scalpCare += 10;
+    if (advisorState.goal === "sensitive") scores.sensitive += 10;
+    if (advisorState.goal === "dandruff") scores.dandruff += 10;
+    if (advisorState.goal === "buildup") scores.scalpCare += 10;
     if (advisorState.goal === "colorCare") scores.colorCare += 10;
     if (advisorState.goal === "repair") scores.repair += 10;
     if (advisorState.goal === "smooth") scores.smooth += 10;
@@ -664,7 +667,19 @@ function getBaseRecommendation() {
 
   if (advisorState.wash === "sweat") scores.scalpCare += 2;
   if (advisorState.wash === "dryLess") scores.sensitive += 2;
-  if (!isStylingConsultIntent()) {
+
+  if (advisorState.intent === "scalpCare") {
+    if (advisorState.wash === "daily" || advisorState.wash === "sweat") scores.scalpCare += 3;
+    if (advisorState.routine === "styling") scores.scalpCare += 4;
+    if (advisorState.routine === "outdoor") scores.scalpCare += 3;
+    if (advisorState.routine === "care") scores.sensitive += 2;
+    if (advisorState.preference === "quick" || advisorState.preference === "lightweight") scores.scalpCare += 2;
+    if (advisorState.preference === "balanced") scores.scalpCare += 3;
+    if (advisorState.preference === "intensive") {
+      scores.scalpCare += 2;
+      scores.sensitive += 2;
+    }
+  } else if (!isStylingConsultIntent()) {
     if (advisorState.routine === "heat") scores.repair += 2;
     if (advisorState.routine === "styling") scores.styling += 5;
     if (advisorState.routine === "outdoor") scores.colorCare += 1;
@@ -705,6 +720,9 @@ function getAdvisorBaseCopy(defaultCopy) {
   if (advisorState.intent === "menStyling") {
     return "你的回答偏向男士造型品。建議先以髮質和想塑造的效果挑選，確認需要的是乾淨俐落、油頭光澤、固定力強、霧面線條或蓬鬆量感，再選對應質地。";
   }
+  if (advisorState.intent === "scalpCare") {
+    return "你的回答偏向頭皮保養。建議先確認出油、乾燥、敏感、頭皮屑或殘留負擔，再依日常情境選擇清潔、調理或加強養護產品。";
+  }
   return defaultCopy;
 }
 
@@ -716,6 +734,8 @@ function getRecommendationModifiers() {
     modifiers.push(`這次會先鎖定「${productType.label}」類商品，再依你的髮質與工具用途排序推薦。`);
   } else if (isStylingConsultIntent()) {
     modifiers.push(`這次會先鎖定「${productType.label}」類商品，再依你的髮質與想塑造的效果排序推薦。`);
+  } else if (advisorState.intent === "scalpCare") {
+    modifiers.push(`這次會先鎖定「${productType.label}」類商品，再依你的頭皮狀況、日常情境與保養方式排序推薦。`);
   } else {
     modifiers.push(`這次會先鎖定「${productType.label}」類商品，再依你的頭皮、髮質與髮況排序推薦。`);
   }
@@ -737,6 +757,10 @@ function getRecommendationModifiers() {
     modifiers.push(`想用工具處理「${toolPurpose.label}」時，會優先挑選用途更接近的梳具。`);
   }
   if (advisorState.intent === "scalpCare") modifiers.push("頭皮保養會優先看出油、乾燥、敏感或殘留感，再選擇對應調理品。");
+  if (advisorState.intent === "scalpCare" && advisorState.goal === "buildup") modifiers.push("有殘留或悶熱感時，會優先考慮清潔、淨化或去角質方向。");
+  if (advisorState.intent === "scalpCare" && advisorState.goal === "volume") modifiers.push("髮根容易扁塌時，頭皮保養會以清爽、蓬鬆與不厚重為主。");
+  if (advisorState.intent === "scalpCare" && advisorState.routine === "styling") modifiers.push("常用造型品時，建議定期確認頭皮與髮根是否有殘留感。");
+  if (advisorState.intent === "scalpCare" && advisorState.routine === "care") modifiers.push("想加強頭皮調理時，可以選擇精華液或頭皮養護品，先從低頻率觀察。");
   if (advisorState.scalp === "dry") modifiers.push("頭皮偏乾時，洗髮水溫不要太高，清潔力也不宜過強。");
   if (advisorState.scalp === "sensitive") modifiers.push("敏感頭皮建議先降低產品更換頻率，避免同時嘗試太多新產品。");
   if (advisorState.scalp === "dandruff") modifiers.push("頭皮屑若伴隨紅癢或刺痛，建議先暫停刺激性產品並尋求專業確認。");
@@ -749,18 +773,32 @@ function getRecommendationModifiers() {
   if (advisorState.chemical === "permed") modifiers.push("燙後髮可把護理重點放在彈性、光澤與髮尾柔順。");
   if (advisorState.chemical === "straightened") modifiers.push("離子燙後可加強光澤與髮尾保濕，維持直順感。");
   if (advisorState.damage === "high" || advisorState.damage === "split") modifiers.push("明顯受損或分岔時，建議每週加入一次加強護理，日常也要減少熱工具傷害。");
-  if (advisorState.wash === "daily") modifiers.push("每天洗髮時，護髮產品更要避開頭皮，避免累積厚重感。");
+  if (advisorState.intent === "scalpCare" && advisorState.wash === "daily") {
+    modifiers.push("每天洗仍容易出油時，建議留意清潔力、髮根吹乾與是否有造型品殘留。");
+  } else if (advisorState.wash === "daily") {
+    modifiers.push("每天洗髮時，護髮產品更要避開頭皮，避免累積厚重感。");
+  }
   if (advisorState.wash === "sweat") modifiers.push("常流汗或悶熱時，頭皮清潔與確實吹乾髮根會比厚重護理更重要。");
-  if (!isStylingConsultIntent() && advisorState.routine === "styling") modifiers.push("常用造型品時，建議定期確認清潔是否足夠，避免殘留影響蓬鬆。");
+  if (!isStylingConsultIntent() && advisorState.intent !== "scalpCare" && advisorState.routine === "styling") modifiers.push("常用造型品時，建議定期確認清潔是否足夠，避免殘留影響蓬鬆。");
   if (!isStylingConsultIntent() && advisorState.routine === "heat") modifiers.push("常吹整或使用電棒時，吹整前後的髮尾防護會是保養重點。");
-  if (!isStylingConsultIntent() && advisorState.routine === "outdoor") modifiers.push("常日曬或戶外活動時，染後髮更要留意護色與乾燥問題。");
-  if (!isStylingConsultIntent() && advisorState.preference === "quick" && advisorState.intent === "shampoo") {
+  if (!isStylingConsultIntent() && advisorState.intent !== "scalpCare" && advisorState.routine === "outdoor") modifiers.push("常日曬或戶外活動時，染後髮更要留意護色與乾燥問題。");
+  if (advisorState.intent === "scalpCare" && advisorState.preference === "quick") {
+    modifiers.push("若想簡單維持，可先固定一款適合頭皮狀態的頭皮保養品，再觀察一到兩週。");
+  } else if (!isStylingConsultIntent() && advisorState.preference === "quick" && advisorState.intent === "shampoo") {
     modifiers.push("若想簡單保養，可先固定一款適合頭皮與髮質的洗髮精，再觀察清爽度與髮尾乾燥感。");
   } else if (!isStylingConsultIntent() && advisorState.preference === "quick") {
     modifiers.push("若想簡單保養，可先固定一款主力產品，再依髮尾乾燥或造型需求少量搭配。");
   }
-  if (!isStylingConsultIntent() && advisorState.preference === "intensive") modifiers.push("若願意完整護理，可以用洗髮、沖洗式護理、免沖洗修護三步驟建立穩定髮況。");
-  if (!isStylingConsultIntent() && advisorState.preference === "lightweight") modifiers.push("喜歡輕盈感時，所有護理產品都建議少量多次，先從髮尾開始。");
+  if (advisorState.intent === "scalpCare" && advisorState.preference === "intensive") {
+    modifiers.push("願意加強護理時，可把重點放在頭皮精華、調理或週期性淨化，避免同時疊太多刺激性產品。");
+  } else if (!isStylingConsultIntent() && advisorState.preference === "intensive") {
+    modifiers.push("若願意完整護理，可以用洗髮、沖洗式護理、免沖洗修護三步驟建立穩定髮況。");
+  }
+  if (advisorState.intent === "scalpCare" && advisorState.preference === "lightweight") {
+    modifiers.push("想要清爽不黏膩時，會優先選擇質地輕、頭皮負擔低的調理品。");
+  } else if (!isStylingConsultIntent() && advisorState.preference === "lightweight") {
+    modifiers.push("喜歡輕盈感時，所有護理產品都建議少量多次，先從髮尾開始。");
+  }
 
   return modifiers;
 }
@@ -973,6 +1011,26 @@ function scoreAdvisorState(product, text) {
   if (advisorState.intent === "scalpCare") {
     if (hasCategory(product, ["頭皮護理", "頭皮保養"])) score += 18;
     if (countKeywordHits(text, ["頭皮", "油性", "乾性", "敏感", "精華液", "去角質", "調理"])) score += 5;
+    if (advisorState.goal === "sensitive") {
+      if (hasProductTag(product.scalp, ["敏感", "乾性"])) score += 6;
+      score += countKeywordHits(text, ["敏感", "乾癢", "舒緩", "溫和", "保濕"]) * 3;
+    }
+    if (advisorState.goal === "dandruff") {
+      if (hasProductTag(product.scalp, ["乾性", "敏感"])) score += 4;
+      score += countKeywordHits(text, ["頭皮屑", "乾燥", "舒緩", "清潔"]) * 3;
+    }
+    if (advisorState.goal === "buildup") {
+      if (hasProductTag(product.scalp, ["油性"])) score += 4;
+      score += countKeywordHits(text, ["殘留", "淨化", "清潔", "去角質", "堵塞", "堆積"]) * 3;
+    }
+    if (advisorState.goal === "volume") {
+      score += countKeywordHits(text, ["髮根", "蓬鬆", "輕盈", "清爽"]) * 3;
+    }
+    if (advisorState.routine === "styling") score += countKeywordHits(text, ["殘留", "淨化", "清潔", "去角質"]) * 2;
+    if (advisorState.routine === "outdoor") score += countKeywordHits(text, ["清爽", "控油", "保護", "汙染", "污染"]) * 2;
+    if (advisorState.routine === "care") score += countKeywordHits(text, ["精華液", "調理", "養護", "保護", "保濕"]) * 2;
+    if (advisorState.preference === "lightweight") score += countKeywordHits(text, ["清爽", "不黏膩", "輕盈", "控油"]) * 2;
+    if (advisorState.preference === "intensive") score += countKeywordHits(text, ["精華液", "調理", "養護", "保護", "保濕"]) * 2;
     if (hasCategory(product, ["洗髮精", "潤絲", "護髮膜", "免沖洗", "造型", "定型", "造型工具"])) score -= 8;
   }
 
