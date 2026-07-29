@@ -49,8 +49,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁"
+      "乾燥／毛躁"
     ],
     "effect": "可洗去多餘的皮脂與污垢，讓頭皮保持在乾淨的狀態。保濕成分給與頭皮與頭髮充分的滋潤度，保持在健康狀態",
     "usage": "按一般洗髮程序",
@@ -151,7 +150,7 @@ window.CANBRAN_PRODUCTS = [
       "洗髮精",
       "補色"
     ],
-    "category": "洗髮精",
+    "category": "洗髮精/補色",
     "scalp": [
       "依髮質選擇"
     ],
@@ -183,7 +182,7 @@ window.CANBRAN_PRODUCTS = [
       "洗髮精",
       "補色"
     ],
-    "category": "洗髮精",
+    "category": "洗髮精/補色",
     "scalp": [
       "依髮質選擇"
     ],
@@ -215,7 +214,7 @@ window.CANBRAN_PRODUCTS = [
       "洗髮精",
       "補色"
     ],
-    "category": "洗髮精",
+    "category": "洗髮精/補色",
     "scalp": [
       "依髮質選擇"
     ],
@@ -251,12 +250,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "細軟",
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "細軟／粗硬／乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "最適合燙髮者使用的不黏膩清爽的米糠精華油，手指的通透感好並且可以有適度的輕盈感好整理的捲度/直髮設計",
@@ -290,11 +284,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "粗硬／乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "適用於捲髮或特別毛躁乾燥的髮質。富含滋潤保濕成分白木耳精華，水嫩滋潤度足、保護秀髮不再毛躁或乾燥。",
@@ -326,11 +316,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "粗硬／乾燥／毛躁／受損／燙後",
       "染後",
       "自然捲"
     ],
@@ -363,11 +349,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "細軟",
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "細軟／乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "適用於細軟髮、脆弱的髮質。或是想要頭髮有髮量感。富含彈性保濕成分羽毛精華，給髮芯彈性、保護細軟又脆弱的秀髮",
@@ -401,10 +383,7 @@ window.CANBRAN_PRODUCTS = [
       "油性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "可徹底去除頭皮的黏膩感、 具收斂效果 洗淨後舒爽的清涼感",
@@ -442,10 +421,7 @@ window.CANBRAN_PRODUCTS = [
       "中性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "可以舒適的洗淨、 清爽的洗淨感",
@@ -483,10 +459,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "可以溫和的洗淨乾燥的頭皮、 滋潤感的使用效果",
@@ -524,10 +497,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "細軟",
-      "乾燥",
-      "毛躁",
-      "燙後",
+      "細軟／乾燥／毛躁／燙後",
       "染後"
     ],
     "effect": "頭髮容易扁塌、輕度受損髮質 使用特色 滑順輕盈、 手指的觸感滑動好整理",
@@ -565,11 +535,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "粗硬／乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "徹底滋潤髮尾、 頭髮乖順好梳理",
@@ -607,13 +573,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "細軟",
-      "乾燥",
-      "毛躁",
-      "受損",
-      "染後",
-      "燙後",
-      "漂髮後"
+      "細軟／乾燥／毛躁／受損／染後／燙後"
     ],
     "effect": "使染後髮質柔軟並產生光澤 平日受到損傷而產生毛躁分裂的染後髮質， 利用疏水化成份調整頭髮受損部分，能快速且均一地吸收修護成分",
     "usage": "每週約使用1〜2次，以髮尾為中心塗佈， 取適量均勻塗抹後放置10~15分鐘， 待修護成分充分滲透進去後再進行沖洗",
@@ -634,7 +594,7 @@ window.CANBRAN_PRODUCTS = [
   {
     "id": "p018",
     "row": 20,
-    "name": "IAU 深層護髮膜  DEEP MASK",
+    "name": "IAU 深層護髮膜 DEEP MASK",
     "brand": "LEBEL",
     "image": "assets/products/product-018.jpg",
     "imageFile": "IAU 深層護髮膜.jpg",
@@ -646,14 +606,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損",
-      "染後",
-      "燙後",
-      "漂髮後",
-      "自然捲"
+      "粗硬／乾燥／毛躁／受損／染後／燙後／漂髮後／自然捲／"
     ],
     "effect": "由頭髮內部集中修護與緩和，使自然捲髮質與受損部分不因濕氣影響而過度澎鬆。 濃密脂質基底，提升光澤，讓頭髮由內到外柔軟好整理，將頭髮調整到最佳狀態",
     "usage": "每週約使用1〜2次，以髮尾為中心塗佈， 取適量均勻塗抹後放置10~15分鐘， 待修護成分充分滲透進去後再進行沖洗",
@@ -756,7 +709,7 @@ window.CANBRAN_PRODUCTS = [
       "頭皮保養",
       "潤絲"
     ],
-    "category": "頭皮保養",
+    "category": "頭皮保養/潤絲",
     "scalp": [
       "乾性"
     ],
@@ -798,10 +751,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "滑順濃密泡泡可以吸附汙垢。由頭皮到髮尾用滋潤度溫和包覆的同時硬化的秀髮和頭皮可以溫和的使其鬆弛",
@@ -841,10 +791,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "獨特的高滲透技術(毛髓值養護)沖洗時即能感受到柔軟與滋潤，順滑手指觸感",
@@ -913,15 +860,12 @@ window.CANBRAN_PRODUCTS = [
       "頭皮護理",
       "潤絲"
     ],
-    "category": "頭皮護理",
+    "category": "頭皮護理/潤絲",
     "scalp": [
       "都適用"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "不需要靠外層鍍膜、毛鱗片可以自動閉合調理頭皮和秀髮紋路第3道秀髮保養品項。讓頭皮跟秀髮變得滑順清爽。",
@@ -946,9 +890,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-026.jpg",
     "imageFile": "THE MOII 乳霜膏.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -966,8 +910,9 @@ window.CANBRAN_PRODUCTS = [
     "status": "上架",
     "priority": "中",
     "needs": [
-      "身體",
-      "頭髮可使用"
+      "身體、頭髮可使用",
+      "柔順線條",
+      "亮澤光感"
     ],
     "caution": "",
     "pitch": "打造光澤並帶濕潤的動感造型。"
@@ -980,9 +925,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-027.jpg",
     "imageFile": "THE MOII 造型乳霜膏.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -999,7 +944,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "柔順線條",
+      "蓬鬆亮感"
+    ],
     "caution": "",
     "pitch": "4種蠟的混合、打造蓬鬆柔軟的質感"
   },
@@ -1011,17 +959,14 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-028.jpg",
     "imageFile": "THE MOII 亮澤輕盈精華油.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
     "hair": [
-      "細軟",
-      "乾燥",
-      "毛躁",
-      "受損"
+      "細軟／乾燥／毛躁／受損"
     ],
     "effect": "取自珍珠的原料木薯的粉末，來呵護秀髮表面。輕盈的質地，造型秀髮，打造閃亮造型",
     "usage": "按壓3-5下，用手指抓出束感並整理，使用後，柔軟輕盈，卻不失光澤。",
@@ -1034,8 +979,8 @@ window.CANBRAN_PRODUCTS = [
     "status": "上架",
     "priority": "中",
     "needs": [
-      "身體",
-      "頭髮可使用"
+      "身體、頭髮可使用",
+      "亮澤光感"
     ],
     "caution": "",
     "pitch": "取自珍珠的原料木薯的粉末，來呵護秀髮表面。輕盈的質地，造型秀髮，打造閃亮造型。"
@@ -1048,17 +993,14 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-029.jpg",
     "imageFile": "THE MOII 亮澤豐盈精華油.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損"
+      "粗硬／乾燥／毛躁／受損"
     ],
     "effect": "用保濕度高的荷荷芭精油來維持滋潤度。修護的同時給予濕潤質感、讓秀髮好整理",
     "usage": "按壓3-5下，用手指抓出束感並整理，使用後，濕潤質感。",
@@ -1071,8 +1013,8 @@ window.CANBRAN_PRODUCTS = [
     "status": "上架",
     "priority": "中",
     "needs": [
-      "身體",
-      "頭髮可使用"
+      "身體、頭髮可使用",
+      "亮澤光感"
     ],
     "caution": "",
     "pitch": "用保濕度高的荷荷芭精油來維持滋潤度。修護的同時給予濕潤質感、讓秀髮好整理。"
@@ -1085,15 +1027,14 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-030.jpg",
     "imageFile": "THE MOII 乳霜.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁"
+      "乾燥／毛躁"
     ],
     "effect": "液狀的乳木果油給予秀髮滋潤、呈現紮實滑順的質感。打造自然俐落的造型。",
     "usage": "珍珠2顆(直徑約1cm) ※建議分數次塗抹",
@@ -1106,8 +1047,9 @@ window.CANBRAN_PRODUCTS = [
     "status": "上架",
     "priority": "中",
     "needs": [
-      "身體",
-      "頭髮可使用"
+      "身體、頭髮可使用",
+      "柔順線條",
+      "亮澤光感"
     ],
     "caution": "",
     "pitch": ""
@@ -1162,9 +1104,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "燙染後",
+      "乾燥／毛躁／燙染後",
       "輕度受損"
     ],
     "effect": "琥珀色的種子中飽含豐富的油脂，這種油脂與人體皮膚、頭髮的油脂結構相似，因此有很高的滲透力可以滲透頭髮、皮膚的內部，給予頭皮充分的滋潤卻不會有油膩的感覺，同時賦予頭髮堅韌的生命力",
@@ -1200,9 +1140,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "燙染後",
+      "乾燥／毛躁／燙染後",
       "重度受損"
     ],
     "effect": "特別選用法國蔚藍海岸深海中成長的昆布科海藻，含有豐富的礦物質與維生素。海藻萃取物可以滲透、補給、保護和滋潤頭髮受損的部分，保持頭髮閃耀光亮。",
@@ -1274,10 +1212,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後"
+      "乾燥／毛躁／受損／燙後"
     ],
     "effect": "含有豐富米胚芽油及蜂蜜的滋養性醣類，充分給予頭髮滋潤、光澤及好梳理的絕佳觸感",
     "usage": "取適量均勻塗抹於髮終至髮尾。 全頭塗抹完後需靜置3-5分鐘，待養份充分滲透進去後再進行沖洗的程序",
@@ -1312,10 +1247,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
-      "燙後",
+      "乾燥／毛躁／受損／燙後",
       "染後"
     ],
     "effect": "迅速修補髮質因吹染整燙所造成的深度損傷，改善頭髮乾枯毛燥、容易糾結、表層無光澤的現象",
@@ -1347,8 +1279,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁"
+      "乾燥／毛躁"
     ],
     "effect": "使頭皮水嫩，秀髮滋潤有光澤，提高頭皮水分的保持力，充分滋潤秀髮",
     "usage": "按一般洗髮程序",
@@ -1498,8 +1429,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "一般",
-      "中度受損用"
+      "一般、中度受損用"
     ],
     "effect": "調理秀髮表層丶鎖住滋潤度。毛鱗片之間吸附的成分在分子間黏著，讓指閒的觸感清爽、秀髮滋潤度持續。",
     "usage": "洗髮後輕輕的去除水氣，再取適量由髮尾開始均勻途抹秀髮。之後再確實沖洗乾淨",
@@ -1612,10 +1542,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損"
+      "粗硬／乾燥／毛躁／受損"
     ],
     "effect": "乳霜的保濕性和油的觸感取得平衡的免沖洗修護油。平衡接近毛髮滋潤度的水分.油份，讓秀髮的滋潤度是由內散發出來的高質感",
     "usage": "洗髮後，毛巾擦乾頭髮多餘水分，均勻塗抹髮中到髮尾，吹乾即可",
@@ -1647,10 +1574,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "粗硬",
-      "毛躁",
-      "受損",
-      "自然捲"
+      "粗硬／毛躁／受損／自然捲"
     ],
     "effect": "用乳霜狀濃郁的泡泡溫和的洗淨頭皮和秀髮、由根部調整秀髮直順。",
     "usage": "按一般洗髮程序",
@@ -1685,10 +1609,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "毛躁",
-      "受損",
-      "自然捲"
+      "粗硬／毛躁／受損／自然捲"
     ],
     "effect": "添加印加果油精華，根根調整容易因濕度和時間變化的自然捲髮質，讓秀髮變得柔順而充滿光澤",
     "usage": "洗髮後輕輕的去除水氣，再取適量由髮尾開始均勻途抹秀髮。之後再確實沖洗乾淨",
@@ -1723,10 +1644,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "毛躁",
-      "受損",
-      "自然捲"
+      "粗硬／毛躁／受損／自然捲"
     ],
     "effect": "鬆散的秀髮可以變的光澤柔順，持續維持水嫩的觸感。連在意髮尾也能提升光澤度",
     "usage": "洗髮後，毛巾擦乾頭髮多餘水分，均勻塗抹髮中到髮尾，吹乾即可",
@@ -1757,10 +1675,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "毛躁",
-      "受損",
-      "自然捲"
+      "粗硬／毛躁／受損／自然捲"
     ],
     "effect": "根根調整容易因濕度和時間變化的自然捲髮質，讓秀髮變得柔順而充滿光澤。 滿滿的美容液修護髮質，讓秀髮綻放滿足的笑容",
     "usage": "每週約使用1〜2次，以髮尾為中心塗佈， 取適量均勻塗抹後放置10~15分鐘， 待修護成分充分滲透進去後再進行沖洗",
@@ -1863,9 +1778,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-051.png",
     "imageFile": "THEO STANDARD 潔膚泡泡.jpg",
     "categories": [
-      "頭皮保養"
+      "頭皮護理"
     ],
-    "category": "頭皮保養",
+    "category": "頭皮護理",
     "scalp": [
       "都適用"
     ],
@@ -1899,16 +1814,13 @@ window.CANBRAN_PRODUCTS = [
       "頭皮護理",
       "潤絲"
     ],
-    "category": "頭皮護理",
+    "category": "頭皮護理/潤絲",
     "scalp": [
       "都適用"
     ],
     "hair": [
       "細軟",
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損"
+      "粗硬／乾燥／毛躁／受損"
     ],
     "effect": "蘊含抗氧化保濕膠囊，令頭皮感覺清爽而不黏膩，頭髮柔順有光澤",
     "usage": "洗髮後，取適量按摩頭皮與頭髮後，沖洗乾淨",
@@ -1973,9 +1885,10 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-054.jpg",
     "imageFile": "TRIE 機能型髮乳-4級.jpg",
     "categories": [
-      "造型"
+      "整髮造型",
+      "男士造型"
     ],
-    "category": "造型",
+    "category": "整髮造型/男士造型",
     "scalp": [
       "不適用"
     ],
@@ -1992,7 +1905,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然好整理",
+      "柔順線條",
+      "乾淨俐落"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2023,7 +1940,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然捲度",
+      "蓬鬆線條"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2054,7 +1974,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "彈力捲度",
+      "捲度持久",
+      "修飾毛躁"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2085,7 +2009,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然捲度",
+      "蓬鬆線條"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2097,9 +2024,10 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-058.jpg",
     "imageFile": "TRIE 機能型髮乳-6級.jpg",
     "categories": [
-      "造型"
+      "整髮造型",
+      "男士造型"
     ],
-    "category": "造型",
+    "category": "整髮造型/男士造型",
     "scalp": [
       "不適用"
     ],
@@ -2116,7 +2044,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然好整理",
+      "乾淨俐落"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2128,9 +2059,10 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-059.jpg",
     "imageFile": "TRIE WF-6級輕柔捲髮泡沫.jpg",
     "categories": [
-      "捲髮造型"
+      "捲髮造型",
+      "男士造型"
     ],
-    "category": "捲髮造型",
+    "category": "捲髮造型/男士造型",
     "scalp": [
       "不適用"
     ],
@@ -2147,7 +2079,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "捲度持久",
+      "修飾毛躁"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2178,7 +2113,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "乾淨俐落",
+      "自然好整理"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2209,7 +2147,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "乾淨俐落",
+      "固定力強"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2221,9 +2162,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-062.jpg",
     "imageFile": "TRIE 機能型滑順噴霧0號.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "不適用"
     ],
@@ -2240,7 +2181,9 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "亮澤光感"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2252,9 +2195,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-063.jpg",
     "imageFile": "TRIE 機能型造型噴霧 MM.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "不適用"
     ],
@@ -2271,7 +2214,9 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然好整理"
+    ],
     "caution": "",
     "pitch": "保護髮絲，防止熱傷害"
   },
@@ -2302,7 +2247,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然定型",
+      "捲度維持"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2333,7 +2281,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然定型",
+      "髮根支撐",
+      "捲度維持"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2364,7 +2316,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "固定力強",
+      "髮根支撐",
+      "捲度維持"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2395,7 +2351,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "固定力強",
+      "髮根支撐"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2415,9 +2374,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "可以去除多餘的皮脂及金屬離子、 在意的氣味也可溫和的一併去除。讓頭皮與秀髮可以重新被設定。",
     "usage": "按一般洗髮程序",
@@ -2452,10 +2409,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損"
+      "粗硬／乾燥／毛躁／受損"
     ],
     "effect": "滲透入秀髮內部，讓亂翹情況緩和、 秀髮變得強韌又美麗。",
     "usage": "洗髮後輕輕的去除水氣，再取適量由髮尾開始均勻途抹秀髮。之後再確實沖洗乾淨",
@@ -2491,9 +2445,7 @@ window.CANBRAN_PRODUCTS = [
     ],
     "hair": [
       "細軟",
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "滲透入秀髮內部，讓亂翹情況緩和、 秀髮變得強韌又美麗。",
     "usage": "洗髮後輕輕的去除水氣，再取適量由髮尾開始均勻途抹秀髮。之後再確實沖洗乾淨",
@@ -2595,10 +2547,7 @@ window.CANBRAN_PRODUCTS = [
     ],
     "hair": [
       "細軟",
-      "粗硬",
-      "乾燥",
-      "毛躁",
-      "受損"
+      "粗硬／乾燥／毛躁／受損"
     ],
     "effect": "持續柔軟好整理、 讓秀髮輕盈有光澤",
     "usage": "洗完秀髮用毛巾擦乾水分，取適量約按壓1~3下，在手心均勻搓開後以髮尾為中心塗抹，塗抹均勻後再使用吹風機吹乾",
@@ -2630,9 +2579,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "不使用刺激性的界面活性劑，能溫和地潔淨所有髮質。",
     "usage": "按一般洗髮程序",
@@ -2667,9 +2614,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "含「角蛋白複合配方」極致光潤絲乳，豐富潤澤的滋潤成分，能瞬間消除洗髮後的乾澀與糾結，在補充水分和養分的同時，讓頭髮馬上回復令人驚艷的柔順和光亮。",
     "usage": "洗髮後輕輕的去除水氣，再取適量由髮尾開始均勻途抹秀髮。之後再確實沖洗乾淨",
@@ -2704,9 +2649,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "含有高濃度的角蛋白複合配方，它能有效地深度修復損傷髮，提供滋潤保濕、和增添光澤，增加頭髮的滑順質地，讓使用後髮質瞬間變得不同。",
     "usage": "每週約使用1〜2次，以髮尾為中心塗佈， 取適量均勻塗抹後放置10~15分鐘， 待修護成分充分滲透進去後再進行沖洗",
@@ -2741,9 +2684,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "迅速地滲透進入頭髮內層，提供潤澤和水分的補充，任何髮質使用後，都有一種完全無負擔的光滑柔順感，是基礎保養的頂級聖品",
     "usage": "洗完秀髮用毛巾擦乾水分，取適量約按壓1~3下，在手心均勻搓開後以髮尾為中心塗抹，塗抹均勻後再使用吹風機吹乾",
@@ -2767,9 +2708,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-078.jpg",
     "imageFile": "(白)極致光髮霧.jpg",
     "categories": [
-      "打亮造型"
+      "整髮造型"
     ],
-    "category": "打亮造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -2786,7 +2727,9 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "低",
-    "needs": [],
+    "needs": [
+      "亮澤光感"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -2817,7 +2760,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然捲度",
+      "捲度持久",
+      "修飾毛躁"
+    ],
     "caution": "乾濕髮皆可以使用",
     "pitch": "乳霜質地，讓捲度Q彈保濕"
   },
@@ -2829,9 +2776,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-080.jpg",
     "imageFile": "(白)極致光蓬鬆造型噴霧.jpg",
     "categories": [
-      "髮跟蓬鬆造型"
+      "整髮造型"
     ],
-    "category": "髮跟蓬鬆造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -2849,7 +2796,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然好整理",
+      "蓬鬆量感"
+    ],
     "caution": "噴於微濕髮使用，吹乾",
     "pitch": ""
   },
@@ -2861,9 +2811,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-081.png",
     "imageFile": "(白)亮澤吹風髮霧.jpg",
     "categories": [
-      "打亮造型"
+      "整髮造型"
     ],
-    "category": "打亮造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -2880,7 +2830,9 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "低",
-    "needs": [],
+    "needs": [
+      "亮澤光感"
+    ],
     "caution": "乾髮使用",
     "pitch": ""
   },
@@ -2911,7 +2863,12 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然定型",
+      "抗潮持久",
+      "髮根支撐",
+      "捲度維持"
+    ],
     "caution": "乾髮使用",
     "pitch": ""
   },
@@ -2931,9 +2888,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "溫和的清潔力，補充水分，頭髮變得柔軟並增添美麗的光澤。",
     "usage": "按一般洗髮程序",
@@ -2970,9 +2925,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "為頭髮提供護理並補充水分，使頭髮看起來健康，充滿豐盈、閃亮的光澤。",
     "usage": "洗髮後輕輕的去除水氣，再取適量由髮尾開始均勻途抹秀髮。之後再確實沖洗乾淨",
@@ -3009,12 +2962,12 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "細軟",
+      "粗硬",
+      "乾燥／毛躁／受損"
     ],
     "effect": "沖洗式護髮，髮絲立刻變得柔軟和光滑，輕盈無重量感",
-    "usage": "每周使用1-3次。擠掉頭髮多餘的水分。 從髮尾開始塗抹，然後逐步按摩至髮中，再到頭皮。\n\n按摩或梳子梳理頭髮，10-15秒後即可沖洗。",
+    "usage": "每周使用1-3次。擠掉頭髮多餘的水分。 從髮尾開始塗抹，然後逐步按摩至髮中，再到頭皮。 按摩或梳子梳理頭髮，10-15秒後即可沖洗。",
     "variants": [
       {
         "spec": "8oz",
@@ -3111,9 +3064,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損"
+      "乾燥／毛躁／受損"
     ],
     "effect": "這款輕盈的打底精華液能加快吹乾時間，讓頭髮變得柔順、光澤、不毛躁。它不含硫酸鹽、染料和香精，僅含 3 種必需成分。",
     "usage": "洗完秀髮用毛巾擦乾水分，取適量約按壓1~3下，在手心均勻搓開後以髮尾為中心塗抹，塗抹均勻後再使用吹風機吹乾",
@@ -3192,7 +3143,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "梳順打結",
+      "日常萬用"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -3223,7 +3177,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "吹整造型",
+      "蓬鬆髮根"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -3254,7 +3211,12 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "梳順打結",
+      "蓬鬆髮根",
+      "頭皮按摩",
+      "日常萬用"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -3285,7 +3247,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "蓬鬆髮根",
+      "頭皮按摩",
+      "日常萬用"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -3324,7 +3290,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "吹整造型",
+      "蓬鬆髮根",
+      "整理捲度"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -3522,9 +3492,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
+      "乾燥／毛躁／受損",
       "燙後",
       "染後"
     ],
@@ -3561,9 +3529,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
+      "乾燥／毛躁／受損",
       "燙後",
       "染後"
     ],
@@ -3704,8 +3670,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁"
+      "乾燥／毛躁"
     ],
     "effect": "極度保溼的洗髮精，快速滋潤、柔順因染燙而造成的髮質乾燥和糾結問題，讓頭髮恢復健康髮的彈力和光澤。",
     "usage": "按一般洗髮程序",
@@ -3740,8 +3705,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁"
+      "乾燥／毛躁"
     ],
     "effect": "深層的滋潤、修復髮絲表面的損傷，使用後極滑順的觸感，讓頭髮更容易整理。大豆蛋白、乳油木搭配PM瞬間滋潤配方能夠瞬間滋潤頭髮，強化髮幹並增加頭髮彈力。",
     "usage": "洗髮後接續使用，再取適量由髮尾開始均勻途抹秀髮。之後再確實沖洗乾淨",
@@ -3776,8 +3740,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁"
+      "乾燥／毛躁"
     ],
     "effect": "隨時隨地可以使用，特別是接受日曬或冷氣房中使用，可讓頭髮及肌膚清新舒適，補充足夠的水分，改善髮質乾燥的現象。",
     "usage": "吹風造形前或需補充水份均勻噴於肌膚和頭髮",
@@ -3878,9 +3841,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
+      "乾燥／毛躁／受損",
       "自然捲"
     ],
     "effect": "適合所有髮型類別使用，洗髮後使用讓髮絲得到很好的保護。同時，提供因乾燥而難以控制的髮質，增添一種平滑柔細的質地，賦予髮絲不可思議的光亮質地。",
@@ -3905,9 +3866,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-111.jpg",
     "imageFile": "超直順造型凝膠.jpg",
     "categories": [
-      "造型"
+      "整髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -3924,7 +3885,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "低",
-    "needs": [],
+    "needs": [
+      "自然好整理",
+      "柔順線條"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -3936,9 +3900,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-112.jpg",
     "imageFile": "新輕柔亮膜.jpg",
     "categories": [
-      "打亮造型"
+      "整髮造型"
     ],
-    "category": "打亮造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -3955,7 +3919,9 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "量澤光感"
+    ],
     "caution": "用量一顆黃豆大小",
     "pitch": ""
   },
@@ -4061,7 +4027,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "彈力捲度",
+      "捲度持久",
+      "蓬鬆線條"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4073,10 +4043,10 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-116.jpg",
     "imageFile": "超彈力賦活凝膠.jpg",
     "categories": [
-      "造型",
-      "鮑伯髮型"
+      "整髮造型",
+      "捲髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型/捲髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -4094,7 +4064,13 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然捲度",
+      "彈力捲度",
+      "蓬鬆線條",
+      "自然好整理",
+      "鬆柔空氣感"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4126,7 +4102,12 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "自然定型",
+      "抗潮持久",
+      "髮根支撐",
+      "捲度維持"
+    ],
     "caution": "",
     "pitch": "長時間的支撐力，它能滿足您一整天的定型需求"
   },
@@ -4158,7 +4139,12 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "自然定型",
+      "抗潮持久",
+      "髮根支撐",
+      "捲度維持"
+    ],
     "caution": "",
     "pitch": "超快乾的Q彈感定型噴霧"
   },
@@ -4170,9 +4156,10 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-119.png",
     "imageFile": "青蘋果雕.jpg",
     "categories": [
-      "造型"
+      "整髮造型",
+      "捲髮造型"
     ],
-    "category": "造型",
+    "category": "整髮造型/捲髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -4194,7 +4181,13 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "自然捲度",
+      "彈力捲度",
+      "蓬鬆線條",
+      "自然好整理",
+      "蓬鬆量感"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4206,9 +4199,10 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-120.png",
     "imageFile": "泡沫雕.jpg",
     "categories": [
+      "整髮造型",
       "捲髮造型"
     ],
-    "category": "捲髮造型",
+    "category": "整髮造型/捲髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -4230,7 +4224,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "自然捲度",
+      "捲度持久",
+      "修飾毛躁"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4263,7 +4261,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "低",
-    "needs": [],
+    "needs": [
+      "自然好整理",
+      "柔順線條",
+      "霧面質感"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4294,7 +4296,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "彈力捲度",
+      "捲度持久",
+      "蓬鬆線條"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4329,7 +4335,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "固定力強",
+      "髮根支撐"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4360,7 +4369,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "低",
-    "needs": [],
+    "needs": [
+      "自然定型",
+      "髮根支撐",
+      "捲度維持"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4461,7 +4474,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "低",
-    "needs": [],
+    "needs": [
+      "霧面線條",
+      "蓬鬆量感",
+      "自然好整理"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4492,7 +4509,12 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "乾淨俐落",
+      "霧面線條",
+      "蓬鬆量感",
+      "自然好整理"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4523,7 +4545,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "蓬鬆量感",
+      "自然好整理"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4554,7 +4579,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "油頭光澤",
+      "蓬鬆量感",
+      "自然好整理"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4585,7 +4614,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "乾淨俐落",
+      "固定力強",
+      "霧面線條"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4616,7 +4649,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "低",
-    "needs": [],
+    "needs": [
+      "乾淨俐落",
+      "固定力強",
+      "霧面線條"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -4738,9 +4775,10 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-136.png",
     "imageFile": "鉑金紫色洗髮精.jpg",
     "categories": [
-      "洗髮精"
+      "洗髮精",
+      "補色"
     ],
-    "category": "洗髮精",
+    "category": "洗髮精/補色",
     "scalp": [
       "中性"
     ],
@@ -4848,7 +4886,7 @@ window.CANBRAN_PRODUCTS = [
       "潤絲",
       "頭皮保養"
     ],
-    "category": "潤絲",
+    "category": "潤絲/頭皮保養",
     "scalp": [
       "依髮質選擇"
     ],
@@ -4990,9 +5028,7 @@ window.CANBRAN_PRODUCTS = [
       "乾性"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
+      "乾燥／毛躁／受損",
       "燙後",
       "染後"
     ],
@@ -5029,9 +5065,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
+      "乾燥／毛躁／受損",
       "燙後",
       "染後"
     ],
@@ -5068,9 +5102,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁",
-      "受損",
+      "乾燥／毛躁／受損",
       "燙後",
       "染後"
     ],
@@ -5173,8 +5205,7 @@ window.CANBRAN_PRODUCTS = [
       "依髮質選擇"
     ],
     "hair": [
-      "乾燥",
-      "毛躁"
+      "乾燥／毛躁"
     ],
     "effect": "免沖洗設計，適合沐浴、刮鬍後潤膚；或者，洗髮後髮質保養使用。",
     "usage": "頭髮：塗抹少量在已清潔的頭髮上。 皮膚：取少量在塗抹皮膚上，按摩，提升肌膚保濕和清爽。",
@@ -5191,8 +5222,7 @@ window.CANBRAN_PRODUCTS = [
     "status": "上架",
     "priority": "低",
     "needs": [
-      "頭髮",
-      "身體皆可使用"
+      "頭髮、身體皆可使用"
     ],
     "caution": "",
     "pitch": ""
@@ -5261,7 +5291,11 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "高",
-    "needs": [],
+    "needs": [
+      "霧面線條",
+      "蓬鬆量感",
+      "自然好整理"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -5314,7 +5348,7 @@ window.CANBRAN_PRODUCTS = [
     "hair": [
       "落髮"
     ],
-    "effect": "髮色保護的清潔配方會溫和地去除雜質，為健康頭皮打底，使髮絲感覺結實，更豐厚。 升了85％的頭髮量感和強靭感*",
+    "effect": "髮色保護的清潔配方會溫和地去除雜質，為健康頭皮打底，使髮絲感覺結實，更豐厚。 升了85％的頭髮量感和強靭感*",
     "usage": "按一般洗髮程序",
     "variants": [
       {
@@ -5412,9 +5446,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-155.png",
     "imageFile": "茶樹髮根蓬鬆泡泡.jpg",
     "categories": [
-      "髮根蓬鬆造型"
+      "整髮造型"
     ],
-    "category": "髮根蓬鬆造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -5430,9 +5464,9 @@ window.CANBRAN_PRODUCTS = [
       }
     ],
     "status": "上架",
-    "priority": "低",
+    "priority": "中",
     "needs": [
-      "頭皮保健"
+      "蓬鬆量感"
     ],
     "caution": "",
     "pitch": ""
