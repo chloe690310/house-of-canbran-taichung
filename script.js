@@ -158,7 +158,7 @@ const advisorState = {
   preference: "quick",
 };
 
-const productCatalog = Array.isArray(window.CANBRAN_PRODUCTS)
+let productCatalog = Array.isArray(window.CANBRAN_PRODUCTS)
   ? window.CANBRAN_PRODUCTS.filter((product) => product.status === "上架")
   : [];
 
@@ -550,6 +550,8 @@ const recommendations = {
 const titleEl = document.querySelector("#recommend-title");
 const copyEl = document.querySelector("#recommend-copy");
 const featuredProductGrid = document.querySelector("#featured-product-grid");
+const promoGrid = document.querySelector("#promo-grid");
+const knowledgeGrid = document.querySelector("#knowledge-grid");
 const advisorQuestionGroups = Array.from(document.querySelectorAll(".advisor-panel .question-group"));
 
 document.querySelectorAll(".choice-row").forEach((row) => {
@@ -1289,6 +1291,95 @@ function renderFeaturedProducts() {
   });
 }
 
+async function loadCmsContent() {
+  try {
+    const response = await fetch("/api/cms", { cache: "no-store" });
+    if (!response.ok) return;
+    applyCmsContent(await response.json());
+  } catch {
+    // Static file previews do not have the CMS API; keep the built-in content.
+  }
+}
+
+function applyCmsContent(cms) {
+  if (Array.isArray(cms.products) && cms.products.length) {
+    productCatalog = cms.products.filter((product) => product.status === "上架");
+    renderFeaturedProducts();
+    updateRecommendation();
+  }
+
+  if (Array.isArray(cms.offers) && cms.offers.length) renderOfferCards(cms.offers);
+  if (Array.isArray(cms.knowledge) && cms.knowledge.length) renderKnowledgeCards(cms.knowledge);
+}
+
+function isLiveContent(item) {
+  return ["上架", "上架中", "live", "published"].includes(String(item.status || "上架"));
+}
+
+function renderOfferCards(offers) {
+  if (!promoGrid) return;
+
+  const liveOffers = offers.filter(isLiveContent);
+  if (!liveOffers.length) return;
+
+  promoGrid.innerHTML = "";
+  liveOffers.forEach((offer) => {
+    const points = Array.isArray(offer.points) ? offer.points : [];
+    const card = document.createElement("article");
+    card.className = "promo-card promo-card-dynamic";
+    card.innerHTML = `
+      <div class="promo-card-head">
+        <div class="promo-price" aria-label="${escapeHtml(`${offer.title || "優惠"}價格`)}">
+          <small>${escapeHtml(offer.priceLabel || "優惠價")}</small>
+          <strong>${escapeHtml(offer.price || "")}</strong>
+          <em>${escapeHtml(offer.original || "")}</em>
+        </div>
+        <span class="promo-tag">${escapeHtml(offer.tag || "本月優惠")}</span>
+      </div>
+      <figure class="promo-media">
+        <img src="${escapeHtml(offer.image || "assets/offer-ics-clean.png")}" alt="${escapeHtml(offer.imageAlt || offer.title || "優惠圖片")}" loading="lazy" />
+      </figure>
+      <div class="promo-content">
+        <p class="promo-series">${escapeHtml(offer.series || "Canbran")}</p>
+        <h3>${escapeHtml(offer.title || "優惠商品")}</h3>
+        <p>${escapeHtml(offer.description || "")}</p>
+        <ul class="promo-points" aria-label="${escapeHtml(`${offer.title || "優惠"}適合需求`)}">
+          ${points.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+    promoGrid.appendChild(card);
+  });
+}
+
+function renderKnowledgeCards(articles) {
+  if (!knowledgeGrid) return;
+
+  const liveArticles = articles.filter(isLiveContent);
+  if (!liveArticles.length) return;
+
+  knowledgeGrid.innerHTML = "";
+  liveArticles.forEach((article) => {
+    const card = document.createElement("article");
+    card.className = "article-card";
+    const link = article.linkUrl
+      ? `<a href="${escapeHtml(article.linkUrl)}" target="_blank" rel="noopener">${escapeHtml(article.linkLabel || "延伸閱讀")}</a>`
+      : "";
+    card.innerHTML = `
+      <figure class="article-media">
+        <img src="${escapeHtml(article.image || "assets/knowledge-shampoo-card.jpg")}" alt="${escapeHtml(article.imageAlt || article.title || "美髮知識圖片")}" loading="lazy" />
+      </figure>
+      <div class="article-content">
+        <p class="article-type">${escapeHtml(article.type || "美髮知識")}</p>
+        <h3>${escapeHtml(article.title || "")}</h3>
+        <p>${escapeHtml(article.description || "")}</p>
+        ${link}
+      </div>
+    `;
+    knowledgeGrid.appendChild(card);
+  });
+}
+
 function updateAdvisorLineLink(base, modifiers, selectedProducts = []) {
   if (!advisorLineLink || !base) return;
 
@@ -1349,6 +1440,7 @@ syncAdvisorChoices();
 updateVisibleAdvisorQuestions();
 updateRecommendation();
 renderFeaturedProducts();
+loadCmsContent();
 
 const advisorPresets = {
   dry: {

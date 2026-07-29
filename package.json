@@ -1,0 +1,12 @@
+{
+  "name": "house-of-canbran-taichung",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "check": "node --check script.js && node --check admin.js && node --check api/_cms-store.js && node --check api/auth.js && node --check api/cms.js && node --check api/upload.js"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.6.1"
+  }
+}

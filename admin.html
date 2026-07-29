@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>肯邦屋後台管理</title>
+    <link rel="icon" href="assets/logo-house-canbran.png" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <a class="admin-brand" href="/">
+        <img src="assets/logo-house-canbran.png" alt="肯邦屋" />
+      </a>
+      <div>
+        <p>House of Canbran</p>
+        <h1>後台管理</h1>
+      </div>
+      <button class="ghost-button" type="button" id="admin-logout" hidden>登出</button>
+    </header>
+
+    <main class="admin-shell">
+      <section class="login-panel" id="login-panel">
+        <form id="login-form" class="login-card">
+          <p class="eyebrow">Admin login</p>
+          <h2>管理登入</h2>
+          <label>
+            管理密碼
+            <input name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">進入後台</button>
+          <p class="form-message" id="login-message"></p>
+        </form>
+      </section>
+
+      <section class="admin-workspace" id="admin-workspace" hidden>
+        <div class="status-bar" id="status-bar"></div>
+
+        <nav class="admin-tabs" aria-label="後台分頁">
+          <button class="is-active" type="button" data-admin-tab="products">商品</button>
+          <button type="button" data-admin-tab="offers">最新優惠</button>
+          <button type="button" data-admin-tab="knowledge">美髮知識</button>
+        </nav>
+
+        <section class="admin-panel is-active" data-admin-panel="products">
+          <div class="admin-list-panel">
+            <div class="list-tools">
+              <input id="product-search" type="search" placeholder="搜尋商品" />
+              <button type="button" data-create-item="products">新增商品</button>
+            </div>
+            <div class="item-list" id="product-list"></div>
+          </div>
+
+          <form class="editor-form" id="product-editor">
+            <div class="form-head">
+              <p class="eyebrow">Product</p>
+              <h2 id="product-editor-title">商品內容</h2>
+            </div>
+            <input name="id" type="hidden" />
+            <div class="field-grid">
+              <label>商品名稱<input name="name" required /></label>
+              <label>品牌<input name="brand" /></label>
+              <label>分類<input name="category" /></label>
+              <label>上架狀態
+                <select name="status">
+                  <option value="上架">上架</option>
+                  <option value="下架">下架</option>
+                </select>
+              </label>
+              <label>推薦優先度
+                <select name="priority">
+                  <option value="高">高</option>
+                  <option value="中">中</option>
+                  <option value="低">低</option>
+                </select>
+              </label>
+              <label>圖片網址<input name="image" /></label>
+            </div>
+            <label class="file-field">
+              商品圖片
+              <input name="imageUpload" type="file" accept="image/*" />
+            </label>
+            <img class="image-preview" id="product-image-preview" alt="" />
+            <div class="field-grid">
+              <label>適合頭皮<input name="scalp" placeholder="油性／乾性／敏感" /></label>
+              <label>適合髮質/造型<input name="hair" placeholder="細軟／粗硬／自然捲" /></label>
+              <label>適合需求<input name="needs" placeholder="頭皮按摩／髮根支撐" /></label>
+              <label>容量價格<input name="variants" placeholder="600ML | 1340" /></label>
+            </div>
+            <label>主要功效<textarea name="effect" rows="4"></textarea></label>
+            <label>使用方式<textarea name="usage" rows="3"></textarea></label>
+            <label>不適合／注意事項<textarea name="caution" rows="2"></textarea></label>
+            <label>推薦話術<textarea name="pitch" rows="2"></textarea></label>
+            <div class="form-actions">
+              <button type="submit">儲存商品</button>
+              <button class="danger-button" type="button" data-delete-current="products">刪除</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="admin-panel" data-admin-panel="offers">
+          <div class="admin-list-panel">
+            <div class="list-tools">
+              <input id="offer-search" type="search" placeholder="搜尋優惠" />
+              <button type="button" data-create-item="offers">新增優惠</button>
+            </div>
+            <div class="item-list" id="offer-list"></div>
+          </div>
+
+          <form class="editor-form" id="offer-editor">
+            <div class="form-head">
+              <p class="eyebrow">Offer</p>
+              <h2>最新優惠內容</h2>
+            </div>
+            <input name="id" type="hidden" />
+            <div class="field-grid">
+              <label>系列/品牌<input name="series" /></label>
+              <label>優惠標題<input name="title" required /></label>
+              <label>價格標籤<input name="priceLabel" /></label>
+              <label>優惠價格<input name="price" /></label>
+              <label>原價/補充<input name="original" /></label>
+              <label>活動標籤<input name="tag" /></label>
+              <label>上架狀態
+                <select name="status">
+                  <option value="上架">上架</option>
+                  <option value="下架">下架</option>
+                </select>
+              </label>
+              <label>圖片網址<input name="image" /></label>
+            </div>
+            <label class="file-field">
+              優惠圖片
+              <input name="imageUpload" type="file" accept="image/*" />
+            </label>
+            <img class="image-preview" id="offer-image-preview" alt="" />
+            <label>優惠介紹<textarea name="description" rows="4"></textarea></label>
+            <label>重點標籤<input name="points" placeholder="髮根支撐／抗潮定型／蓬鬆不扁塌" /></label>
+            <div class="form-actions">
+              <button type="submit">儲存優惠</button>
+              <button class="danger-button" type="button" data-delete-current="offers">刪除</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="admin-panel" data-admin-panel="knowledge">
+          <div class="admin-list-panel">
+            <div class="list-tools">
+              <input id="knowledge-search" type="search" placeholder="搜尋知識文章" />
+              <button type="button" data-create-item="knowledge">新增知識</button>
+            </div>
+            <div class="item-list" id="knowledge-list"></div>
+          </div>
+
+          <form class="editor-form" id="knowledge-editor">
+            <div class="form-head">
+              <p class="eyebrow">Knowledge</p>
+              <h2>美髮知識內容</h2>
+            </div>
+            <input name="id" type="hidden" />
+            <div class="field-grid">
+              <label>分類標籤<input name="type" /></label>
+              <label>標題<input name="title" required /></label>
+              <label>上架狀態
+                <select name="status">
+                  <option value="上架">上架</option>
+                  <option value="下架">下架</option>
+                </select>
+              </label>
+              <label>圖片網址<input name="image" /></label>
+              <label>連結文字<input name="linkLabel" /></label>
+              <label>參考連結<input name="linkUrl" /></label>
+            </div>
+            <label class="file-field">
+              文章圖片
+              <input name="imageUpload" type="file" accept="image/*" />
+            </label>
+            <img class="image-preview" id="knowledge-image-preview" alt="" />
+            <label>文章摘要<textarea name="description" rows="5"></textarea></label>
+            <div class="form-actions">
+              <button type="submit">儲存知識</button>
+              <button class="danger-button" type="button" data-delete-current="knowledge">刪除</button>
+            </div>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

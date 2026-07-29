@@ -1,0 +1,95 @@
+{
+  "offers": [
+    {
+      "id": "offer-ics",
+      "status": "上架",
+      "series": "LebeL ICS",
+      "title": "ICS 修護油",
+      "priceLabel": "優惠價",
+      "price": "$1000",
+      "original": "原價 $1200",
+      "tag": "20% OFF",
+      "image": "assets/offer-ics-clean.png",
+      "imageAlt": "ICS 修護油優惠",
+      "description": "LebeL ICS 全效溫塑燙秀髮修護精油，適合燙後、毛躁、髮尾乾燥與需要光澤感的日常保養。",
+      "points": ["燙染後修護", "髮尾光澤", "毛躁柔順"]
+    },
+    {
+      "id": "offer-pm-volume",
+      "status": "上架",
+      "series": "Paul Mitchell Extra-Body",
+      "title": "夏日蓬鬆定型組",
+      "priceLabel": "限時優惠組合價",
+      "price": "$1840",
+      "original": "原價 $2300",
+      "tag": "蓬鬆有型",
+      "image": "assets/offer-paul-mitchell-volume-clean.png",
+      "imageAlt": "Paul Mitchell 夏日蓬鬆定型組優惠",
+      "description": "蓬鬆慕斯搭配定型噴霧，適合想要髮根支撐、抗潮抗濕與全天候造型維持的人。",
+      "points": ["髮根支撐", "抗潮定型", "蓬鬆不扁塌"]
+    },
+    {
+      "id": "offer-hemp-two",
+      "status": "上架",
+      "series": "Tea Tree Hemp",
+      "title": "茶樹漢麻髮浴潤澤乳兩入組",
+      "priceLabel": "便攜小瓶優惠價",
+      "price": "$1760",
+      "original": "兩入優惠組",
+      "tag": "兩入組",
+      "image": "assets/offer-teatree-hemp-two-clean.png",
+      "imageAlt": "茶樹漢麻髮浴潤澤乳兩入優惠組",
+      "description": "便攜小瓶裝髮浴潤澤乳，適合旅行、健身或想先體驗茶樹漢麻系列清新潤澤感的日常保養。",
+      "points": ["髮浴潤澤乳", "旅行便攜", "清新保濕"]
+    },
+    {
+      "id": "offer-hemp-three",
+      "status": "上架",
+      "series": "Tea Tree Hemp",
+      "title": "茶樹漢麻髮浴三入組",
+      "priceLabel": "便攜小瓶優惠價",
+      "price": "$2340",
+      "original": "三入優惠組",
+      "tag": "三入組",
+      "image": "assets/offer-teatree-hemp-three-clean.png",
+      "imageAlt": "茶樹漢麻髮浴三入優惠組",
+      "description": "便攜小瓶裝髮浴，清潔時保留舒適潤澤感，適合喜歡茶樹漢麻香氣與清爽洗感的人補貨。",
+      "points": ["髮浴小瓶", "清爽洗感", "補貨組合"]
+    }
+  ],
+  "knowledge": [
+    {
+      "id": "knowledge-shampoo",
+      "status": "上架",
+      "type": "正確洗髮",
+      "title": "洗髮重點在頭皮，護髮重點在髮絲",
+      "image": "assets/knowledge-shampoo-card.jpg",
+      "imageAlt": "正確洗髮時以指腹按摩頭皮的清新情境圖",
+      "description": "洗髮時先充分沖濕，將洗髮精放在頭皮按摩清潔，再讓泡沫帶過髮絲即可；護髮產品則依髮質放在髮中至髮尾，細軟髮可避開髮根。",
+      "linkLabel": "參考 AAD 洗護建議",
+      "linkUrl": "https://www.aad.org/public/everyday-care/hair-scalp-care/hair/healthy-hair-tips"
+    },
+    {
+      "id": "knowledge-color-care",
+      "status": "上架",
+      "type": "染後保養",
+      "title": "染後頭髮更需要防曬、護色與溫和清潔",
+      "image": "assets/knowledge-color-care-card.jpg",
+      "imageAlt": "染後髮絲以毛巾輕柔按乾的護色保養情境圖",
+      "description": "染後或漂後髮絲較容易乾燥、褪色與失去光澤。建議選擇護色或補色產品，減少高溫傷害，外出時也要留意日曬對髮色與髮質的影響。",
+      "linkLabel": "參考 AAD 染燙照護",
+      "linkUrl": "https://www.aad.org/public/everyday-care/hair-scalp-care/hair/coloring-perming-tips"
+    },
+    {
+      "id": "knowledge-wash-frequency",
+      "status": "上架",
+      "type": "洗髮頻率",
+      "title": "多久洗一次頭，取決於頭皮出油與髮質",
+      "image": "assets/knowledge-wash-frequency-card.jpg",
+      "imageAlt": "日常洗護用品與頭皮按摩刷的清爽保養情境圖",
+      "description": "容易出油、細軟髮或常流汗的人通常需要較頻繁清潔；乾燥、粗硬、捲髮或染燙後髮質則可依出油與髮絲乾燥程度調整頻率。",
+      "linkLabel": "參考 Cleveland Clinic",
+      "linkUrl": "https://newsroom.clevelandclinic.org/2025/01/24/how-often-should-you-wash-your-hair"
+    }
+  ]
+}
