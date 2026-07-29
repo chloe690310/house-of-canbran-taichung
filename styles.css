@@ -788,6 +788,15 @@ input {
   line-height: 1.6;
 }
 
+.advisor-result-note {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(18, 95, 76, 0.1);
+  color: rgba(73, 91, 86, 0.9);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
 .products-section,
 .stores-section {
   background: rgba(255, 255, 255, 0.92);
