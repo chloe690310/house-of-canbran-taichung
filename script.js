@@ -1357,18 +1357,25 @@ const defaultAdminProducts = [
     description: "適合燙後、毛躁與髮尾乾燥。",
   },
   {
-    id: "iau-lycomint",
-    name: "IAU 茄紅素洗護組",
-    category: "頭皮管理",
+    id: "paul-mitchell-volume-set",
+    name: "Paul Mitchell 夏日蓬鬆定型組",
+    category: "造型定型",
     status: "上架中",
-    description: "適合頭皮出油、悶熱與髮根扁塌。",
+    description: "適合髮根支撐、抗潮抗濕與全天候造型維持。",
   },
   {
-    id: "edol-color",
-    name: "EDOL 煥然補色洗髮精",
-    category: "染後護色",
+    id: "tea-tree-hemp-two",
+    name: "茶樹漢麻髮浴潤澤乳兩入組",
+    category: "旅行便攜",
     status: "上架中",
-    description: "適合染後補色與維持透明感。",
+    description: "便攜小瓶裝，適合旅行、健身或初次體驗。",
+  },
+  {
+    id: "tea-tree-hemp-three",
+    name: "茶樹漢麻髮浴三入組",
+    category: "補貨組合",
+    status: "上架中",
+    description: "清爽洗感搭配漢麻系列舒適潤澤，適合日常補貨。",
   },
 ];
 
