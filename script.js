@@ -344,6 +344,25 @@ const productTypeConfigs = {
   },
 };
 
+const hairCompatibilityRules = {
+  fine: {
+    tags: ["細軟", "髮質缺乏彈性", "髮量感不足"],
+    conflicts: ["粗硬", "自然捲", "髮質亂翹"],
+  },
+  coarse: {
+    tags: ["粗硬"],
+    conflicts: ["細軟", "髮質缺乏彈性", "髮量感不足"],
+  },
+  frizzy: {
+    tags: ["自然捲", "髮質亂翹"],
+    conflicts: ["細軟", "髮質缺乏彈性", "髮量感不足"],
+  },
+  normal: {
+    tags: ["一般", "中等", "中性", "都適用"],
+    conflicts: [],
+  },
+};
+
 const menStyleEffectConfigs = {
   clean: {
     label: "乾淨俐落",
@@ -763,8 +782,11 @@ function getProductRecommendations(base) {
     .sort((a, b) => b.score - a.score || a.catalogIndex - b.catalogIndex);
   const matchedProducts = scoredProducts.filter((product) => productMatchesType(product, base.productType));
   const candidateProducts = matchedProducts.length ? matchedProducts : scoredProducts;
+  const hairCompatibleProducts = candidateProducts.filter((product) => isProductHairCompatible(product));
+  const filteredProducts =
+    advisorState.hair !== "normal" && hairCompatibleProducts.length ? hairCompatibleProducts : candidateProducts;
 
-  return diversifyProducts(candidateProducts, base).slice(0, 3);
+  return diversifyProducts(filteredProducts, base).slice(0, 3);
 }
 
 function scoreProduct(product, base) {
@@ -774,6 +796,7 @@ function scoreProduct(product, base) {
   score += scoreProductType(product, base.productType);
   score += scoreIntent(product, text, base.intent);
   score += scoreAdvisorState(product, text);
+  score += scoreHairCompatibility(product);
 
   if (hasCategory(product, ["造型工具"]) && advisorState.intent !== "tool") score -= 6;
   if (hasCategory(product, ["男士造型"]) && advisorState.intent !== "menStyling" && advisorState.routine !== "styling") score -= 2;
@@ -803,6 +826,26 @@ function productMatchesType(product, intent = advisorState.intent) {
 
 function scoreProductType(product, intent = advisorState.intent) {
   return productMatchesType(product, intent) ? 30 : -30;
+}
+
+function getProductHairCompatibility(product, hair = advisorState.hair) {
+  const tags = product.hair || [];
+  const rule = hairCompatibilityRules[hair];
+  if (!rule || !tags.length) return "neutral";
+  if (hasProductTag(tags, rule.tags)) return "match";
+  if (hasProductTag(tags, rule.conflicts)) return "conflict";
+  return "neutral";
+}
+
+function isProductHairCompatible(product, hair = advisorState.hair) {
+  return getProductHairCompatibility(product, hair) !== "conflict";
+}
+
+function scoreHairCompatibility(product, hair = advisorState.hair) {
+  const compatibility = getProductHairCompatibility(product, hair);
+  if (compatibility === "match") return 18;
+  if (compatibility === "conflict") return -60;
+  return 0;
 }
 
 function scoreIntent(product, text, intent) {
