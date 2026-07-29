@@ -449,11 +449,6 @@ const menStyleEffectConfigs = {
     keywords: ["髮根", "豎立", "支撐", "髮量感", "蓬鬆", "長時間"],
     reason: "協助髮根支撐與蓬鬆維持",
   },
-  shineHold: {
-    label: "光澤定型",
-    keywords: ["光澤", "光亮", "定型", "飽滿", "滋潤", "柔軟動感"],
-    reason: "兼顧光澤與定型效果",
-  },
 };
 
 const toolPurposeConfigs = {
@@ -715,7 +710,7 @@ function getAdvisorBaseCopy(defaultCopy) {
     return "你的回答偏向整髮造型品。建議先以髮質和想塑造的效果挑選，確認需要自然好整理、柔順線條、蓬鬆量感、亮澤光感或霧面質感，再選對應質地。";
   }
   if (advisorState.intent === "holdStyling") {
-    return "你的回答偏向定型產品。建議先確認需要固定力強、自然定型、抗潮持久、髮根支撐、捲度維持或光澤定型，再選擇適合的噴霧或定型液。";
+    return "你的回答偏向定型產品。建議先確認需要固定力強、自然定型、抗潮持久、髮根支撐或捲度維持，再選擇適合的噴霧或定型液。";
   }
   if (advisorState.intent === "menStyling") {
     return "你的回答偏向男士造型品。建議先以髮質和想塑造的效果挑選，確認需要的是乾淨俐落、油頭光澤、固定力強、霧面線條或蓬鬆量感，再選對應質地。";
