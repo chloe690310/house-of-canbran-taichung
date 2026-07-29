@@ -1362,9 +1362,7 @@ function renderKnowledgeCards(articles) {
   liveArticles.forEach((article) => {
     const card = document.createElement("article");
     card.className = "article-card";
-    const link = article.linkUrl
-      ? `<a href="${escapeHtml(article.linkUrl)}" target="_blank" rel="noopener">${escapeHtml(article.linkLabel || "延伸閱讀")}</a>`
-      : "";
+    const links = renderKnowledgeLanguageLinks(article);
     card.innerHTML = `
       <figure class="article-media">
         <img src="${escapeHtml(article.image || "assets/knowledge-shampoo-card.jpg")}" alt="${escapeHtml(article.imageAlt || article.title || "美髮知識圖片")}" loading="lazy" />
@@ -1373,11 +1371,42 @@ function renderKnowledgeCards(articles) {
         <p class="article-type">${escapeHtml(article.type || "美髮知識")}</p>
         <h3>${escapeHtml(article.title || "")}</h3>
         <p>${escapeHtml(article.description || "")}</p>
-        ${link}
+        ${links}
       </div>
     `;
     knowledgeGrid.appendChild(card);
   });
+}
+
+function renderKnowledgeLanguageLinks(article) {
+  const sourceUrl = String(article.linkUrl || "").trim();
+  if (!sourceUrl) return "";
+
+  const translatedUrl = createTranslatedUrl(sourceUrl);
+  const translatedLink = translatedUrl
+    ? `<a class="article-language-link is-primary" href="${escapeHtml(translatedUrl)}" target="_blank" rel="noopener">中文翻譯</a>`
+    : "";
+  const sourceLabel = article.linkLabel || "外部原文";
+
+  return `
+    <div class="article-language" aria-label="${escapeHtml(`${article.title || "美髮知識"}語言選擇`)}">
+      <span>語言選擇</span>
+      <div class="article-language-links">
+        ${translatedLink}
+        <a class="article-language-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener" aria-label="${escapeHtml(`開啟${sourceLabel}`)}">英文原文</a>
+      </div>
+    </div>
+  `;
+}
+
+function createTranslatedUrl(sourceUrl) {
+  try {
+    const url = new URL(sourceUrl, window.location.href);
+    if (!["http:", "https:"].includes(url.protocol)) return "";
+    return `https://translate.google.com/translate?sl=auto&tl=zh-TW&u=${encodeURIComponent(url.href)}`;
+  } catch {
+    return "";
+  }
 }
 
 function updateAdvisorLineLink(base, modifiers, selectedProducts = []) {
