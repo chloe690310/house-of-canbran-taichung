@@ -2798,7 +2798,8 @@ window.CANBRAN_PRODUCTS = [
     "priority": "中",
     "needs": [
       "自然好整理",
-      "蓬鬆量感"
+      "蓬鬆量感",
+      "髮根支撐"
     ],
     "caution": "噴於微濕髮使用，吹乾",
     "pitch": ""
@@ -4989,9 +4990,9 @@ window.CANBRAN_PRODUCTS = [
     "image": "assets/products/product-142.jpg",
     "imageFile": "鼠尾草蓬鬆髮霧.jpg",
     "categories": [
-      "髮根蓬鬆造型"
+      "整髮造型"
     ],
-    "category": "髮根蓬鬆造型",
+    "category": "整髮造型",
     "scalp": [
       "依髮質選擇"
     ],
@@ -5008,7 +5009,10 @@ window.CANBRAN_PRODUCTS = [
     ],
     "status": "上架",
     "priority": "中",
-    "needs": [],
+    "needs": [
+      "蓬鬆量感",
+      "髮根支撐"
+    ],
     "caution": "",
     "pitch": ""
   },
@@ -5466,7 +5470,8 @@ window.CANBRAN_PRODUCTS = [
     "status": "上架",
     "priority": "中",
     "needs": [
-      "蓬鬆量感"
+      "蓬鬆量感",
+      "髮根支撐"
     ],
     "caution": "",
     "pitch": ""

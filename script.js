@@ -325,7 +325,7 @@ const productTypeConfigs = {
   styling: {
     label: "整髮造型品",
     recommendation: "styling",
-    categories: ["造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型", "鮑伯髮型"],
+    categories: ["造型", "整髮造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型", "鮑伯髮型"],
   },
   holdStyling: {
     label: "定型產品",
@@ -707,7 +707,7 @@ function getAdvisorBaseCopy(defaultCopy) {
     return "你的回答偏向捲髮造型品。建議先確認想要自然捲度、彈力捲度、鬆柔空氣感、捲度持久或修飾毛躁，再選對應質地。";
   }
   if (advisorState.intent === "styling") {
-    return "你的回答偏向整髮造型品。建議先以髮質和想塑造的效果挑選，確認需要自然好整理、柔順線條、蓬鬆量感、亮澤光感或霧面質感，再選對應質地。";
+    return "你的回答偏向整髮造型品。建議先以髮質和想塑造的效果挑選，確認需要自然好整理、柔順線條、蓬鬆量感、髮根支撐、亮澤光感或霧面質感，再選對應質地。";
   }
   if (advisorState.intent === "holdStyling") {
     return "你的回答偏向定型產品。建議先確認需要固定力強、自然定型、抗潮持久、髮根支撐或捲度維持，再選擇適合的噴霧或定型液。";
@@ -892,7 +892,7 @@ function scoreIntent(product, text, intent) {
     volume: [["洗髮精", "頭皮護理", "造型", "定型"], 4],
     shine: [["免沖洗", "潤絲", "護髮膜"], 4],
     leaveIn: [["免沖洗", "免沖洗補水"], 8],
-    styling: [["造型", "定型", "男士造型", "捲髮造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型"], 8],
+    styling: [["造型", "整髮造型", "定型", "男士造型", "捲髮造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型"], 8],
   };
   const keywords = {
     sensitive: ["敏感", "乾癢", "舒緩", "溫和", "保濕", "頭皮"],
@@ -981,7 +981,7 @@ function scoreAdvisorState(product, text) {
   }
 
   if (advisorState.intent === "styling") {
-    if (hasCategory(product, ["造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型", "鮑伯髮型"])) score += 14;
+    if (hasCategory(product, ["造型", "整髮造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型", "鮑伯髮型"])) score += 14;
     const styleEffect = getMenStyleEffectConfig();
     score += countKeywordHits(text, styleEffect.keywords) * 4;
     if (hasCategory(product, ["洗髮精", "潤絲", "護髮膜", "頭皮護理"])) score -= 6;
@@ -1054,7 +1054,7 @@ function scoreAdvisorState(product, text) {
     if (advisorState.goal === "smooth") score += countKeywordHits(text, ["柔順", "毛躁", "滑順", "順髮"]) * 3;
     if (advisorState.goal === "volume") score += countKeywordHits(text, ["蓬鬆", "細軟", "髮根", "輕盈"]) * 3;
     if (advisorState.goal === "shine") score += countKeywordHits(text, ["光澤", "亮澤", "精華油", "光感"]) * 3;
-    if (advisorState.routine === "styling") score += hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"]) ? 5 : 0;
+    if (advisorState.routine === "styling") score += hasCategory(product, ["造型", "整髮造型", "定型", "男士造型", "捲髮造型"]) ? 5 : 0;
     if (advisorState.routine === "heat") score += countKeywordHits(text, ["修護", "免沖洗", "精華油", "熱", "吹整"]) * 2;
     if (advisorState.preference === "lightweight") score += countKeywordHits(text, ["輕盈", "蓬鬆", "清爽", "不厚重"]) * 2;
     if (advisorState.preference === "intensive") score += hasCategory(product, ["護髮膜", "潤絲", "免沖洗"]) ? 3 : 0;
@@ -1130,7 +1130,7 @@ function getProductGroup(product) {
   if (hasCategory(product, ["頭皮護理", "頭皮保養"])) return "scalp";
   if (hasCategory(product, ["護髮膜", "潤絲"])) return "treatment";
   if (hasCategory(product, ["免沖洗", "免沖洗補水"])) return "leaveIn";
-  if (hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型"])) return "styling";
+  if (hasCategory(product, ["造型", "整髮造型", "定型", "男士造型", "捲髮造型", "打亮造型", "髮根蓬鬆造型", "髮跟蓬鬆造型"])) return "styling";
   if (hasCategory(product, ["造型工具"])) return "tool";
   return "other";
 }
@@ -1190,7 +1190,7 @@ function buildProductReason(product, base) {
   if (advisorState.intent !== "menStyling" && advisorState.goal === "smooth" && countKeywordHits(text, ["柔順", "滑順", "毛躁", "順髮"])) reasons.push("提升髮尾柔順與好整理度");
   if (advisorState.intent !== "menStyling" && advisorState.goal === "shine" && countKeywordHits(text, ["光澤", "亮澤", "精華油"])) reasons.push("補足髮絲光澤與質感");
   if (advisorState.intent !== "menStyling" && advisorState.goal === "volume" && countKeywordHits(text, ["蓬鬆", "髮根", "輕盈", "支撐"])) reasons.push("協助維持蓬鬆與支撐度");
-  if (!isStylingConsultIntent() && advisorState.routine === "styling" && hasCategory(product, ["造型", "定型", "男士造型", "捲髮造型"])) reasons.push("適合日常造型需求");
+  if (!isStylingConsultIntent() && advisorState.routine === "styling" && hasCategory(product, ["造型", "整髮造型", "定型", "男士造型", "捲髮造型"])) reasons.push("適合日常造型需求");
 
   if (!reasons.length && product.pitch) reasons.push(summarizeText(product.pitch, 42));
   if (!reasons.length && product.effect) reasons.push(summarizeText(product.effect, 42));
