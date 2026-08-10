@@ -675,6 +675,71 @@ input {
   font-size: 0.95rem;
 }
 
+.pif-detail {
+  margin-top: 18px;
+}
+
+.pif-detail summary {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid rgba(18, 168, 117, 0.2);
+  border-radius: 999px;
+  color: var(--line);
+  background: rgba(237, 246, 240, 0.76);
+  font-size: 0.9rem;
+  font-weight: 900;
+  cursor: pointer;
+  list-style: none;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.pif-detail summary::-webkit-details-marker {
+  display: none;
+}
+
+.pif-detail summary::after {
+  content: "+";
+  font-weight: 900;
+}
+
+.pif-detail[open] summary {
+  color: var(--white);
+  border-color: var(--line);
+  background: var(--line);
+}
+
+.pif-detail[open] summary::after {
+  content: "-";
+}
+
+.pif-detail-body {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid rgba(17, 47, 42, 0.08);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.pif-detail-body strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.pif-detail-body p {
+  margin: 0;
+  color: #60716d;
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+
 .service-flow {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
