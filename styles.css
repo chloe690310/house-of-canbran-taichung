@@ -1866,11 +1866,11 @@ input {
     display: block;
     height: clamp(286px, 89vw, 360px);
     min-height: 0;
-    margin-bottom: 0;
+    margin-bottom: 84px;
     padding: 0;
     color: var(--ink);
     background: #eef3f1;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .hero::before {
@@ -1882,9 +1882,11 @@ input {
 
   .hero-copy {
     display: block;
-    top: 18px;
-    left: 18px;
-    width: min(330px, calc(100% - 36px));
+    top: auto;
+    right: 22px;
+    bottom: -72px;
+    left: 22px;
+    width: auto;
   }
 
   .hero-copy::before,
@@ -1897,11 +1899,18 @@ input {
   }
 
   .hero .home-product-search label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--forest);
     font-size: 0.78rem;
   }
 
   .hero .home-product-search-box {
-    min-height: 44px;
+    min-height: 48px;
+    border-color: rgba(17, 47, 42, 0.08);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 14px 34px rgba(18, 95, 76, 0.12);
+    backdrop-filter: blur(12px);
   }
 
   .hero .home-product-search-box input {
