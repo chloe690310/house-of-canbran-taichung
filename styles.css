@@ -339,8 +339,8 @@ input {
 
 .home-intro-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 28px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.65fr) auto;
+  gap: 24px;
   align-items: center;
 }
 
@@ -350,6 +350,58 @@ input {
   color: #4f625e;
   font-size: clamp(1rem, 1.35vw, 1.14rem);
   line-height: 1.85;
+}
+
+.home-product-search {
+  display: grid;
+  gap: 8px;
+}
+
+.home-product-search label {
+  color: var(--forest);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.home-product-search-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 48px;
+  overflow: hidden;
+  border: 1px solid rgba(17, 47, 42, 0.12);
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(18, 95, 76, 0.08);
+}
+
+.home-product-search-box input,
+.home-product-search-box button {
+  min-width: 0;
+  border: 0;
+  font: inherit;
+}
+
+.home-product-search-box input {
+  width: 100%;
+  padding: 0 18px;
+  color: var(--forest);
+  background: transparent;
+  outline: none;
+}
+
+.home-product-search-box button {
+  padding: 0 18px;
+  color: var(--white);
+  background: var(--line);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.home-product-search-box:focus-within {
+  border-color: rgba(18, 95, 76, 0.46);
+  box-shadow:
+    0 16px 36px rgba(18, 95, 76, 0.1),
+    0 0 0 3px rgba(25, 177, 130, 0.12);
 }
 
 .home-intro .hero-actions {

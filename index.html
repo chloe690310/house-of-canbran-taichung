@@ -26,7 +26,7 @@
         <a href="#brand" data-page-link="brand">品牌故事</a>
         <a href="#services" data-page-link="services">肯邦服務</a>
         <a href="#advisor" data-page-link="advisor">AI 髮品顧問</a>
-        <a href="#products" data-page-link="products">商品快搜</a>
+        <a href="#products" data-page-link="products">熱門髮品</a>
         <a href="#offers" data-page-link="offers">最新優惠</a>
         <a href="#knowledge" data-page-link="knowledge">美髮知識</a>
         <a href="#stores" data-page-link="stores">門市資訊</a>
@@ -54,6 +54,18 @@
               專業髮品不一定難懂。從頭皮、髮質到日常造型需求，肯邦屋陪你找到真正適合自己的居家護髮選擇。
             </p>
           </div>
+          <form class="home-product-search" id="home-product-search" role="search" aria-label="首頁商品快搜">
+            <label for="home-product-search-input">商品快搜</label>
+            <div class="home-product-search-box">
+              <input
+                id="home-product-search-input"
+                type="search"
+                autocomplete="off"
+                placeholder="找茶樹、細軟、免沖洗、髮根支撐..."
+              />
+              <button type="submit">搜尋</button>
+            </div>
+          </form>
           <div class="hero-actions" aria-label="首頁主要行動">
             <a class="btn primary" href="#advisor" data-page-link="advisor">開始髮品診斷</a>
             <a class="btn secondary" href="#offers" data-page-link="offers">查看本月優惠</a>
@@ -442,9 +454,9 @@
       <section id="products" class="section products-section" data-page="products" hidden aria-labelledby="products-title">
         <div class="section-inner">
           <div class="section-heading">
-            <p class="eyebrow">Product finder</p>
-            <h2 id="products-title">商品快搜</h2>
-            <p>輸入商品名稱、品牌、頭皮狀況、髮質或想解決的需求，快速找到適合詢問與比較的商品。</p>
+            <p class="eyebrow">Selected products</p>
+            <h2 id="products-title">熱門髮品推薦</h2>
+            <p>可先瀏覽熱門髮品，也可以輸入商品名稱、品牌、頭皮狀況、髮質或想解決的需求快速搜尋。</p>
           </div>
           <div class="product-search-panel" role="search" aria-label="商品快搜">
             <label for="product-search-input">商品快搜</label>

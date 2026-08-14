@@ -577,6 +577,8 @@ const recommendations = {
 const titleEl = document.querySelector("#recommend-title");
 const copyEl = document.querySelector("#recommend-copy");
 const featuredProductGrid = document.querySelector("#featured-product-grid");
+const homeProductSearchForm = document.querySelector("#home-product-search");
+const homeProductSearchInput = document.querySelector("#home-product-search-input");
 const productSearchInput = document.querySelector("#product-search-input");
 const productSearchClear = document.querySelector("#product-search-clear");
 const productSearchStatus = document.querySelector("#product-search-status");
@@ -1397,6 +1399,23 @@ if (productSearchClear) {
     productSearchClear.hidden = true;
     renderFeaturedProducts();
     productSearchInput?.focus();
+  });
+}
+
+if (homeProductSearchForm) {
+  homeProductSearchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = homeProductSearchInput?.value.trim() || "";
+
+    if (productSearchInput) productSearchInput.value = query;
+    if (productSearchClear) productSearchClear.hidden = !query;
+
+    renderFeaturedProducts();
+    showPage("products", { updateUrl: true, scrollToTop: true });
+
+    window.requestAnimationFrame(() => {
+      productSearchInput?.focus({ preventScroll: true });
+    });
   });
 }
 
