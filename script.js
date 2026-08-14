@@ -162,6 +162,33 @@ let productCatalog = Array.isArray(window.CANBRAN_PRODUCTS)
   ? window.CANBRAN_PRODUCTS.filter((product) => product.status === "上架")
   : [];
 
+const supplementalKnowledgeArticles = [
+  {
+    id: "knowledge-scalp-care",
+    status: "上架",
+    type: "頭皮養護",
+    title: "頭皮保養從清潔、舒緩與適度保濕開始",
+    image: "assets/knowledge-scalp-care-card.jpg",
+    imageAlt: "清新檯面上的頭皮按摩刷、毛巾與保養用品",
+    description:
+      "頭皮和臉部肌膚一樣會受出油、汗水、造型品殘留與乾燥影響。日常可依頭皮狀況選擇清潔頻率，洗髮時以指腹輕柔按摩，避免過度抓搔；若持續紅癢、刺痛或大量脫屑，建議先詢問專業人員。",
+    linkLabel: "參考 AAD 頭皮洗護建議",
+    linkUrl: "https://www.aad.org/public/everyday-care/hair-scalp-care/hair/healthy-hair-tips",
+  },
+  {
+    id: "knowledge-growth-cycle",
+    status: "上架",
+    type: "頭髮週期",
+    title: "頭髮會經歷生長、轉換、休止與自然掉落",
+    image: "assets/knowledge-growth-cycle-card.jpg",
+    imageAlt: "髮絲與植物以柔和圓形構圖呈現頭髮生長週期",
+    description:
+      "頭髮不是每一根都同時生長，而是各自進入生長期、轉換期、休止期與掉落階段。每天少量掉髮多半屬於自然代謝；若突然大量掉髮、局部稀疏或伴隨頭皮不適，建議記錄近期作息、壓力與身體變化後再諮詢專業人員。",
+    linkLabel: "參考 Cleveland Clinic 生長週期",
+    linkUrl: "https://my.clevelandclinic.org/health/diseases/24486-telogen-effluvium",
+  },
+];
+
 const priorityScore = {
   高: 7,
   中: 4,
@@ -550,6 +577,9 @@ const recommendations = {
 const titleEl = document.querySelector("#recommend-title");
 const copyEl = document.querySelector("#recommend-copy");
 const featuredProductGrid = document.querySelector("#featured-product-grid");
+const productSearchInput = document.querySelector("#product-search-input");
+const productSearchClear = document.querySelector("#product-search-clear");
+const productSearchStatus = document.querySelector("#product-search-status");
 const promoGrid = document.querySelector("#promo-grid");
 const knowledgeGrid = document.querySelector("#knowledge-grid");
 const advisorQuestionGroups = Array.from(document.querySelectorAll(".advisor-panel .question-group"));
@@ -1264,17 +1294,80 @@ function renderProducts(products, fallbackProducts = []) {
   });
 }
 
+function getFeaturedProducts() {
+  const featuredNames = ["茶樹洗髮精", "米胚芽護髮霜", "順髮凝露"];
+  return featuredNames
+    .map((name) => productCatalog.find((product) => product.name === name))
+    .filter(Boolean);
+}
+
+function normalizeQuickSearchText(value) {
+  return String(value || "")
+    .toLocaleLowerCase("zh-TW")
+    .replace(/\s+/g, "");
+}
+
+function collectProductSearchValues(value) {
+  if (Array.isArray(value)) return value.map(collectProductSearchValues).join(" ");
+  if (value && typeof value === "object") return Object.values(value).map(collectProductSearchValues).join(" ");
+  return String(value || "");
+}
+
+function getProductQuickSearchQuery() {
+  return productSearchInput?.value.trim() || "";
+}
+
+function productMatchesQuickSearch(product, query) {
+  const tokens = query.split(/\s+/).map(normalizeQuickSearchText).filter(Boolean);
+  if (!tokens.length) return true;
+
+  const searchText = normalizeQuickSearchText([
+    getProductSearchText(product),
+    collectProductSearchValues(product),
+  ].join(" "));
+
+  return tokens.every((token) => searchText.includes(token));
+}
+
+function updateProductQuickSearchStatus(resultCount, query) {
+  if (!productSearchStatus) return;
+
+  if (!query) {
+    productSearchStatus.textContent = "可搜尋商品名稱、品牌、主要功效、髮質、頭皮屬性與造型需求。";
+    return;
+  }
+
+  if (!resultCount) {
+    productSearchStatus.textContent = "目前沒有找到完全符合的商品，請換個關鍵字或直接 LINE 詢問專人。";
+    return;
+  }
+
+  productSearchStatus.textContent =
+    resultCount > 24
+      ? `找到 ${resultCount} 個相關商品，目前先顯示前 24 個，可再輸入更精準的關鍵字。`
+      : `找到 ${resultCount} 個相關商品，可透過 LINE 諮詢確認庫存與用法。`;
+}
+
 function renderFeaturedProducts() {
   if (!featuredProductGrid || !productCatalog.length) return;
 
-  const featuredNames = ["茶樹洗髮精", "米胚芽護髮霜", "順髮凝露"];
-  const featuredProducts = featuredNames
-    .map((name) => productCatalog.find((product) => product.name === name))
-    .filter(Boolean);
+  const query = getProductQuickSearchQuery();
+  const searchMatches = query
+    ? productCatalog.filter((product) => productMatchesQuickSearch(product, query))
+    : getFeaturedProducts();
+  const featuredProducts = query ? searchMatches.slice(0, 24) : searchMatches;
 
-  if (!featuredProducts.length) return;
+  updateProductQuickSearchStatus(searchMatches.length, query);
 
   featuredProductGrid.innerHTML = "";
+
+  if (!featuredProducts.length) {
+    featuredProductGrid.innerHTML = `
+      <p class="product-empty">沒有找到符合「${escapeHtml(query)}」的商品，建議換成品牌、功效、髮質或頭皮狀況再試一次。</p>
+    `;
+    return;
+  }
+
   featuredProducts.forEach((product) => {
     const card = document.createElement("article");
     card.className = "product-card";
@@ -1288,6 +1381,22 @@ function renderFeaturedProducts() {
       </div>
     `;
     featuredProductGrid.appendChild(card);
+  });
+}
+
+if (productSearchInput) {
+  productSearchInput.addEventListener("input", () => {
+    if (productSearchClear) productSearchClear.hidden = !getProductQuickSearchQuery();
+    renderFeaturedProducts();
+  });
+}
+
+if (productSearchClear) {
+  productSearchClear.addEventListener("click", () => {
+    if (productSearchInput) productSearchInput.value = "";
+    productSearchClear.hidden = true;
+    renderFeaturedProducts();
+    productSearchInput?.focus();
   });
 }
 
@@ -1309,7 +1418,12 @@ function applyCmsContent(cms) {
   }
 
   if (Array.isArray(cms.offers) && cms.offers.length) renderOfferCards(cms.offers);
-  if (Array.isArray(cms.knowledge) && cms.knowledge.length) renderKnowledgeCards(cms.knowledge);
+
+  const mergedKnowledge = mergeKnowledgeArticles(
+    Array.isArray(cms.knowledge) ? cms.knowledge : [],
+    supplementalKnowledgeArticles,
+  );
+  if (mergedKnowledge.length) renderKnowledgeCards(mergedKnowledge);
 }
 
 function isLiveContent(item) {
@@ -1350,6 +1464,20 @@ function renderOfferCards(offers) {
     `;
     promoGrid.appendChild(card);
   });
+}
+
+function mergeKnowledgeArticles(primaryArticles, fallbackArticles) {
+  const mergedArticles = [];
+  const seenKeys = new Set();
+
+  [...primaryArticles, ...fallbackArticles].forEach((article) => {
+    const keys = [article.id, article.title].map((value) => String(value || "").trim()).filter(Boolean);
+    if (!keys.length || keys.some((key) => seenKeys.has(key))) return;
+    keys.forEach((key) => seenKeys.add(key));
+    mergedArticles.push(article);
+  });
+
+  return mergedArticles;
 }
 
 function renderKnowledgeCards(articles) {

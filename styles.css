@@ -959,6 +959,66 @@ input {
   margin: 0;
 }
 
+.product-search-panel {
+  display: grid;
+  gap: 12px;
+  margin: -10px 0 28px;
+  padding: 18px 20px;
+  border: 1px solid rgba(18, 95, 76, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(243, 250, 247, 0.88)),
+    #ffffff;
+}
+
+.product-search-panel label {
+  color: var(--forest);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.product-search-box {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.product-search-box input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(18, 95, 76, 0.16);
+  border-radius: 4px;
+  padding: 0 16px;
+  color: var(--forest);
+  background: rgba(255, 255, 255, 0.92);
+  font: inherit;
+  outline: none;
+}
+
+.product-search-box input:focus {
+  border-color: rgba(18, 95, 76, 0.52);
+  box-shadow: 0 0 0 3px rgba(25, 177, 130, 0.13);
+}
+
+.product-search-box button {
+  min-height: 48px;
+  border: 1px solid rgba(18, 95, 76, 0.16);
+  border-radius: 4px;
+  padding: 0 18px;
+  color: var(--forest);
+  background: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.product-search-panel p {
+  margin: 0;
+  color: rgba(73, 91, 86, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -990,6 +1050,16 @@ input {
 
 .product-card .product-spec {
   margin-top: 12px;
+}
+
+.product-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 28px;
+  border: 1px dashed rgba(18, 95, 76, 0.24);
+  color: rgba(73, 91, 86, 0.86);
+  background: rgba(255, 255, 255, 0.78);
+  text-align: center;
 }
 
 .offers-section {
@@ -1897,6 +1967,19 @@ input {
   .brand-logo-grid,
   .admin-tabs {
     grid-template-columns: 1fr;
+  }
+
+  .product-search-panel {
+    margin: -6px 0 22px;
+    padding: 16px;
+  }
+
+  .product-search-box {
+    grid-template-columns: 1fr;
+  }
+
+  .product-search-box button {
+    width: 100%;
   }
 
   .promo-grid {

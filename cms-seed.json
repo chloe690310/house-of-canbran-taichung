@@ -90,6 +90,28 @@
       "description": "容易出油、細軟髮或常流汗的人通常需要較頻繁清潔；乾燥、粗硬、捲髮或染燙後髮質則可依出油與髮絲乾燥程度調整頻率。",
       "linkLabel": "參考 Cleveland Clinic",
       "linkUrl": "https://newsroom.clevelandclinic.org/2025/01/24/how-often-should-you-wash-your-hair"
+    },
+    {
+      "id": "knowledge-scalp-care",
+      "status": "上架",
+      "type": "頭皮養護",
+      "title": "頭皮保養從清潔、舒緩與適度保濕開始",
+      "image": "assets/knowledge-scalp-care-card.jpg",
+      "imageAlt": "清新檯面上的頭皮按摩刷、毛巾與保養用品",
+      "description": "頭皮和臉部肌膚一樣會受出油、汗水、造型品殘留與乾燥影響。日常可依頭皮狀況選擇清潔頻率，洗髮時以指腹輕柔按摩，避免過度抓搔；若持續紅癢、刺痛或大量脫屑，建議先詢問專業人員。",
+      "linkLabel": "參考 AAD 頭皮洗護建議",
+      "linkUrl": "https://www.aad.org/public/everyday-care/hair-scalp-care/hair/healthy-hair-tips"
+    },
+    {
+      "id": "knowledge-growth-cycle",
+      "status": "上架",
+      "type": "頭髮週期",
+      "title": "頭髮會經歷生長、轉換、休止與自然掉落",
+      "image": "assets/knowledge-growth-cycle-card.jpg",
+      "imageAlt": "髮絲與植物以柔和圓形構圖呈現頭髮生長週期",
+      "description": "頭髮不是每一根都同時生長，而是各自進入生長期、轉換期、休止期與掉落階段。每天少量掉髮多半屬於自然代謝；若突然大量掉髮、局部稀疏或伴隨頭皮不適，建議記錄近期作息、壓力與身體變化後再諮詢專業人員。",
+      "linkLabel": "參考 Cleveland Clinic 生長週期",
+      "linkUrl": "https://my.clevelandclinic.org/health/diseases/24486-telogen-effluvium"
     }
   ]
 }
