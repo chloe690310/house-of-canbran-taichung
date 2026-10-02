@@ -1388,10 +1388,43 @@ function getFeaturedProducts() {
     .filter(Boolean);
 }
 
+const managerPickSelections = [
+  {
+    id: "p009",
+    matchName: "IAU精華保濕乳MOIST",
+    displayName: "IAU 精華保濕乳",
+    badge: "免沖洗保濕",
+  },
+  {
+    id: "p152",
+    matchName: "茶樹激活洗髮精",
+    displayName: "茶樹頭皮激活洗髮精",
+    badge: "頭皮激活",
+  },
+  {
+    id: "p053",
+    matchName: "THEO STANDARD 頭皮淨化美容液",
+    displayName: "THEO 美容淨化液",
+    badge: "頭皮淨化",
+  },
+];
+
 function getManagerPickProducts() {
-  const preferredNames = ["茶樹洗髮精", "米胚芽護髮霜", "順髮凝露"];
-  const picks = preferredNames
-    .map((name) => productCatalog.find((product) => product.name === name))
+  const picks = managerPickSelections
+    .map((selection) => {
+      const product =
+        productCatalog.find((item) => item.id === selection.id) ||
+        productCatalog.find((item) => item.name === selection.matchName) ||
+        productCatalog.find((item) => item.name.includes(selection.displayName.replace(/\s+/g, "")));
+
+      return product
+        ? {
+            ...product,
+            managerBadge: selection.badge,
+            managerDisplayName: selection.displayName,
+          }
+        : null;
+    })
     .filter(Boolean);
 
   if (picks.length >= 3) return picks.slice(0, 3);
@@ -1438,8 +1471,8 @@ function renderManagerPicks() {
     card.innerHTML = `
       <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" />
       <div>
-        <span>${index === 0 ? "店長首選" : escapeHtml([product.brand, product.category].filter(Boolean).join(" / "))}</span>
-        <h4>${escapeHtml(product.name)}</h4>
+        <span>${escapeHtml(product.managerBadge || (index === 0 ? "店長首選" : [product.brand, product.category].filter(Boolean).join(" / ")))}</span>
+        <h4>${escapeHtml(product.managerDisplayName || product.name)}</h4>
         <p>${escapeHtml(getManagerPickReason(product))}</p>
         ${useTags ? `<small>適合：${escapeHtml(useTags)}</small>` : ""}
         <em>${escapeHtml(formatProductVariants(product))}</em>
