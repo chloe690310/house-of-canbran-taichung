@@ -1229,6 +1229,45 @@ input {
   margin-top: 12px;
 }
 
+.product-card,
+.recommend-products .recommend-product-card,
+.manager-pick-card {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.product-card:hover,
+.recommend-products .recommend-product-card:hover,
+.manager-pick-card:hover {
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.product-card img,
+.recommend-product-card img,
+.manager-pick-card img {
+  border-radius: 0;
+  background: transparent;
+}
+
+.product-card div {
+  padding: 18px 8px 0;
+}
+
+.manager-pick-card div {
+  padding: 16px 4px 0;
+}
+
+.recommend-products .recommend-product-card {
+  padding: 10px 0;
+}
+
+.recommend-product-card img {
+  background: transparent;
+}
+
 .product-empty {
   grid-column: 1 / -1;
   margin: 0;
