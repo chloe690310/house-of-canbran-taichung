@@ -5,6 +5,7 @@ const crypto = require("node:crypto");
 const cmsBlobPath = "canbran-cms/content.json";
 const localProductsPath = path.join(process.cwd(), "products-data.js");
 const seedPath = path.join(process.cwd(), "cms-seed.json");
+const legacyOfferIds = new Set(["offer-ics", "offer-pm-volume", "offer-hemp-two", "offer-hemp-three"]);
 
 function getAdminPassword() {
   return process.env.CANBRAN_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "";
@@ -56,6 +57,13 @@ function readSeedData() {
     knowledge: seed.knowledge || [],
     updatedAt: null,
   });
+}
+
+function resolveOffers(blobOffers = [], seedOffers = []) {
+  const filteredBlobOffers = Array.isArray(blobOffers)
+    ? blobOffers.filter((offer) => !legacyOfferIds.has(offer.id))
+    : [];
+  return filteredBlobOffers.length ? filteredBlobOffers : seedOffers;
 }
 
 function normalizeStatus(value, fallback = "上架") {
@@ -163,7 +171,7 @@ async function readCmsData() {
     ...seed,
     ...blobData,
     products: blobData?.products?.length ? blobData.products : seed.products,
-    offers: blobData?.offers?.length ? blobData.offers : seed.offers,
+    offers: resolveOffers(blobData?.offers, seed.offers),
     knowledge: blobData?.knowledge?.length ? blobData.knowledge : seed.knowledge,
     storageConfigured: hasBlobToken(),
     source: blobData ? "blob" : "seed",
