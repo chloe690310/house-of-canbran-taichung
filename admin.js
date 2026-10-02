@@ -3,6 +3,7 @@ const state = {
   products: [],
   offers: [],
   knowledge: [],
+  analytics: null,
   storageConfigured: false,
   source: "seed",
 };
@@ -40,6 +41,15 @@ const previews = {
   products: document.querySelector("#product-image-preview"),
   offers: document.querySelector("#offer-image-preview"),
   knowledge: document.querySelector("#knowledge-image-preview"),
+};
+const analyticsElements = {
+  refresh: document.querySelector("#analytics-refresh"),
+  summary: document.querySelector("#analytics-summary"),
+  total: document.querySelector("#metric-total"),
+  today: document.querySelector("#metric-today"),
+  week: document.querySelector("#metric-week"),
+  pageList: document.querySelector("#analytics-page-list"),
+  dailyBars: document.querySelector("#analytics-daily-bars"),
 };
 
 let activeTab = "products";
@@ -92,6 +102,8 @@ Object.entries(forms).forEach(([type, form]) => {
 document.querySelectorAll("[data-delete-current]").forEach((button) => {
   button.addEventListener("click", async () => deleteCurrent(button.dataset.deleteCurrent));
 });
+
+analyticsElements.refresh?.addEventListener("click", () => loadAnalytics());
 
 async function openWorkspace() {
   loginMessage.textContent = "";
@@ -154,6 +166,11 @@ function setActiveTab(type) {
   activeTab = type;
   tabButtons.forEach((button) => button.classList.toggle("is-active", button.dataset.adminTab === type));
   panels.forEach((panel) => panel.classList.toggle("is-active", panel.dataset.adminPanel === type));
+  if (type === "analytics") {
+    renderAnalytics();
+    loadAnalytics();
+    return;
+  }
   renderList(type);
   fillEditor(type);
 }
@@ -162,6 +179,7 @@ function renderAll() {
   renderList("products");
   renderList("offers");
   renderList("knowledge");
+  renderAnalytics();
   fillEditor(activeTab);
 }
 
@@ -436,6 +454,122 @@ async function uploadImageForForm(type, file) {
   setValue(forms[type], "image", result.url);
   updatePreview(type, result.url);
   setStatus("圖片已上傳，記得儲存內容。", "success");
+}
+
+async function loadAnalytics() {
+  if (!adminPassword) return;
+  if (analyticsElements.summary) analyticsElements.summary.textContent = "正在載入瀏覽數據...";
+
+  try {
+    const response = await fetch("/api/analytics", {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${adminPassword}`,
+      },
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.message || "無法讀取數據分析。");
+    state.analytics = result.analytics || null;
+    renderAnalytics();
+  } catch (error) {
+    if (analyticsElements.summary) analyticsElements.summary.textContent = error.message || "數據分析載入失敗。";
+  }
+}
+
+function renderAnalytics() {
+  const analytics = state.analytics;
+  if (!analytics) {
+    setMetricValue("total", 0);
+    setMetricValue("today", 0);
+    setMetricValue("week", 0);
+    if (analyticsElements.summary) analyticsElements.summary.textContent = "切換到此分頁後會載入最新瀏覽數據。";
+    if (analyticsElements.pageList) analyticsElements.pageList.innerHTML = "";
+    if (analyticsElements.dailyBars) analyticsElements.dailyBars.innerHTML = "";
+    return;
+  }
+
+  setMetricValue("total", analytics.totalViews);
+  setMetricValue("today", analytics.todayViews);
+  setMetricValue("week", analytics.last7Views);
+
+  if (analyticsElements.summary) {
+    analyticsElements.summary.textContent = analytics.storageConfigured
+      ? `資料更新時間：${formatDateTime(analytics.updatedAt)}`
+      : "尚未設定 Vercel Blob，無法累計正式瀏覽數據。";
+  }
+
+  renderAnalyticsPages(analytics.pages || []);
+  renderAnalyticsDailyBars(analytics.daily || []);
+}
+
+function renderAnalyticsPages(pages) {
+  if (!analyticsElements.pageList) return;
+  analyticsElements.pageList.innerHTML = "";
+  const visiblePages = pages.filter((page) => Number(page.total || 0) > 0);
+
+  if (!visiblePages.length) {
+    analyticsElements.pageList.innerHTML = '<p class="empty-state">目前尚未累計分頁瀏覽。</p>';
+    return;
+  }
+
+  visiblePages.forEach((page) => {
+    const row = document.createElement("div");
+    row.className = "analytics-row";
+    row.innerHTML = `
+      <span>
+        <strong>${escapeHtml(page.label)}</strong>
+        <small>今日 ${formatNumber(page.today)}／近 7 天 ${formatNumber(page.last7)}</small>
+      </span>
+      <b>${formatNumber(page.total)}</b>
+    `;
+    analyticsElements.pageList.appendChild(row);
+  });
+}
+
+function renderAnalyticsDailyBars(days) {
+  if (!analyticsElements.dailyBars) return;
+  analyticsElements.dailyBars.innerHTML = "";
+  const maxViews = Math.max(...days.map((day) => Number(day.views || 0)), 1);
+
+  days.forEach((day) => {
+    const views = Number(day.views || 0);
+    const row = document.createElement("div");
+    row.className = "analytics-bar-row";
+    row.innerHTML = `
+      <span>${escapeHtml(formatDateLabel(day.date))}</span>
+      <div class="analytics-bar-track"><i style="width: ${Math.max(5, (views / maxViews) * 100)}%"></i></div>
+      <b>${formatNumber(views)}</b>
+    `;
+    analyticsElements.dailyBars.appendChild(row);
+  });
+}
+
+function setMetricValue(key, value) {
+  const element = analyticsElements[key];
+  if (element) element.textContent = formatNumber(value);
+}
+
+function formatNumber(value) {
+  return Number(value || 0).toLocaleString("zh-TW");
+}
+
+function formatDateTime(value) {
+  if (!value) return "尚未更新";
+  try {
+    return new Intl.DateTimeFormat("zh-TW", {
+      timeZone: "Asia/Taipei",
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(value));
+  } catch {
+    return value;
+  }
+}
+
+function formatDateLabel(value) {
+  if (!value) return "";
+  const [, month, day] = String(value).split("-");
+  return `${month}/${day}`;
 }
 
 function setStatus(message, type = "") {

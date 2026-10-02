@@ -40,6 +40,7 @@
           <button class="is-active" type="button" data-admin-tab="products">商品</button>
           <button type="button" data-admin-tab="offers">最新優惠</button>
           <button type="button" data-admin-tab="knowledge">美髮知識</button>
+          <button type="button" data-admin-tab="analytics">數據分析</button>
         </nav>
 
         <section class="admin-panel is-active" data-admin-panel="products">
@@ -181,6 +182,45 @@
               <button class="danger-button" type="button" data-delete-current="knowledge">刪除</button>
             </div>
           </form>
+        </section>
+
+        <section class="admin-panel analytics-panel" data-admin-panel="analytics">
+          <div class="analytics-dashboard">
+            <div class="analytics-head">
+              <div>
+                <p class="eyebrow">Analytics</p>
+                <h2>瀏覽數據分析</h2>
+                <p id="analytics-summary">登入後可查看網站瀏覽概況。</p>
+              </div>
+              <button type="button" id="analytics-refresh">重新整理</button>
+            </div>
+
+            <div class="metric-grid" aria-label="瀏覽數據總覽">
+              <article class="metric-card">
+                <span>總瀏覽</span>
+                <strong id="metric-total">0</strong>
+              </article>
+              <article class="metric-card">
+                <span>今日瀏覽</span>
+                <strong id="metric-today">0</strong>
+              </article>
+              <article class="metric-card">
+                <span>近 7 天</span>
+                <strong id="metric-week">0</strong>
+              </article>
+            </div>
+
+            <div class="analytics-grid">
+              <article class="analytics-card">
+                <h3>各分頁瀏覽</h3>
+                <div class="analytics-list" id="analytics-page-list"></div>
+              </article>
+              <article class="analytics-card">
+                <h3>近 7 日趨勢</h3>
+                <div class="analytics-bars" id="analytics-daily-bars"></div>
+              </article>
+            </div>
+          </div>
         </section>
       </section>
     </main>

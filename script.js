@@ -34,6 +34,26 @@ function getPageFromLocation() {
   return getPageName(decodeURIComponent(window.location.hash || "#home"));
 }
 
+let lastTrackedPage = "";
+
+function trackPageView(pageName) {
+  const activePage = getPageName(pageName);
+  if (lastTrackedPage === activePage) return;
+  lastTrackedPage = activePage;
+
+  fetch("/api/analytics", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      page: activePage,
+      path: `${window.location.pathname}${window.location.hash || ""}`,
+    }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 function closeMobileNav() {
   if (!siteNav || !navToggle) return;
   siteNav.classList.remove("is-open");
@@ -78,6 +98,8 @@ function showPage(pageName, options = {}) {
   if (options.scrollToTop) {
     scrollToPageStart(activePage, isCompactViewport);
   }
+
+  trackPageView(activePage);
 }
 
 function scrollToPageStart(activePage, isCompactViewport) {

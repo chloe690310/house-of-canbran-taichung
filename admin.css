@@ -84,7 +84,8 @@ button:focus-visible {
 
 .admin-header h1,
 .login-card h2,
-.editor-form h2 {
+.editor-form h2,
+.analytics-head h2 {
   margin: 2px 0 0;
   font-size: clamp(1.25rem, 2vw, 1.75rem);
   line-height: 1.2;
@@ -176,7 +177,7 @@ textarea {
 
 .admin-tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   overflow: hidden;
   margin-bottom: 18px;
   border: 1px solid var(--border);
@@ -209,6 +210,10 @@ textarea {
 
 .admin-panel.is-active {
   display: grid;
+}
+
+.analytics-panel.is-active {
+  display: block;
 }
 
 .admin-list-panel {
@@ -308,6 +313,136 @@ textarea {
   background: rgba(180, 74, 61, 0.08);
 }
 
+.analytics-dashboard {
+  display: grid;
+  gap: 18px;
+}
+
+.analytics-head,
+.metric-card,
+.analytics-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 48px rgba(20, 59, 53, 0.08);
+}
+
+.analytics-head {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.analytics-head p:last-child {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.metric-card {
+  display: grid;
+  gap: 8px;
+  padding: 20px;
+}
+
+.metric-card span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.metric-card strong {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.analytics-card {
+  display: grid;
+  gap: 16px;
+  padding: clamp(18px, 3vw, 24px);
+}
+
+.analytics-card h3 {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.analytics-list,
+.analytics-bars {
+  display: grid;
+  gap: 10px;
+}
+
+.analytics-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(20, 59, 53, 0.1);
+  border-radius: 8px;
+  background: #fbfefd;
+}
+
+.analytics-row span {
+  display: grid;
+  gap: 3px;
+}
+
+.analytics-row small,
+.analytics-bar-row span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.analytics-row b,
+.analytics-bar-row b {
+  color: var(--line);
+  font-size: 1.05rem;
+}
+
+.analytics-bar-row {
+  display: grid;
+  grid-template-columns: 54px 1fr 48px;
+  gap: 10px;
+  align-items: center;
+}
+
+.analytics-bar-track {
+  overflow: hidden;
+  height: 12px;
+  border-radius: 999px;
+  background: #e8f2ed;
+}
+
+.analytics-bar-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #12a875, #78cfad);
+}
+
+.empty-state {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
 @media (max-width: 860px) {
   .admin-header {
     grid-template-columns: 1fr auto;
@@ -322,7 +457,9 @@ textarea {
   }
 
   .field-grid,
-  .list-tools {
+  .list-tools,
+  .metric-grid,
+  .analytics-grid {
     grid-template-columns: 1fr;
   }
 
@@ -333,5 +470,9 @@ textarea {
   .admin-tabs button {
     border-right: 0;
     border-bottom: 1px solid var(--border);
+  }
+
+  .analytics-head {
+    display: grid;
   }
 }
