@@ -661,6 +661,7 @@ const recommendations = {
 const titleEl = document.querySelector("#recommend-title");
 const copyEl = document.querySelector("#recommend-copy");
 const featuredProductGrid = document.querySelector("#featured-product-grid");
+const managerPickGrid = document.querySelector("#manager-pick-grid");
 const homeProductSearchForm = document.querySelector("#home-product-search");
 const homeProductSearchInput = document.querySelector("#home-product-search-input");
 const productSearchInput = document.querySelector("#product-search-input");
@@ -1387,6 +1388,67 @@ function getFeaturedProducts() {
     .filter(Boolean);
 }
 
+function getManagerPickProducts() {
+  const preferredNames = ["茶樹洗髮精", "米胚芽護髮霜", "順髮凝露"];
+  const picks = preferredNames
+    .map((name) => productCatalog.find((product) => product.name === name))
+    .filter(Boolean);
+
+  if (picks.length >= 3) return picks.slice(0, 3);
+
+  productCatalog
+    .filter((product) => product.priority === "高" && !picks.some((pick) => pick.id === product.id))
+    .slice(0, 3 - picks.length)
+    .forEach((product) => picks.push(product));
+
+  return picks.slice(0, 3);
+}
+
+function formatProductUseTags(product) {
+  const tags = [
+    ...(Array.isArray(product.scalp) ? product.scalp : []),
+    ...(Array.isArray(product.hair) ? product.hair : []),
+    ...(Array.isArray(product.needs) ? product.needs : []),
+  ]
+    .map((tag) => String(tag || "").trim())
+    .filter(Boolean)
+    .filter((tag) => !["不適用", "依髮質選擇", "依頭皮屬性", "依造型需求"].includes(tag));
+
+  return [...new Set(tags)].slice(0, 3).join(" / ");
+}
+
+function getManagerPickReason(product) {
+  if (product.pitch) return summarizeText(product.pitch, 58);
+  if (product.effect) return summarizeText(product.effect, 64);
+  return "門市常見需求的入門選品，適合帶著需求再與專人確認使用方式。";
+}
+
+function renderManagerPicks() {
+  if (!managerPickGrid || !productCatalog.length) return;
+
+  const picks = getManagerPickProducts();
+  if (!picks.length) return;
+
+  managerPickGrid.innerHTML = "";
+
+  picks.forEach((product, index) => {
+    const card = document.createElement("article");
+    card.className = "manager-pick-card";
+    const useTags = formatProductUseTags(product);
+    card.innerHTML = `
+      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" />
+      <div>
+        <span>${index === 0 ? "店長首選" : escapeHtml([product.brand, product.category].filter(Boolean).join(" / "))}</span>
+        <h4>${escapeHtml(product.name)}</h4>
+        <p>${escapeHtml(getManagerPickReason(product))}</p>
+        ${useTags ? `<small>適合：${escapeHtml(useTags)}</small>` : ""}
+        <em>${escapeHtml(formatProductVariants(product))}</em>
+      </div>
+    `;
+    managerPickGrid.appendChild(card);
+  });
+}
+
 function normalizeQuickSearchText(value) {
   return String(value || "")
     .toLocaleLowerCase("zh-TW")
@@ -1435,6 +1497,8 @@ function updateProductQuickSearchStatus(resultCount, query) {
 }
 
 function renderFeaturedProducts() {
+  renderManagerPicks();
+
   if (!featuredProductGrid || !productCatalog.length) return;
 
   const query = getProductQuickSearchQuery();
