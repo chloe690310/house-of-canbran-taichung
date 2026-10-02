@@ -16,6 +16,8 @@ const selected = {
 const loginPanel = document.querySelector("#login-panel");
 const loginForm = document.querySelector("#login-form");
 const loginMessage = document.querySelector("#login-message");
+const passwordInput = document.querySelector("#admin-password-input");
+const showPasswordCheckbox = document.querySelector("#show-admin-password");
 const workspace = document.querySelector("#admin-workspace");
 const logoutButton = document.querySelector("#admin-logout");
 const statusBar = document.querySelector("#status-bar");
@@ -56,6 +58,11 @@ let activeTab = "products";
 let adminPassword = sessionStorage.getItem(adminSessionKey) || "";
 
 if (adminPassword) openWorkspace();
+
+showPasswordCheckbox?.addEventListener("change", () => {
+  if (!passwordInput) return;
+  passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
+});
 
 loginForm?.addEventListener("submit", async (event) => {
   event.preventDefault();

@@ -144,6 +144,21 @@ textarea {
   background: #fbfefd;
 }
 
+.checkbox-field {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--ink);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.checkbox-field input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--line);
+}
+
 textarea {
   min-height: 88px;
   resize: vertical;

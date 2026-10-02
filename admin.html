@@ -26,7 +26,11 @@
           <h2>管理登入</h2>
           <label>
             管理密碼
-            <input name="password" type="password" autocomplete="current-password" required />
+            <input id="admin-password-input" name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <label class="checkbox-field">
+            <input id="show-admin-password" type="checkbox" />
+            <span>顯示密碼</span>
           </label>
           <button type="submit">進入後台</button>
           <p class="form-message" id="login-message"></p>
