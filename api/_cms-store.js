@@ -6,6 +6,12 @@ const cmsBlobPath = "canbran-cms/content.json";
 const localProductsPath = path.join(process.cwd(), "products-data.js");
 const seedPath = path.join(process.cwd(), "cms-seed.json");
 const legacyOfferIds = new Set(["offer-ics", "offer-pm-volume", "offer-hemp-two", "offer-hemp-three"]);
+const currentOfferImages = new Map([
+  ["offer-pm-classic-styling", "assets/offer-paul-mitchell-classic-styling-clean.png"],
+  ["offer-iau-serum-wash-care", "assets/offer-iau-serum-wash-care-clean.png"],
+  ["offer-teatree-scalp-care", "assets/offer-teatree-scalp-care-clean.png"],
+  ["offer-pm-color-care", "assets/offer-paul-mitchell-color-care-clean.png"],
+]);
 
 function getAdminPassword() {
   return process.env.CANBRAN_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "";
@@ -61,7 +67,12 @@ function readSeedData() {
 
 function resolveOffers(blobOffers = [], seedOffers = []) {
   const filteredBlobOffers = Array.isArray(blobOffers)
-    ? blobOffers.filter((offer) => !legacyOfferIds.has(offer.id))
+    ? blobOffers
+        .filter((offer) => !legacyOfferIds.has(offer.id))
+        .map((offer) => ({
+          ...offer,
+          image: currentOfferImages.get(offer.id) || offer.image,
+        }))
     : [];
   return filteredBlobOffers.length ? filteredBlobOffers : seedOffers;
 }

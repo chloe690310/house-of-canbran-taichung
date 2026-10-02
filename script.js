@@ -199,7 +199,7 @@ const currentOfferCampaigns = [
     price: "$1650",
     original: "原價 $2100",
     tag: "現省 $450",
-    image: "assets/offer-paul-mitchell-classic-styling.jpg",
+    image: "assets/offer-paul-mitchell-classic-styling-clean.png",
     imageAlt: "Paul Mitchell 經典明星造型組優惠",
     description:
       "蓄薏護髮素搭配青蘋果雕，從免沖洗保養到彈性定型一次完成，適合想提升柔順、光澤與造型持久度的日常整理。",
@@ -214,7 +214,7 @@ const currentOfferCampaigns = [
     price: "$3840",
     original: "原價 $4800",
     tag: "加贈旅行組",
-    image: "assets/offer-iau-serum-wash-care.jpg",
+    image: "assets/offer-iau-serum-wash-care-clean.png",
     imageAlt: "IAU SERUM 精粹超值洗護組優惠",
     description:
       "IAU SERUM 洗髮精 600ML 搭配修護霜 600ML，專為自然捲或想提升水潤、柔順與好整理度的髮質設計，限量加贈 30ML 洗護旅行組。",
@@ -229,7 +229,7 @@ const currentOfferCampaigns = [
     price: "$2500",
     original: "原價 $3400",
     tag: "約 74 折",
-    image: "assets/offer-teatree-scalp-care.jpg",
+    image: "assets/offer-teatree-scalp-care-clean.png",
     imageAlt: "茶樹頭皮激活洗護組優惠",
     description:
       "茶樹激活洗髮精搭配潤髮乳，主打強健髮根、豐盈支撐與頭皮活絡感，適合細軟、扁塌或想維持頭皮健康環境的人。",
@@ -244,7 +244,7 @@ const currentOfferCampaigns = [
     price: "$1800",
     original: "原價 $2300",
     tag: "約 78 折",
-    image: "assets/offer-paul-mitchell-color-care.jpg",
+    image: "assets/offer-paul-mitchell-color-care-clean.png",
     imageAlt: "Paul Mitchell 護色煥采組優惠",
     description: "護色洗髮精搭配護色修護，延緩褪色、提升柔順亮澤，適合染後髮色維持與日常修護。",
     points: ["染後護色", "柔順亮澤", "延緩褪色"],
@@ -1532,7 +1532,7 @@ function renderOfferCards(offers) {
         <span class="promo-tag">${escapeHtml(offer.tag || "本月優惠")}</span>
       </div>
       <figure class="promo-media">
-        <img src="${escapeHtml(offer.image || "assets/offer-paul-mitchell-classic-styling.jpg")}" alt="${escapeHtml(offer.imageAlt || offer.title || "優惠圖片")}" loading="lazy" />
+        <img src="${escapeHtml(offer.image || "assets/offer-paul-mitchell-classic-styling-clean.png")}" alt="${escapeHtml(offer.imageAlt || offer.title || "優惠圖片")}" loading="lazy" />
       </figure>
       <div class="promo-content">
         <p class="promo-series">${escapeHtml(offer.series || "Canbran")}</p>
