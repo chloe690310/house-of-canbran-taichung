@@ -70,6 +70,7 @@ const managerElements = {
 };
 let productDisplayDraft = null;
 let savingDisplaySettings = false;
+let managerImageUploading = false;
 
 let activeTab = "products";
 let adminPassword = sessionStorage.getItem(adminSessionKey) || "";
@@ -129,9 +130,26 @@ document.querySelectorAll("[data-delete-current]").forEach((button) => {
 
 analyticsElements.refresh?.addEventListener("click", () => loadAnalytics());
 featuredElements.search?.addEventListener("input", () => renderFeaturedCatalog());
-managerElements.settings?.addEventListener("input", () => {
+managerElements.settings?.addEventListener("input", (event) => {
+  if (event.target.type === "file") return;
   productDisplayDraft.managerPicks = readManagerPickSettings();
+  updateManagerPreviews();
   managerElements.message.textContent = "有尚未儲存的調整，請按「儲存店長推薦」。";
+});
+managerElements.settings?.addEventListener("change", async (event) => {
+  const index = event.target.dataset.managerUpload;
+  const file = event.target.files?.[0];
+  if (index === undefined || !file) return;
+  await uploadManagerImage(Number(index), file);
+  event.target.value = "";
+});
+managerElements.settings?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-manager-reset]");
+  if (!button) return;
+  setValue(managerElements.form, `managerImage${button.dataset.managerReset}`, "");
+  productDisplayDraft.managerPicks = readManagerPickSettings();
+  updateManagerPreviews();
+  managerElements.message.textContent = "已改用商品原圖，請按「儲存店長推薦」套用。";
 });
 featuredElements.form?.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -146,6 +164,10 @@ async function saveDisplaySettings(type) {
   const isManager = type === "manager";
   const elements = isManager ? managerElements : featuredElements;
   const label = isManager ? "店長推薦" : "熱門髮品";
+  if (isManager && managerImageUploading) {
+    elements.message.textContent = "圖片正在上傳，完成後即可儲存。";
+    return;
+  }
   if (savingDisplaySettings) {
     elements.message.textContent = "其他設定正在儲存，請稍後再試。";
     return;
@@ -163,10 +185,12 @@ async function saveDisplaySettings(type) {
   const previous = state.productDisplay;
   state.productDisplay = { ...state.productDisplay, [key]: settings };
   savingDisplaySettings = true;
+  updateManagerBusyState();
   submit.disabled = true;
   elements.message.textContent = `正在儲存${label}...`;
   const saved = await saveAll();
   savingDisplaySettings = false;
+  updateManagerBusyState();
   submit.disabled = false;
   if (saved) {
     productDisplayDraft[key] = structuredClone(state.productDisplay[key]);
@@ -274,6 +298,7 @@ function readManagerPickSettings() {
     productId: getValue(managerElements.form, `managerProduct${index}`),
     displayName: getValue(managerElements.form, `managerName${index}`),
     badge: getValue(managerElements.form, `managerBadge${index}`),
+    image: getValue(managerElements.form, `managerImage${index}`),
   }));
 }
 
@@ -309,11 +334,54 @@ function renderManagerEditor() {
       </select></label>
       <label>顯示名稱（選填）<input name="managerName${index}" aria-label="第 ${index + 1} 席顯示名稱" placeholder="留空則使用商品名稱" /></label>
       <label>推薦標籤（選填）<input name="managerBadge${index}" aria-label="第 ${index + 1} 席推薦標籤" placeholder="例如：免沖洗保濕" /></label>
+      <label>推薦圖片網址（選填）<input name="managerImage${index}" aria-label="第 ${index + 1} 席圖片網址" placeholder="留空則使用商品原圖" /></label>
+      <label>上傳推薦圖片<input type="file" accept="image/*" data-manager-upload="${index}" aria-label="第 ${index + 1} 席上傳圖片" /></label>
+      <img class="image-preview" data-manager-preview="${index}" alt="第 ${index + 1} 席推薦圖片預覽" />
+      <button type="button" class="ghost-button" data-manager-reset="${index}">使用商品原圖</button>
     `;
     managerElements.settings.appendChild(fieldset);
     setValue(managerElements.form, `managerProduct${index}`, pick.productId);
     setValue(managerElements.form, `managerName${index}`, pick.displayName);
     setValue(managerElements.form, `managerBadge${index}`, pick.badge);
+    setValue(managerElements.form, `managerImage${index}`, pick.image);
+  }
+  updateManagerPreviews();
+  updateManagerBusyState();
+}
+
+function updateManagerPreviews() {
+  readManagerPickSettings().forEach((pick, index) => {
+    const preview = managerElements.settings.querySelector(`[data-manager-preview="${index}"]`);
+    const image = pick.image || state.products.find((product) => product.id === pick.productId)?.image;
+    if (image) preview.src = image;
+    else preview.removeAttribute("src");
+  });
+}
+
+function updateManagerBusyState() {
+  const busy = managerImageUploading || savingDisplaySettings;
+  managerElements.settings?.querySelectorAll("fieldset").forEach((fieldset) => { fieldset.disabled = busy; });
+  const submit = managerElements.form?.querySelector('[type="submit"]');
+  if (submit) submit.disabled = busy;
+}
+
+async function uploadManagerImage(index, file) {
+  if (managerImageUploading || savingDisplaySettings) return;
+  productDisplayDraft.managerPicks = readManagerPickSettings();
+  managerImageUploading = true;
+  updateManagerBusyState();
+  managerElements.message.textContent = "正在上傳推薦圖片...";
+  try {
+    const url = await uploadImage(file);
+    productDisplayDraft.managerPicks[index].image = url;
+    setValue(managerElements.form, `managerImage${index}`, url);
+    updateManagerPreviews();
+    managerElements.message.textContent = "圖片已上傳並可預覽，請按「儲存店長推薦」套用到前台。";
+  } catch (error) {
+    managerElements.message.textContent = error.message || "圖片上傳失敗，請稍後再試。";
+  } finally {
+    managerImageUploading = false;
+    updateManagerBusyState();
   }
 }
 
@@ -665,6 +733,19 @@ async function saveAll() {
 
 async function uploadImageForForm(type, file) {
   setStatus("正在上傳圖片...");
+  try {
+    const url = await uploadImage(file);
+    setValue(forms[type], "image", url);
+    updatePreview(type, url);
+    setStatus("圖片已上傳，記得儲存內容。", "success");
+  } catch (error) {
+    setStatus(error.message || "圖片上傳失敗，請稍後再試。", "warning");
+  }
+}
+
+async function uploadImage(file) {
+  if (!file.type.startsWith("image/")) throw new Error("請選擇圖片檔案。");
+  if (file.size > 5 * 1024 * 1024) throw new Error("圖片檔案請先壓到 5MB 以下。");
   const dataUrl = await fileToDataUrl(file);
   const response = await fetch("/api/upload", {
     method: "POST",
@@ -678,14 +759,8 @@ async function uploadImageForForm(type, file) {
     }),
   });
   const result = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    setStatus(result.message || "圖片上傳失敗。", "warning");
-    return;
-  }
-
-  setValue(forms[type], "image", result.url);
-  updatePreview(type, result.url);
-  setStatus("圖片已上傳，記得儲存內容。", "success");
+  if (!response.ok || !result.url) throw new Error(result.message || "圖片上傳失敗。");
+  return result.url;
 }
 
 async function loadAnalytics() {

@@ -174,6 +174,7 @@ function normalizeProductDisplay(value) {
         productId: String(pick.productId || "").trim(),
         displayName: String(pick.displayName || "").trim(),
         badge: String(pick.badge || "").trim(),
+        image: String(pick.image || "").trim(),
       }))
       .filter((pick) => {
         if (!pick.productId || seenPicks.has(pick.productId)) return false;

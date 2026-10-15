@@ -503,6 +503,15 @@ textarea {
   font-weight: 800;
 }
 
+.manager-setting input {
+  min-width: 0;
+}
+
+.manager-setting .image-preview {
+  width: 100%;
+  height: 180px;
+}
+
 .featured-catalog,
 .featured-selected {
   display: grid;

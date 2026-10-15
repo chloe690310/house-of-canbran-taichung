@@ -1421,7 +1421,12 @@ function getManagerPickProducts() {
     return productDisplay.managerPicks
       .map((selection) => {
         const product = productCatalog.find((item) => item.id === selection.productId);
-        return product ? { ...product, managerBadge: selection.badge, managerDisplayName: selection.displayName } : null;
+        return product ? {
+          ...product,
+          image: selection.image || product.image,
+          managerBadge: selection.badge,
+          managerDisplayName: selection.displayName,
+        } : null;
       })
       .filter(Boolean)
       .slice(0, 3);
