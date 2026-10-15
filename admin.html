@@ -43,6 +43,7 @@
         <nav class="admin-tabs" aria-label="後台分頁">
           <button class="is-active" type="button" data-admin-tab="products">商品</button>
           <button type="button" data-admin-tab="featured">熱門髮品</button>
+          <button type="button" data-admin-tab="manager">店長推薦</button>
           <button type="button" data-admin-tab="offers">最新優惠</button>
           <button type="button" data-admin-tab="knowledge">美髮知識</button>
           <button type="button" data-admin-tab="analytics">數據分析</button>
@@ -111,11 +112,6 @@
               <h2>熱門髮品管理</h2>
               <p class="settings-help">設定前台「熱門髮品」的展示內容，調整完成後請按儲存。</p>
             </div>
-            <section class="featured-settings" aria-labelledby="manager-settings-title">
-              <h3 id="manager-settings-title">店長推薦</h3>
-              <p class="settings-help">最多三席，可自訂顯示名稱與推薦標籤。選擇「不顯示」即可移除該席。</p>
-              <div class="manager-settings-grid" id="manager-pick-settings"></div>
-            </section>
             <section class="featured-settings" aria-labelledby="featured-list-title">
               <h3 id="featured-list-title">熱門髮品展示清單</h3>
               <p class="settings-help">加入商品後可調整展示順序；未加入清單的上架商品，仍可透過前台商品快搜找到。</p>
@@ -132,6 +128,26 @@
               <a class="settings-link" href="/#products" target="_blank" rel="noopener">查看前台熱門髮品</a>
             </div>
             <p class="form-message" id="featured-save-message" role="status"></p>
+          </form>
+        </section>
+
+        <section class="admin-panel manager-panel" data-admin-panel="manager">
+          <form class="editor-form" id="manager-editor">
+            <div>
+              <p class="eyebrow">Manager picks</p>
+              <h2>店長推薦管理</h2>
+              <p class="settings-help">設定前台「店長推薦」的商品，依第 1 至第 3 席的順序展示。</p>
+            </div>
+            <section class="featured-settings" aria-labelledby="manager-settings-title">
+              <h3 id="manager-settings-title">推薦商品</h3>
+              <p class="settings-help">最多三席，可自訂顯示名稱與推薦標籤。選擇「不顯示」即可移除該席。</p>
+              <div class="manager-settings-grid" id="manager-pick-settings"></div>
+            </section>
+            <div class="form-actions">
+              <button type="submit">儲存店長推薦</button>
+              <a class="settings-link" href="/#products" target="_blank" rel="noopener">查看前台店長推薦</a>
+            </div>
+            <p class="form-message" id="manager-save-message" role="status"></p>
           </form>
         </section>
 

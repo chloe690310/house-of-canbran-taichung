@@ -192,7 +192,7 @@ textarea {
 
 .admin-tabs {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   overflow: hidden;
   margin-bottom: 18px;
   border: 1px solid var(--border);
@@ -458,7 +458,8 @@ textarea {
   font-weight: 700;
 }
 
-.featured-panel.is-active {
+.featured-panel.is-active,
+.manager-panel.is-active {
   display: block;
 }
 

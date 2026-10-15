@@ -56,7 +56,6 @@ const analyticsElements = {
 };
 const featuredElements = {
   form: document.querySelector("#featured-editor"),
-  managerSettings: document.querySelector("#manager-pick-settings"),
   search: document.querySelector("#featured-product-search"),
   catalog: document.querySelector("#featured-product-catalog"),
   catalogSummary: document.querySelector("#featured-catalog-summary"),
@@ -64,7 +63,13 @@ const featuredElements = {
   selectionSummary: document.querySelector("#featured-selection-summary"),
   message: document.querySelector("#featured-save-message"),
 };
+const managerElements = {
+  form: document.querySelector("#manager-editor"),
+  settings: document.querySelector("#manager-pick-settings"),
+  message: document.querySelector("#manager-save-message"),
+};
 let productDisplayDraft = null;
+let savingDisplaySettings = false;
 
 let activeTab = "products";
 let adminPassword = sessionStorage.getItem(adminSessionKey) || "";
@@ -124,34 +129,55 @@ document.querySelectorAll("[data-delete-current]").forEach((button) => {
 
 analyticsElements.refresh?.addEventListener("click", () => loadAnalytics());
 featuredElements.search?.addEventListener("input", () => renderFeaturedCatalog());
-featuredElements.managerSettings?.addEventListener("input", () => {
+managerElements.settings?.addEventListener("input", () => {
   productDisplayDraft.managerPicks = readManagerPickSettings();
-  markFeaturedChanged();
+  managerElements.message.textContent = "有尚未儲存的調整，請按「儲存店長推薦」。";
 });
 featuredElements.form?.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const managerPicks = readManagerPickSettings().filter((pick) => pick.productId);
-  if (new Set(managerPicks.map((pick) => pick.productId)).size !== managerPicks.length) {
-    featuredElements.message.textContent = "店長推薦請選擇不同商品，避免重複展示。";
+  await saveDisplaySettings("featured");
+});
+managerElements.form?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  await saveDisplaySettings("manager");
+});
+
+async function saveDisplaySettings(type) {
+  const isManager = type === "manager";
+  const elements = isManager ? managerElements : featuredElements;
+  const label = isManager ? "店長推薦" : "熱門髮品";
+  if (savingDisplaySettings) {
+    elements.message.textContent = "其他設定正在儲存，請稍後再試。";
+    return;
+  }
+  const key = isManager ? "managerPicks" : "featuredIds";
+  const settings = isManager
+    ? readManagerPickSettings().filter((pick) => pick.productId)
+    : [...productDisplayDraft.featuredIds];
+  if (isManager && new Set(settings.map((pick) => pick.productId)).size !== settings.length) {
+    elements.message.textContent = "店長推薦請選擇不同商品，避免重複展示。";
     return;
   }
 
-  const submit = featuredElements.form.querySelector('[type="submit"]');
+  const submit = elements.form.querySelector('[type="submit"]');
   const previous = state.productDisplay;
-  state.productDisplay = { featuredIds: [...productDisplayDraft.featuredIds], managerPicks };
+  state.productDisplay = { ...state.productDisplay, [key]: settings };
+  savingDisplaySettings = true;
   submit.disabled = true;
-  featuredElements.message.textContent = "正在儲存熱門髮品...";
+  elements.message.textContent = `正在儲存${label}...`;
   const saved = await saveAll();
+  savingDisplaySettings = false;
   submit.disabled = false;
   if (saved) {
-    productDisplayDraft = structuredClone(state.productDisplay);
-    renderFeaturedEditor();
-    featuredElements.message.textContent = "已儲存，前台熱門髮品將依照這份清單顯示。";
+    productDisplayDraft[key] = structuredClone(state.productDisplay[key]);
+    if (isManager) renderManagerEditor();
+    else renderFeaturedEditor();
+    elements.message.textContent = `已儲存，前台${label}將依照這份清單顯示。`;
   } else {
     state.productDisplay = previous;
-    featuredElements.message.textContent = "儲存未完成，設定仍保留在此頁，請稍後再試。";
+    elements.message.textContent = "儲存未完成，設定仍保留在此頁，請稍後再試。";
   }
-});
+}
 
 async function openWorkspace() {
   loginMessage.textContent = "";
@@ -220,6 +246,10 @@ function setActiveTab(type) {
     renderFeaturedEditor();
     return;
   }
+  if (type === "manager") {
+    renderManagerEditor();
+    return;
+  }
   if (type === "analytics") {
     renderAnalytics();
     loadAnalytics();
@@ -235,14 +265,15 @@ function renderAll() {
   renderList("knowledge");
   renderAnalytics();
   if (activeTab === "featured") renderFeaturedEditor();
+  else if (activeTab === "manager") renderManagerEditor();
   else fillEditor(activeTab);
 }
 
 function readManagerPickSettings() {
   return Array.from({ length: 3 }, (_, index) => ({
-    productId: getValue(featuredElements.form, `managerProduct${index}`),
-    displayName: getValue(featuredElements.form, `managerName${index}`),
-    badge: getValue(featuredElements.form, `managerBadge${index}`),
+    productId: getValue(managerElements.form, `managerProduct${index}`),
+    displayName: getValue(managerElements.form, `managerName${index}`),
+    badge: getValue(managerElements.form, `managerBadge${index}`),
   }));
 }
 
@@ -253,8 +284,15 @@ function markFeaturedChanged() {
 function renderFeaturedEditor() {
   if (!featuredElements.form) return;
   productDisplayDraft ??= structuredClone(state.productDisplay);
+  renderFeaturedCatalog();
+  renderFeaturedSelection();
+}
+
+function renderManagerEditor() {
+  if (!managerElements.form) return;
+  productDisplayDraft ??= structuredClone(state.productDisplay);
   const liveProducts = state.products.filter((item) => normalizeStatus(item.status) === "上架");
-  featuredElements.managerSettings.innerHTML = "";
+  managerElements.settings.innerHTML = "";
   for (let index = 0; index < 3; index += 1) {
     const pick = productDisplayDraft.managerPicks[index] || {};
     const fieldset = document.createElement("fieldset");
@@ -272,13 +310,11 @@ function renderFeaturedEditor() {
       <label>顯示名稱（選填）<input name="managerName${index}" aria-label="第 ${index + 1} 席顯示名稱" placeholder="留空則使用商品名稱" /></label>
       <label>推薦標籤（選填）<input name="managerBadge${index}" aria-label="第 ${index + 1} 席推薦標籤" placeholder="例如：免沖洗保濕" /></label>
     `;
-    featuredElements.managerSettings.appendChild(fieldset);
-    setValue(featuredElements.form, `managerProduct${index}`, pick.productId);
-    setValue(featuredElements.form, `managerName${index}`, pick.displayName);
-    setValue(featuredElements.form, `managerBadge${index}`, pick.badge);
+    managerElements.settings.appendChild(fieldset);
+    setValue(managerElements.form, `managerProduct${index}`, pick.productId);
+    setValue(managerElements.form, `managerName${index}`, pick.displayName);
+    setValue(managerElements.form, `managerBadge${index}`, pick.badge);
   }
-  renderFeaturedCatalog();
-  renderFeaturedSelection();
 }
 
 function renderFeaturedCatalog() {
