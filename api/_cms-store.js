@@ -13,7 +13,7 @@ const currentOfferImages = new Map([
   ["offer-iau-serum-wash-care", "assets/offer-iau-serum-wash-care-clean.png"],
   ["offer-teatree-scalp-care", "assets/offer-teatree-scalp-care-clean.png"],
   ["offer-pm-color-care", "assets/offer-paul-mitchell-color-care-clean.png"],
-  ["offer-lebel-natural-wash-care", "assets/offer-lebel-natural-wash-care-accurate-v2.png"],
+  ["offer-lebel-natural-wash-care", "assets/offer-lebel-natural-wash-care-accurate-v3.png"],
   ["offer-pm-style-extend-rescue", "assets/offer-pm-style-extend-rescue-clean.png"],
 ]);
 
