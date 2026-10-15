@@ -42,6 +42,7 @@
 
         <nav class="admin-tabs" aria-label="後台分頁">
           <button class="is-active" type="button" data-admin-tab="products">商品</button>
+          <button type="button" data-admin-tab="featured">熱門髮品</button>
           <button type="button" data-admin-tab="offers">最新優惠</button>
           <button type="button" data-admin-tab="knowledge">美髮知識</button>
           <button type="button" data-admin-tab="analytics">數據分析</button>
@@ -100,6 +101,37 @@
               <button type="submit">儲存商品</button>
               <button class="danger-button" type="button" data-delete-current="products">刪除</button>
             </div>
+          </form>
+        </section>
+
+        <section class="admin-panel featured-panel" data-admin-panel="featured">
+          <form class="editor-form" id="featured-editor">
+            <div>
+              <p class="eyebrow">Featured products</p>
+              <h2>熱門髮品管理</h2>
+              <p class="settings-help">設定前台「熱門髮品」的展示內容，調整完成後請按儲存。</p>
+            </div>
+            <section class="featured-settings" aria-labelledby="manager-settings-title">
+              <h3 id="manager-settings-title">店長推薦</h3>
+              <p class="settings-help">最多三席，可自訂顯示名稱與推薦標籤。選擇「不顯示」即可移除該席。</p>
+              <div class="manager-settings-grid" id="manager-pick-settings"></div>
+            </section>
+            <section class="featured-settings" aria-labelledby="featured-list-title">
+              <h3 id="featured-list-title">熱門髮品展示清單</h3>
+              <p class="settings-help">加入商品後可調整展示順序；未加入清單的上架商品，仍可透過前台商品快搜找到。</p>
+              <label for="featured-product-search">搜尋可加入的商品</label>
+              <input id="featured-product-search" type="search" placeholder="輸入商品名稱、品牌或分類" />
+              <p class="settings-help" id="featured-catalog-summary" aria-live="polite"></p>
+              <div class="featured-catalog" id="featured-product-catalog"></div>
+              <h3>已選展示商品</h3>
+              <p class="settings-help" id="featured-selection-summary" aria-live="polite"></p>
+              <ol class="featured-selected" id="featured-selected-products"></ol>
+            </section>
+            <div class="form-actions">
+              <button type="submit">儲存熱門髮品</button>
+              <a class="settings-link" href="/#products" target="_blank" rel="noopener">查看前台熱門髮品</a>
+            </div>
+            <p class="form-message" id="featured-save-message" role="status"></p>
           </form>
         </section>
 

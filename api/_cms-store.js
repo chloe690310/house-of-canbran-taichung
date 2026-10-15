@@ -65,6 +65,7 @@ function readSeedData() {
     products: readSeedProducts(),
     offers: seed.offers || [],
     knowledge: seed.knowledge || [],
+    productDisplay: seed.productDisplay,
     updatedAt: null,
   });
 }
@@ -162,11 +163,33 @@ function normalizeKnowledge(article, index) {
   };
 }
 
+function normalizeProductDisplay(value) {
+  if (!value || typeof value !== "object") return null;
+  const seenPicks = new Set();
+  return {
+    featuredIds: [...new Set(ensureArray(value.featuredIds).map((id) => String(id).trim()).filter(Boolean))],
+    managerPicks: (Array.isArray(value.managerPicks) ? value.managerPicks : [])
+      .filter((pick) => pick && typeof pick === "object")
+      .map((pick) => ({
+        productId: String(pick.productId || "").trim(),
+        displayName: String(pick.displayName || "").trim(),
+        badge: String(pick.badge || "").trim(),
+      }))
+      .filter((pick) => {
+        if (!pick.productId || seenPicks.has(pick.productId)) return false;
+        seenPicks.add(pick.productId);
+        return true;
+      })
+      .slice(0, 3),
+  };
+}
+
 function normalizeCmsData(data = {}) {
   return {
     products: Array.isArray(data.products) ? data.products.map(normalizeProduct).filter((item) => item.name) : [],
     offers: Array.isArray(data.offers) ? data.offers.map(normalizeOffer).filter((item) => item.title) : [],
     knowledge: Array.isArray(data.knowledge) ? data.knowledge.map(normalizeKnowledge).filter((item) => item.title) : [],
+    productDisplay: normalizeProductDisplay(data.productDisplay),
     updatedAt: data.updatedAt || null,
   };
 }
@@ -199,6 +222,7 @@ async function readCmsData() {
     products: blobData?.products?.length ? blobData.products : seed.products,
     offers: resolveOffers(blobData?.offers, seed.offers),
     knowledge: blobData?.knowledge?.length ? blobData.knowledge : seed.knowledge,
+    productDisplay: blobData?.productDisplay ?? seed.productDisplay,
     storageConfigured: hasBlobToken(),
     source: blobData ? "blob" : "seed",
   };
@@ -211,8 +235,12 @@ async function writeCmsData(data) {
     throw error;
   }
 
+  const productDisplay = data.productDisplay === undefined
+    ? (await readCmsData()).productDisplay
+    : data.productDisplay;
   const normalized = normalizeCmsData({
     ...data,
+    productDisplay,
     updatedAt: new Date().toISOString(),
   });
   const { put } = await import("@vercel/blob");

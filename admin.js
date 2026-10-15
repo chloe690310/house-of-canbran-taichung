@@ -3,6 +3,7 @@ const state = {
   products: [],
   offers: [],
   knowledge: [],
+  productDisplay: { featuredIds: [], managerPicks: [] },
   analytics: null,
   storageConfigured: false,
   source: "seed",
@@ -53,6 +54,17 @@ const analyticsElements = {
   pageList: document.querySelector("#analytics-page-list"),
   dailyBars: document.querySelector("#analytics-daily-bars"),
 };
+const featuredElements = {
+  form: document.querySelector("#featured-editor"),
+  managerSettings: document.querySelector("#manager-pick-settings"),
+  search: document.querySelector("#featured-product-search"),
+  catalog: document.querySelector("#featured-product-catalog"),
+  catalogSummary: document.querySelector("#featured-catalog-summary"),
+  selected: document.querySelector("#featured-selected-products"),
+  selectionSummary: document.querySelector("#featured-selection-summary"),
+  message: document.querySelector("#featured-save-message"),
+};
+let productDisplayDraft = null;
 
 let activeTab = "products";
 let adminPassword = sessionStorage.getItem(adminSessionKey) || "";
@@ -111,6 +123,35 @@ document.querySelectorAll("[data-delete-current]").forEach((button) => {
 });
 
 analyticsElements.refresh?.addEventListener("click", () => loadAnalytics());
+featuredElements.search?.addEventListener("input", () => renderFeaturedCatalog());
+featuredElements.managerSettings?.addEventListener("input", () => {
+  productDisplayDraft.managerPicks = readManagerPickSettings();
+  markFeaturedChanged();
+});
+featuredElements.form?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const managerPicks = readManagerPickSettings().filter((pick) => pick.productId);
+  if (new Set(managerPicks.map((pick) => pick.productId)).size !== managerPicks.length) {
+    featuredElements.message.textContent = "店長推薦請選擇不同商品，避免重複展示。";
+    return;
+  }
+
+  const submit = featuredElements.form.querySelector('[type="submit"]');
+  const previous = state.productDisplay;
+  state.productDisplay = { featuredIds: [...productDisplayDraft.featuredIds], managerPicks };
+  submit.disabled = true;
+  featuredElements.message.textContent = "正在儲存熱門髮品...";
+  const saved = await saveAll();
+  submit.disabled = false;
+  if (saved) {
+    productDisplayDraft = structuredClone(state.productDisplay);
+    renderFeaturedEditor();
+    featuredElements.message.textContent = "已儲存，前台熱門髮品將依照這份清單顯示。";
+  } else {
+    state.productDisplay = previous;
+    featuredElements.message.textContent = "儲存未完成，設定仍保留在此頁，請稍後再試。";
+  }
+});
 
 async function openWorkspace() {
   loginMessage.textContent = "";
@@ -153,6 +194,8 @@ async function loadData() {
   state.products = Array.isArray(data.products) ? data.products : [];
   state.offers = Array.isArray(data.offers) ? data.offers : [];
   state.knowledge = Array.isArray(data.knowledge) ? data.knowledge : [];
+  state.productDisplay = data.productDisplay || { featuredIds: [], managerPicks: [] };
+  productDisplayDraft = structuredClone(state.productDisplay);
   state.storageConfigured = Boolean(data.storageConfigured);
   state.source = data.source || "seed";
 
@@ -173,6 +216,10 @@ function setActiveTab(type) {
   activeTab = type;
   tabButtons.forEach((button) => button.classList.toggle("is-active", button.dataset.adminTab === type));
   panels.forEach((panel) => panel.classList.toggle("is-active", panel.dataset.adminPanel === type));
+  if (type === "featured") {
+    renderFeaturedEditor();
+    return;
+  }
   if (type === "analytics") {
     renderAnalytics();
     loadAnalytics();
@@ -187,7 +234,141 @@ function renderAll() {
   renderList("offers");
   renderList("knowledge");
   renderAnalytics();
-  fillEditor(activeTab);
+  if (activeTab === "featured") renderFeaturedEditor();
+  else fillEditor(activeTab);
+}
+
+function readManagerPickSettings() {
+  return Array.from({ length: 3 }, (_, index) => ({
+    productId: getValue(featuredElements.form, `managerProduct${index}`),
+    displayName: getValue(featuredElements.form, `managerName${index}`),
+    badge: getValue(featuredElements.form, `managerBadge${index}`),
+  }));
+}
+
+function markFeaturedChanged() {
+  featuredElements.message.textContent = "有尚未儲存的調整，請按「儲存熱門髮品」。";
+}
+
+function renderFeaturedEditor() {
+  if (!featuredElements.form) return;
+  productDisplayDraft ??= structuredClone(state.productDisplay);
+  const liveProducts = state.products.filter((item) => normalizeStatus(item.status) === "上架");
+  featuredElements.managerSettings.innerHTML = "";
+  for (let index = 0; index < 3; index += 1) {
+    const pick = productDisplayDraft.managerPicks[index] || {};
+    const fieldset = document.createElement("fieldset");
+    fieldset.className = "manager-setting";
+    const unavailable = pick.productId && !liveProducts.some((product) => product.id === pick.productId)
+      ? `<option value="${escapeHtml(pick.productId)}">${escapeHtml(state.products.find((product) => product.id === pick.productId)?.name || "已移除的商品")}（未上架）</option>`
+      : "";
+    fieldset.innerHTML = `
+      <legend>第 ${index + 1} 席</legend>
+      <label>推薦商品<select name="managerProduct${index}" aria-label="第 ${index + 1} 席推薦商品">
+        <option value="">不顯示</option>
+        ${unavailable}
+        ${liveProducts.map((product) => `<option value="${escapeHtml(product.id)}">${escapeHtml(product.name)}</option>`).join("")}
+      </select></label>
+      <label>顯示名稱（選填）<input name="managerName${index}" aria-label="第 ${index + 1} 席顯示名稱" placeholder="留空則使用商品名稱" /></label>
+      <label>推薦標籤（選填）<input name="managerBadge${index}" aria-label="第 ${index + 1} 席推薦標籤" placeholder="例如：免沖洗保濕" /></label>
+    `;
+    featuredElements.managerSettings.appendChild(fieldset);
+    setValue(featuredElements.form, `managerProduct${index}`, pick.productId);
+    setValue(featuredElements.form, `managerName${index}`, pick.displayName);
+    setValue(featuredElements.form, `managerBadge${index}`, pick.badge);
+  }
+  renderFeaturedCatalog();
+  renderFeaturedSelection();
+}
+
+function renderFeaturedCatalog() {
+  if (!featuredElements.catalog || !productDisplayDraft) return;
+  const keyword = featuredElements.search.value.trim().toLocaleLowerCase("zh-TW");
+  const matches = state.products.filter((product) =>
+    normalizeStatus(product.status) === "上架" &&
+    [product.name, product.brand, product.category].join(" ").toLocaleLowerCase("zh-TW").includes(keyword),
+  );
+  featuredElements.catalogSummary.textContent = matches.length > 8
+    ? `找到 ${matches.length} 筆上架商品，目前顯示前 8 筆，可輸入關鍵字縮小範圍。`
+    : `找到 ${matches.length} 筆上架商品。`;
+  featuredElements.catalog.innerHTML = "";
+  if (!matches.length) {
+    featuredElements.catalog.innerHTML = '<p class="empty-state">沒有符合的上架商品，請換個關鍵字。</p>';
+  }
+  matches.slice(0, 8).forEach((product) => {
+    const row = createFeaturedProductRow(product);
+    const button = document.createElement("button");
+    button.type = "button";
+    button.disabled = productDisplayDraft.featuredIds.includes(product.id);
+    button.textContent = button.disabled ? "已加入" : "加入";
+    button.setAttribute("aria-label", `加入${product.name}到熱門髮品`);
+    button.addEventListener("click", () => {
+      if (!productDisplayDraft.featuredIds.includes(product.id)) productDisplayDraft.featuredIds.push(product.id);
+      renderFeaturedCatalog();
+      renderFeaturedSelection();
+      markFeaturedChanged();
+    });
+    row.appendChild(button);
+    featuredElements.catalog.appendChild(row);
+  });
+}
+
+function createFeaturedProductRow(product, tagName = "div", index) {
+  const row = document.createElement(tagName);
+  row.className = "featured-product-row";
+  row.innerHTML = `
+    ${product.image ? `<img src="${escapeHtml(product.image)}" alt="" loading="lazy" />` : ""}
+    <div class="featured-product-info">
+      <strong>${index === undefined ? "" : `${index + 1}. `}${escapeHtml(product.name || "已移除的商品")}</strong>
+      <small>${escapeHtml([product.brand, product.category, product.status === "下架" ? "已下架，前台不顯示" : ""].filter(Boolean).join(" / "))}</small>
+    </div>
+  `;
+  return row;
+}
+
+function renderFeaturedSelection() {
+  if (!featuredElements.selected || !productDisplayDraft) return;
+  const ids = productDisplayDraft.featuredIds;
+  featuredElements.selectionSummary.textContent = ids.length
+    ? `已選 ${ids.length} 項，前台將依下方順序顯示；已下架或移除的商品會自動略過。`
+    : "尚未選擇展示商品，儲存後前台將僅提供商品快搜。";
+  featuredElements.selected.innerHTML = "";
+  ids.forEach((id, index) => {
+    const product = state.products.find((item) => item.id === id) || { id, status: "下架" };
+    const row = createFeaturedProductRow(product, "li", index);
+    const actions = document.createElement("div");
+    actions.className = "featured-row-actions";
+    for (const [label, offset] of [["上移", -1], ["下移", 1], ["移除", 0]]) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = offset ? "ghost-button" : "danger-button";
+      button.textContent = label;
+      button.setAttribute("aria-label", `${label}${product.name || "已移除的商品"}`);
+      button.disabled = (offset < 0 && index === 0) || (offset > 0 && index === ids.length - 1);
+      button.addEventListener("click", () => {
+        if (offset) [ids[index], ids[index + offset]] = [ids[index + offset], ids[index]];
+        else ids.splice(index, 1);
+        renderFeaturedCatalog();
+        renderFeaturedSelection();
+        markFeaturedChanged();
+      });
+      actions.appendChild(button);
+    }
+    if (product.name) {
+      const edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "ghost-button";
+      edit.textContent = "編輯商品";
+      edit.setAttribute("aria-label", `編輯${product.name}`);
+      edit.addEventListener("click", () => {
+        selected.products = id;
+        setActiveTab("products");
+      });
+      actions.appendChild(edit);
+    }
+    row.appendChild(actions);
+    featuredElements.selected.appendChild(row);
+  });
 }
 
 function renderList(type) {
@@ -414,28 +595,36 @@ async function deleteCurrent(type) {
 
 async function saveAll() {
   setStatus("正在儲存...");
-  const response = await fetch("/api/cms", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${adminPassword}`,
-    },
-    body: JSON.stringify({
-      products: state.products,
-      offers: state.offers,
-      knowledge: state.knowledge,
-    }),
-  });
-  const result = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    setStatus(result.message || "儲存失敗。", "warning");
-    return;
-  }
+  try {
+    const response = await fetch("/api/cms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${adminPassword}`,
+      },
+      body: JSON.stringify({
+        products: state.products,
+        offers: state.offers,
+        knowledge: state.knowledge,
+        productDisplay: state.productDisplay,
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      setStatus(result.message || "儲存失敗。", "warning");
+      return false;
+    }
 
-  state.products = result.products || state.products;
-  state.offers = result.offers || state.offers;
-  state.knowledge = result.knowledge || state.knowledge;
-  setStatus("已儲存，公開網站會讀取最新後台資料。", "success");
+    state.products = result.products || state.products;
+    state.offers = result.offers || state.offers;
+    state.knowledge = result.knowledge || state.knowledge;
+    state.productDisplay = result.productDisplay || state.productDisplay;
+    setStatus("已儲存，公開網站會讀取最新後台資料。", "success");
+    return true;
+  } catch {
+    setStatus("連線失敗，資料尚未儲存，請稍後再試。", "warning");
+    return false;
+  }
 }
 
 async function uploadImageForForm(type, file) {

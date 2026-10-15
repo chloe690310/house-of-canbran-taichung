@@ -1,4 +1,12 @@
 {
+  "productDisplay": {
+    "featuredIds": ["p138", "p035", "p110"],
+    "managerPicks": [
+      { "productId": "p009", "displayName": "IAU 精華保濕乳", "badge": "免沖洗保濕" },
+      { "productId": "p152", "displayName": "茶樹頭皮激活洗髮精", "badge": "頭皮激活" },
+      { "productId": "p053", "displayName": "THEO 美容淨化液", "badge": "頭皮淨化" }
+    ]
+  },
   "offers": [
     {
       "id": "offer-pm-classic-styling",

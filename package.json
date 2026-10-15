@@ -4,6 +4,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
+    "test": "node --test tests/product-display.test.cjs",
     "check": "node --check script.js && node --check admin.js && node --check api/_cms-store.js && node --check api/auth.js && node --check api/cms.js && node --check api/upload.js && node --check api/analytics.js"
   },
   "dependencies": {

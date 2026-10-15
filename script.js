@@ -183,6 +183,7 @@ const advisorState = {
 let productCatalog = Array.isArray(window.CANBRAN_PRODUCTS)
   ? window.CANBRAN_PRODUCTS.filter((product) => product.status === "上架")
   : [];
+let productDisplay = null;
 
 const supplementalKnowledgeArticles = [
   {
@@ -1383,6 +1384,11 @@ function renderProducts(products, fallbackProducts = []) {
 }
 
 function getFeaturedProducts() {
+  if (Array.isArray(productDisplay?.featuredIds)) {
+    return productDisplay.featuredIds
+      .map((id) => productCatalog.find((product) => product.id === id))
+      .filter(Boolean);
+  }
   const featuredNames = ["茶樹洗髮精", "米胚芽護髮霜", "順髮凝露"];
   return featuredNames
     .map((name) => productCatalog.find((product) => product.name === name))
@@ -1411,6 +1417,15 @@ const managerPickSelections = [
 ];
 
 function getManagerPickProducts() {
+  if (Array.isArray(productDisplay?.managerPicks)) {
+    return productDisplay.managerPicks
+      .map((selection) => {
+        const product = productCatalog.find((item) => item.id === selection.productId);
+        return product ? { ...product, managerBadge: selection.badge, managerDisplayName: selection.displayName } : null;
+      })
+      .filter(Boolean)
+      .slice(0, 3);
+  }
   const picks = managerPickSelections
     .map((selection) => {
       const product =
@@ -1458,12 +1473,12 @@ function getManagerPickReason(product) {
 }
 
 function renderManagerPicks() {
-  if (!managerPickGrid || !productCatalog.length) return;
+  if (!managerPickGrid) return;
 
   const picks = getManagerPickProducts();
-  if (!picks.length) return;
-
   managerPickGrid.innerHTML = "";
+  const section = managerPickGrid.closest(".manager-picks");
+  if (section) section.hidden = !picks.length;
 
   picks.forEach((product, index) => {
     const card = document.createElement("article");
@@ -1533,7 +1548,7 @@ function updateProductQuickSearchStatus(resultCount, query) {
 function renderFeaturedProducts() {
   renderManagerPicks();
 
-  if (!featuredProductGrid || !productCatalog.length) return;
+  if (!featuredProductGrid) return;
 
   const query = getProductQuickSearchQuery();
   const searchMatches = query
@@ -1547,7 +1562,7 @@ function renderFeaturedProducts() {
 
   if (!featuredProducts.length) {
     featuredProductGrid.innerHTML = `
-      <p class="product-empty">沒有找到符合「${escapeHtml(query)}」的商品，建議換成品牌、功效、髮質或頭皮狀況再試一次。</p>
+      <p class="product-empty">${query ? `沒有找到符合「${escapeHtml(query)}」的商品，建議換成品牌、功效、髮質或頭皮狀況再試一次。` : "目前沒有展示中的熱門髮品，歡迎使用商品快搜或透過 LINE 諮詢。"}</p>
     `;
     return;
   }
@@ -1612,11 +1627,14 @@ async function loadCmsContent() {
 }
 
 function applyCmsContent(cms) {
+  if (cms.productDisplay && typeof cms.productDisplay === "object") {
+    productDisplay = cms.productDisplay;
+  }
   if (Array.isArray(cms.products) && cms.products.length) {
     productCatalog = cms.products.filter((product) => product.status === "上架");
-    renderFeaturedProducts();
     updateRecommendation();
   }
+  renderFeaturedProducts();
 
   renderOfferCards(Array.isArray(cms.offers) && cms.offers.length ? cms.offers : currentOfferCampaigns);
 
