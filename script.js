@@ -243,33 +243,34 @@ const currentOfferCampaigns = [
     points: ["洗髮精 600ML", "修護霜 600ML", "加贈 30ML 旅行組"],
   },
   {
-    id: "offer-teatree-scalp-care",
+    id: "offer-lebel-natural-wash-care",
     status: "上架",
-    series: "Tea Tree Scalp Care",
-    title: "茶樹頭皮激活洗護組",
-    priceLabel: "優惠價",
-    price: "$2500",
-    original: "原價 $3400",
-    tag: "約 74 折",
-    image: "assets/offer-teatree-scalp-care-clean.png",
-    imageAlt: "茶樹頭皮激活洗護組優惠",
+    series: "LebeL 自然美主義",
+    title: "自然美主義經典洗護組",
+    priceLabel: "預購組合價",
+    price: "$2000",
+    original: "11/16 正式開賣",
+    tag: "預購中",
+    image: "assets/offer-lebel-natural-wash-care-clean.png",
+    imageAlt: "自然美主義海藻、荷荷芭與金盞花洗髮精搭配米胚芽修護霜",
     description:
-      "茶樹激活洗髮精搭配潤髮乳，主打強健髮根、豐盈支撐與頭皮活絡感，適合細軟、扁塌或想維持頭皮健康環境的人。",
-    points: ["強健髮根", "豐盈支撐", "活絡頭皮"],
+      "海藻、荷荷芭或金盞花洗髮精擇一，搭配米胚芽修護霜，加贈 30mL 旅行品隨機一瓶。即日起開放預購，11/16 正式開賣。",
+    points: ["三款洗髮精擇一", "搭配米胚芽修護霜", "加贈隨機 30mL 旅行品"],
   },
   {
-    id: "offer-pm-color-care",
+    id: "offer-pm-style-extend-rescue",
     status: "上架",
-    series: "Paul Mitchell Color Protect",
-    title: "PM 護色煥采組",
+    series: "Paul Mitchell 零水持型系列",
+    title: "零水持型 3 秒急救組",
     priceLabel: "優惠價",
-    price: "$1800",
-    original: "原價 $2300",
-    tag: "約 78 折",
-    image: "assets/offer-paul-mitchell-color-care-clean.png",
-    imageAlt: "Paul Mitchell 護色煥采組優惠",
-    description: "護色洗髮精搭配護色修護，延緩褪色、提升柔順亮澤，適合染後髮色維持與日常修護。",
-    points: ["染後護色", "柔順亮澤", "延緩褪色"],
+    price: "$1400",
+    original: "原價 $1760",
+    tag: "現省 $360",
+    image: "assets/offer-pm-style-extend-rescue-clean.png",
+    imageAlt: "Paul Mitchell 零水持型乾洗髮大瓶與雲朵隨行瓶商品組合",
+    description:
+      "雲朵隨行瓶 2.2oz，搭配全效輕盈或極淨控油乾洗髮 7.6oz，隨時整理出清爽蓬鬆髮感。",
+    points: ["快速清爽", "髮根蓬鬆", "隨時有型"],
   },
 ];
 
@@ -1617,7 +1618,7 @@ function applyCmsContent(cms) {
     updateRecommendation();
   }
 
-  renderOfferCards(currentOfferCampaigns);
+  renderOfferCards(Array.isArray(cms.offers) && cms.offers.length ? cms.offers : currentOfferCampaigns);
 
   const mergedKnowledge = mergeKnowledgeArticles(
     Array.isArray(cms.knowledge) ? cms.knowledge : [],

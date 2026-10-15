@@ -6,11 +6,15 @@ const cmsBlobPath = "canbran-cms/content.json";
 const localProductsPath = path.join(process.cwd(), "products-data.js");
 const seedPath = path.join(process.cwd(), "cms-seed.json");
 const legacyOfferIds = new Set(["offer-ics", "offer-pm-volume", "offer-hemp-two", "offer-hemp-three"]);
+const retiredOfferIds = new Set(["offer-teatree-scalp-care", "offer-pm-color-care"]);
+const newlyPublishedOfferIds = new Set(["offer-lebel-natural-wash-care", "offer-pm-style-extend-rescue"]);
 const currentOfferImages = new Map([
   ["offer-pm-classic-styling", "assets/offer-paul-mitchell-classic-styling-clean.png"],
   ["offer-iau-serum-wash-care", "assets/offer-iau-serum-wash-care-clean.png"],
   ["offer-teatree-scalp-care", "assets/offer-teatree-scalp-care-clean.png"],
   ["offer-pm-color-care", "assets/offer-paul-mitchell-color-care-clean.png"],
+  ["offer-lebel-natural-wash-care", "assets/offer-lebel-natural-wash-care-clean.png"],
+  ["offer-pm-style-extend-rescue", "assets/offer-pm-style-extend-rescue-clean.png"],
 ]);
 
 function getAdminPassword() {
@@ -74,7 +78,18 @@ function resolveOffers(blobOffers = [], seedOffers = []) {
           image: currentOfferImages.get(offer.id) || offer.image,
         }))
     : [];
-  return filteredBlobOffers.length ? filteredBlobOffers : seedOffers;
+  const offers = (filteredBlobOffers.length ? filteredBlobOffers : seedOffers).map((offer) =>
+    retiredOfferIds.has(offer.id) ? { ...offer, status: "下架" } : offer,
+  );
+
+  // Keep saved content while adding this release's campaigns to older Blob data.
+  seedOffers.forEach((offer) => {
+    if (newlyPublishedOfferIds.has(offer.id) && !offers.some((item) => item.id === offer.id)) {
+      offers.push(offer);
+    }
+  });
+
+  return offers;
 }
 
 function normalizeStatus(value, fallback = "上架") {
