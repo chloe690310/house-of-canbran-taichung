@@ -7,7 +7,7 @@ const localProductsPath = path.join(process.cwd(), "products-data.js");
 const seedPath = path.join(process.cwd(), "cms-seed.json");
 const legacyOfferIds = new Set(["offer-ics", "offer-pm-volume", "offer-hemp-two", "offer-hemp-three"]);
 const retiredOfferIds = new Set(["offer-teatree-scalp-care", "offer-pm-color-care"]);
-const newlyPublishedOfferIds = new Set(["offer-lebel-natural-wash-care", "offer-pm-style-extend-rescue"]);
+const newlyPublishedOfferIds = new Set(["offer-teatree-lavender-mint", "offer-lebel-natural-wash-care", "offer-pm-style-extend-rescue"]);
 const currentOfferImages = new Map([
   ["offer-pm-classic-styling", "assets/offer-paul-mitchell-classic-styling-clean.png"],
   ["offer-iau-serum-wash-care", "assets/offer-iau-serum-wash-care-clean.png"],
@@ -71,6 +71,15 @@ function readSeedData() {
 }
 
 function resolveOffers(blobOffers = [], seedOffers = []) {
+  // Replace the retired serum campaign in older saved CMS content in its original slot.
+  const lavenderOffer = seedOffers.find((offer) => offer.id === "offer-teatree-lavender-mint");
+  if (Array.isArray(blobOffers) && lavenderOffer) {
+    const hasLavender = blobOffers.some((offer) => offer.id === lavenderOffer.id);
+    blobOffers = blobOffers.flatMap((offer) => {
+      if (offer.id !== "offer-iau-serum-wash-care") return [offer];
+      return hasLavender ? [] : [{ ...lavenderOffer }];
+    });
+  }
   const filteredBlobOffers = Array.isArray(blobOffers)
     ? blobOffers
         .filter((offer) => !legacyOfferIds.has(offer.id))

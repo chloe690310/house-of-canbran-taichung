@@ -7,6 +7,37 @@ const custom = {
   managerPicks: [{ productId: "p035", displayName: "保濕修護首選", badge: "店長推薦", image: "" }],
 };
 
+test("older saved offers replace serum with lavender without writing to Blob", async () => {
+  const original = { offers: [
+    { id: "custom-before", title: "保留優惠" },
+    { id: "offer-iau-serum-wash-care", title: "舊精粹組合" },
+    { id: "custom-after", title: "另一優惠" },
+  ] };
+  const cms = createCmsStore(original);
+  const data = await cms.store.readCmsData();
+  assert.deepEqual(data.offers.slice(0, 3).map((offer) => offer.id), [
+    "custom-before", "offer-teatree-lavender-mint", "custom-after",
+  ]);
+  assert.equal(data.offers[1].price, "$2500");
+  assert.equal(data.offers[1].original, "原價 $3200");
+  assert.equal(cms.writes(), 0);
+  assert.deepEqual(cms.stored(), original);
+});
+
+test("saved lavender offer stays editable and is never duplicated by migration", async () => {
+  const cms = createCmsStore({ offers: [
+    { id: "offer-iau-serum-wash-care" },
+    { id: "offer-teatree-lavender-mint", title: "門市調整標題", status: "下架", price: "$2400" },
+  ] });
+  const data = await cms.store.readCmsData();
+  const lavender = data.offers.filter((offer) => offer.id === "offer-teatree-lavender-mint");
+  assert.equal(lavender.length, 1);
+  assert.equal(lavender[0].title, "門市調整標題");
+  assert.equal(lavender[0].status, "下架");
+  assert.equal(lavender[0].price, "$2400");
+  assert.ok(!data.offers.some((offer) => offer.id === "offer-iau-serum-wash-care"));
+});
+
 async function request(cms, method, body, authorized = true, handler = cms.handler) {
   let responseBody;
   const res = { statusCode: 200, setHeader() {}, end(value) { responseBody = JSON.parse(value); } };
