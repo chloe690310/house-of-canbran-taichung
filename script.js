@@ -214,21 +214,6 @@ const supplementalKnowledgeArticles = [
 
 const currentOfferCampaigns = [
   {
-    id: "offer-pm-classic-styling",
-    status: "上架",
-    series: "Paul Mitchell",
-    title: "經典明星造型組",
-    priceLabel: "優惠價",
-    price: "$1650",
-    original: "原價 $2100",
-    tag: "現省 $450",
-    image: "assets/offer-paul-mitchell-classic-styling-clean.png",
-    imageAlt: "Paul Mitchell 經典明星造型組優惠",
-    description:
-      "蓄薏護髮素搭配青蘋果雕，從免沖洗保養到彈性定型一次完成，適合想提升柔順、光澤與造型持久度的日常整理。",
-    points: ["免沖洗保養", "彈性定型", "柔順光澤"],
-  },
-  {
     id: "offer-teatree-lavender-mint",
     status: "上架",
     series: "Tea Tree Lavender Mint",
@@ -1890,13 +1875,6 @@ const productForm = document.querySelector("#product-form");
 const productAdminList = document.querySelector("#product-admin-list");
 
 const defaultAdminProducts = [
-  {
-    id: "offer-pm-classic-styling",
-    name: "經典明星造型組",
-    category: "本月優惠",
-    status: "上架中",
-    description: "蓄薏護髮素搭配青蘋果雕，免沖洗保養與彈性定型一次完成。",
-  },
   {
     id: "offer-teatree-lavender-mint",
     name: "薰衣草保濕優惠組",

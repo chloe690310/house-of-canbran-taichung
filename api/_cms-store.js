@@ -6,7 +6,7 @@ const cmsBlobPath = "canbran-cms/content.json";
 const localProductsPath = path.join(process.cwd(), "products-data.js");
 const seedPath = path.join(process.cwd(), "cms-seed.json");
 const legacyOfferIds = new Set(["offer-ics", "offer-pm-volume", "offer-hemp-two", "offer-hemp-three"]);
-const retiredOfferIds = new Set(["offer-teatree-scalp-care", "offer-pm-color-care"]);
+const retiredOfferIds = new Set(["offer-pm-classic-styling", "offer-teatree-scalp-care", "offer-pm-color-care"]);
 const newlyPublishedOfferIds = new Set(["offer-teatree-lavender-mint", "offer-lebel-natural-wash-care", "offer-pm-style-extend-rescue"]);
 const currentOfferImages = new Map([
   ["offer-pm-classic-styling", "assets/offer-paul-mitchell-classic-styling-clean.png"],
